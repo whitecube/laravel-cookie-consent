@@ -30,6 +30,45 @@ This package will auto-register its service provider.
 
 ## Usage
 
+First, we'll have to register the cookies used by your application. A good place to do so is in the `App\Providers\AppServiceProvider`'s `boot` method:
+
+```php
+public function boot()
+{
+    Cookies::operational()
+        ->session()
+        ->csrf();
+
+    Cookies::analytics()
+        ->google(env('GOOGLE_ANALYTICS_ID'));
+
+    Cookies::optional()->name('my_cookie')->duration(120);
+}
+```
+
+More details on the available cookie registration methods below.
+
+We can now add the consent scripts and modals to the application's layouts or views using the following blade directives:
+
+- `@cookie-consent-scripts`: used to add the package's default JavaScript and any third-party script you need to get the end-user's consent for.
+- `@cookie-consent-alert`: used to render the alert or pop-up view.
+
+```blade
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- ... -->
+    @cookie-consent-scripts
+</head>
+<body>
+    <!-- ... -->
+    @cookie-consent-alert
+</body>
+</html>
+```
+
+### Registering cookies
+
 TBD.
 
 ## 🔥 Sponsorships 
