@@ -26,7 +26,8 @@
     },
     "require-dev": {
         "pestphp/pest": "^2.6",
-        "mockery/mockery": "^1.5"
+        "mockery/mockery": "^1.5",
+        "orchestra/testbench": "^8.5"
     },
     "config": {
         "allow-plugins": {
@@ -45,6 +46,11 @@
                 "Whitecube\\LaravelCookieConsent\\ServiceProvider"
             ]
         }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "@php vendor/bin/testbench package:discover --ansi"
+        ]
     },
     "minimum-stability": "dev",
     "prefer-stable": true

@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.1/phpunit.xsd" bootstrap="vendor/autoload.php" colors="true">
+  <php>
+    <env name="APP_KEY" value="base64:livKcUsWHoaFk9mgf8FJIRcWiRf7pXKav/IjJj6vaA4=" />
+  </php>
   <testsuites>
     <testsuite name="Test Suite">
       <directory suffix="Test.php">./tests</directory>
