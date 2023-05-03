@@ -2,19 +2,17 @@
 
 namespace Whitecube\LaravelCookieConsent;
 
+use Closure;
+
 class CookiesCategory
 {
     use Concerns\HasAttributes;
+    use Concerns\HasCookies;
 
     /**
      * The category's identifier.
      */
     protected string $key;
-
-    /**
-     * The registered cookies.
-     */
-    protected array $cookies = [];
 
     /**
      * Create a new cookies category container instance.
@@ -33,21 +31,15 @@ class CookiesCategory
     }
 
     /**
-     * Return all defined cookies.
+     * Add a group to this category.
      */
-    public function getCookies(): array
+    public function group(Closure $callback): static
     {
-        return array_values($this->cookies);
-    }
+        $group = new CookiesGroup();
 
-    /**
-     * Create a new cookies category container instance.
-     */
-    public function register(Cookie $instance): static
-    {
-        $this->cookies[] = $instance;
+        $callback($group);
 
-        return $this;
+        return $this->register($group);
     }
 
     /**
@@ -58,7 +50,7 @@ class CookiesCategory
         $instance = new Cookie();
         $instance->$method(...$arguments);
 
-        $this->register($instance);
+        $this->cookie($instance);
 
         return $instance;
     }

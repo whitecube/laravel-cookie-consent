@@ -2,11 +2,10 @@
 
 namespace Whitecube\LaravelCookieConsent;
 
-use Closure;
-
 class Cookie
 {
     use Concerns\HasAttributes;
+    use Concerns\HasConsentCallback;
 
     /**
      * The cookie's name.
@@ -17,11 +16,6 @@ class Cookie
      * The cookie's duration.
      */
     public readonly int $duration;
-
-    /**
-     * The cookie's duration.
-     */
-    protected ?Closure $script = null;
 
     /**
      * Set the cookie's name.
@@ -39,16 +33,6 @@ class Cookie
     public function duration(int $seconds): static
     {
         $this->duration = $seconds;
-
-        return $this;
-    }
-
-    /**
-     * Set the cookie's consent callback.
-     */
-    public function script(Closure $callback): static
-    {
-        $this->script = $callback;
 
         return $this;
     }

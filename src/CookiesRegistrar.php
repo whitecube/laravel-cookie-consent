@@ -26,8 +26,9 @@ class CookiesRegistrar
      */
     public function analytics(): CookiesCategory
     {
-        // TODO : make special AnalyticsCookiesCategory
-        return $this->getOrMakeCategory('analytics');
+        return $this->getOrMakeCategory('analytics', function(string $key) {
+            return new AnalyticCookiesCategory($key);
+        });
     }
 
     /**
@@ -57,8 +58,6 @@ class CookiesRegistrar
         if($key = $this->getCategoryKeyFromMethod($method)) {
             return $this->categories[$key];
         }
-
-        // TODO : check if we're calling cookie methods inside a group definition.
 
         throw new \BadMethodCallException(sprintf(
             'Method %s::%s does not exist.', static::class, $method

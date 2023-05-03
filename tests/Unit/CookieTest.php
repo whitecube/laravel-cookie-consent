@@ -16,12 +16,6 @@ it('can set duration', function () {
     expect($cookie->duration)->toBe(10);
 });
 
-it('can set consent callback', function () {
-    $cookie = new Cookie();
-    
-    expect($cookie->script(fn() => null))->toBe($cookie);
-});
-
 it('can set custom attributes', function () {
     $cookie = new Cookie();
 
