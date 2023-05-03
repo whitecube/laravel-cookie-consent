@@ -18,7 +18,9 @@ class CookiesRegistrar
      */
     public function operational(): CookiesCategory
     {
-        return $this->getOrMakeCategory('operational');
+        return $this->getOrMakeCategory('operational', function(string $key) {
+            return new OperationalCookiesCategory($key);
+        });
     }
 
     /**

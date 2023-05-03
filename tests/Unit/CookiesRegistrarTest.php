@@ -2,12 +2,13 @@
 
 use Whitecube\LaravelCookieConsent\CookiesRegistrar;
 use Whitecube\LaravelCookieConsent\CookiesCategory;
+use Whitecube\LaravelCookieConsent\OperationalCookiesCategory;
 use Whitecube\LaravelCookieConsent\AnalyticCookiesCategory;
 
 it('can create and access consent categories', function () {
     $registrar = new CookiesRegistrar();
 
-    expect($operational = $registrar->operational())->toBeInstanceOf(CookiesCategory::class);
+    expect($operational = $registrar->operational())->toBeInstanceOf(OperationalCookiesCategory::class);
     expect($operational->key())->toBe('operational');
 
     expect($analytics = $registrar->analytics())->toBeInstanceOf(AnalyticCookiesCategory::class);

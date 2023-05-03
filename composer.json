@@ -25,7 +25,8 @@
         "laravel/framework": "^9|^10"
     },
     "require-dev": {
-        "pestphp/pest": "^2.6"
+        "pestphp/pest": "^2.6",
+        "mockery/mockery": "^1.5"
     },
     "config": {
         "allow-plugins": {

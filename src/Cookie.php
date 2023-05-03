@@ -28,11 +28,11 @@ class Cookie
     }
 
     /**
-     * Set the cookie's duration in seconds.
+     * Set the cookie's duration in minutes.
      */
-    public function duration(int $seconds): static
+    public function duration(int $minutes): static
     {
-        $this->duration = $seconds;
+        $this->duration = $minutes;
 
         return $this;
     }
