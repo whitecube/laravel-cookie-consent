@@ -33,6 +33,8 @@ This package will auto-register its service provider.
 First, we'll have to register the cookies used by your application. A good place to do so is in the `App\Providers\AppServiceProvider`'s `boot` method:
 
 ```php
+use Whitecube\LaravelCookieConsent\Facades\Cookies;
+
 public function boot()
 {
     Cookies::operational()
