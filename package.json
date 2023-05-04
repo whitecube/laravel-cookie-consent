@@ -1,0 +1,9 @@
+{
+  "name": "laravel-cookie-consent",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "laravel-mix": "^6.0.49"
+  }
+}

@@ -30,7 +30,14 @@ This package will auto-register its service provider.
 
 ## Usage
 
-First, we'll have to register the cookies used by your application. A good place to do so is in the `App\Providers\AppServiceProvider`'s `boot` method:
+First, let's publish the package's files:
+
+1. Publish the assets: `php artisan vendor:publish --tag=laravel-cookie-consent-assets`
+2. Publish the views: `php artisan vendor:publish --tag=laravel-cookie-consent-views`
+
+More on view customization below.
+
+Now, we'll have to register and configure the used cookies. A good place to do so is in the `App\Providers\AppServiceProvider`'s `boot` method, but feel free to create your own `CookiesServiceProvider`.
 
 ```php
 use Whitecube\LaravelCookieConsent\Facades\Cookies;
@@ -52,24 +59,28 @@ More details on the available cookie registration methods below.
 
 We can now add the consent scripts and modals to the application's layouts or views using the following blade directives:
 
-- `@cookie-consent-scripts`: used to add the package's default JavaScript and any third-party script you need to get the end-user's consent for.
-- `@cookie-consent-alert`: used to render the alert or pop-up view.
+- `@cookieconsentscripts`: used to add the package's default JavaScript and any third-party script you need to get the end-user's consent for.
+- `@cookieconsentview`: used to render the alert or pop-up view.
 
 ```blade
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <!-- ... -->
-    @cookie-consent-scripts
+    @cookieconsentscripts
 </head>
 <body>
     <!-- ... -->
-    @cookie-consent-alert
+    @cookieconsentview
 </body>
 </html>
 ```
 
 ### Registering cookies
+
+TBD.
+
+### Views customization
 
 TBD.
 
