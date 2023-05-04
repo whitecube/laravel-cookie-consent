@@ -1,7 +1,7 @@
 # Laravel Cookie Consent
 
-> ✅ 100% GDPR compliant 
-> ✅ Fully customizable
+> ✅ 100% GDPR compliant  
+> ✅ Fully customizable  
 > ✅ Works with and without JS
 
 Under the [EU’s GDPR](http://ec.europa.eu/ipg/basics/legal/cookies/index_en.htm#section_2), cookies that are not strictly necessary for the basic function of your website must only be activated after your end-users have given their explicit consent to the specific purpose of their operation and collection of personal data. Despite some crazy arbitrary requirements decided by non-technical lawmakers, overall **this is a good thing** since it pushes our profession to a more respectful and user-friendly direction. More and more non-EU citizens are expecting websites to ask for their consent, potentially including your website's target audience too.
