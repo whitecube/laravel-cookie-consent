@@ -26,6 +26,8 @@ class ServiceProvider extends Provider
         ], 'laravel-cookie-consent-views');
 
         $this->registerBladeDirectives();
+
+        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
     }
 
     /**
