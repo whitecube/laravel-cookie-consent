@@ -6,11 +6,11 @@
             <p>Check our <a href="#">cookies policy</a> for more information.</p>
         </div>
         <div class="cookies__actions">
-            @cookieconsentbutton(action: 'accept.essentials')
-            @cookieconsentbutton(action: 'accept.all')
+            @cookieconsentbutton(action: 'accept.essentials', label: 'Only essentials')
+            @cookieconsentbutton(action: 'accept.all', label: 'Accept all')
             <a href="#cookies-policy-customize" class="cookies__btn cookies__btn--customize">Customize</a>
         </div>
-        @cookieconsentbutton(action: 'reset', attributes: ['class' => ''])
+        @cookieconsentbutton(action: 'reset', label: 'Manage cookies', attributes: ['class' => 'cookiereset'])
         <div class="cookies__expandable" id="cookies-policy-customize">
             <form action="#" method="post" class="cookies__customize">
                 @csrf
