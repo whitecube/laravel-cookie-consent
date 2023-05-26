@@ -62,4 +62,44 @@ class CookiesManager
             'cookies' => $this->registrar,
         ])->render();
     }
+
+    /**
+     * Output a single cookie consent action button.
+     */
+    public function renderButton(string $action, ?string $label = null, array $attributes = []): string
+    {
+        $url = match ($action) {
+            'accept.all' => route('cookieconsent.accept.all'),
+            'accept.essentials' => route('cookieconsent.accept.essentials'),
+            'accept.configuration' => route('cookieconsent.accept.configuration'),
+            'reset' => route('cookieconsent.reset'),
+            default => null,
+        };
+
+        if(! $url) {
+            throw new \InvalidArgumentException('Cookie consent action "' . $action . '" does not exist. Try one of these: "accept.all", "accept.essentials", "accept.configuration", "reset".');
+        }
+
+        $attributes = array_merge([
+            'method' => 'post',
+            'data-cookie-action' => $action,
+        ], $attributes);
+
+        if(! ($attributes['class'] ?? null)) {
+            $attributes['class'] = 'cookiebtn';
+        }
+
+        $basename = explode(' ', $attributes['class'])[0];
+
+        $attributes = collect($attributes)
+            ->map(fn($value, $attribute) => $attribute . '="' . $value . '"')
+            ->implode(' ');
+
+        return view('cookie-consent::button', [
+            'url' => $url,
+            'label' => $label ?? $action, // TODO: use lang file
+            'attributes' => $attributes,
+            'basename' => $basename,
+        ])->render();
+    }
 }

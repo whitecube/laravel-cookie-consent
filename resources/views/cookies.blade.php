@@ -6,10 +6,11 @@
             <p>Check our <a href="#">cookies policy</a> for more information.</p>
         </div>
         <div class="cookies__actions">
-            <a href="#" class="cookies__btn cookies__btn--decline">Decline</a>
+            @cookieconsentbutton(action: 'accept.essentials')
+            @cookieconsentbutton(action: 'accept.all')
             <a href="#cookies-policy-customize" class="cookies__btn cookies__btn--customize">Customize</a>
-            <a href="#" class="cookies__btn cookies__btn--accept">Accept all</a>
         </div>
+        @cookieconsentbutton(action: 'reset', attributes: ['class' => ''])
         <div class="cookies__expandable" id="cookies-policy-customize">
             <form action="#" method="post" class="cookies__customize">
                 @csrf
@@ -72,9 +73,9 @@
         }, 210);
     }
 
-    cookies.querySelector('.cookies__btn--decline').addEventListener('click', function(event) {
+    cookies.querySelector('.cookies__btn--essentials').addEventListener('click', function(event) {
         event.preventDefault();
-        console.log('decline');
+        console.log('essentials');
         lcs_close();
     });
 
@@ -84,11 +85,11 @@
         lcs_toggle_expand(cookies.querySelector(event.target.getAttribute('href')));
     });
 
-    cookies.querySelector('.cookies__btn--accept').addEventListener('click', function(event) {
-        event.preventDefault();
-        console.log('accept');
-        lcs_close();
-    });
+    // cookies.querySelector('.cookies__btn--accept').addEventListener('click', function(event) {
+    //     event.preventDefault();
+    //     console.log('accept');
+    //     lcs_close();
+    // });
 
     cookies.querySelector('.cookies__btn--save').addEventListener('click', function(event) {
         event.preventDefault();

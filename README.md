@@ -128,17 +128,21 @@ Your website will need a dedicated "Cookie Policy" page containing extensive inf
 
 ### Let your users change their mind
 
-Users should be able to change their consent settings at any time. No worries, with this package it is quite simple to achieve: add a link to the _Cookie Policy_ page in order to reset the user's consent.
+Users should be able to change their consent settings at any time. No worries, with this package it is quite simple to achieve: generate a button that will reset the user's cookies and show the consent modal again.
 
 ```blade
-<a href="{{ Cookies::reset() }}" id="cookie-policy-reset">Update Cookie Settings</a>
+@cookieconsentbutton('reset')
 ```
-```javascript
-document.getElementById('cookie-policy-reset').addEventListener('click', function(event) {
-    event.preventDefault();
-    LaravelCookieConsent.reset();
-});
+
+This will output a fully functional consent reset button. If you wish to customize it, you can pass it the following parameters:
+
+```blade
+@cookieconsentbutton(action: 'reset', label: 'Manage cookies', attributes: ['id' => 'reset-button', 'class' => 'btn'])
 ```
+
+Or, for even more customization, you can change its template situated in `resources/views/vendor/cookie-consent/button.blade.php` (you'll have to publish the package's views first). Keep in mind that this template is used for all button components in this package, including the "Accept all", "Accept essentials" and "Save configuration" buttons.
+
+If you're wondering why these buttons are wrapped in a `form` element: this way they'll work when JavaScript is disabled whilst preventing browser link prefetching.
 
 ### Keep it accessible
 

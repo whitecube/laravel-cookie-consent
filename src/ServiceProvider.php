@@ -52,5 +52,9 @@ class ServiceProvider extends Provider
         Blade::directive('cookieconsentview', function (string $expression) {
             return '<?php echo ' . Facades\Cookies::class . '::renderView(); ?>';
         });
+
+        Blade::directive('cookieconsentbutton', function (string $expression) {
+            return '<?php echo ' . Facades\Cookies::class . '::renderButton(' . $expression . '); ?>';
+        });
     }
 }
