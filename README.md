@@ -49,7 +49,7 @@ use Whitecube\LaravelCookieConsent\Facades\Cookies;
 
 public function boot()
 {
-    Cookies::operational()
+    Cookies::essentials()
         ->session()
         ->csrf();
 

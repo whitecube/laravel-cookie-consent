@@ -9,8 +9,17 @@ class ConfigureController
 {
     public function __invoke(Request $request, CookiesManager $cookies)
     {
-        // TODO.
-        
-        return redirect()->back();
+        $categories = $request->collect()
+            ->filter(function($value, $key) use ($cookies) {
+                return $cookies->hasCategory($key) && filter_var($value, FILTER_VALIDATE_BOOLEAN);
+            })
+            ->keys()
+            ->all();
+
+        $consent = $cookies->accept($categories);
+
+        return $request->expectsJson()
+            ? response()->json(['status' => 'ok'])->withCookie($consent)
+            : redirect()->back()->withCookie($consent);
     }
 }

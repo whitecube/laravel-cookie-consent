@@ -9,8 +9,10 @@ class AcceptEssentialsController
 {
     public function __invoke(Request $request, CookiesManager $cookies)
     {
-        // TODO.
-        
-        return redirect()->back();
+        $consent = $cookies->accept(['essentials']);
+
+        return $request->expectsJson()
+            ? response()->json(['status' => 'ok'])->withCookie($consent)
+            : redirect()->back()->withCookie($consent);
     }
 }

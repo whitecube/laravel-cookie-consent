@@ -2,6 +2,9 @@
 
 namespace Whitecube\LaravelCookieConsent;
 
+use Illuminate\Support\Facades\Cookie as CookieFacade;
+use Symfony\Component\HttpFoundation\Cookie;
+
 class CookiesManager
 {
     /**
@@ -23,6 +26,42 @@ class CookiesManager
     public function __call(string $method, array $arguments)
     {
         return $this->registrar->$method(...$arguments);
+    }
+
+    /**
+     * TODO
+     */
+    public function accept(string|array $categories = '*'): Cookie
+    {
+        if(! is_array($categories) || ! $categories) {
+            $categories = array_map(fn($category) => $category->key(), $this->registrar->getCategories());
+        }
+
+        // TODO : call all registration callbacks for provided $categories
+
+        return $this->makeConsentCookie($categories);
+    }
+
+    /**
+     * TODO
+     */
+    protected function makeConsentCookie(array $categories): Cookie
+    {
+        $value = array_reduce($this->registrar->getCategories(), function($values, $category) use ($categories) {
+            $state = in_array($category->key(), $categories);
+            return array_reduce($category->getCookies(), function($values, $cookie) use ($state) {
+                $values[$cookie->name] = $state;
+                return $values;
+            }, $values);
+        }, ['consent_at' => time()]);
+
+        return CookieFacade::make(
+            name: config('cookieconsent.cookie.name'),
+            value: json_encode($value),
+            minutes: config('cookieconsent.cookie.duration'),
+            domain: config('cookieconsent.cookie.domain'),
+            secure: true
+        );
     }
 
     /**

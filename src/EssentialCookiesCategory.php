@@ -4,7 +4,7 @@ namespace Whitecube\LaravelCookieConsent;
 
 use Illuminate\Support\Facades\Config;
 
-class OperationalCookiesCategory extends CookiesCategory
+class EssentialCookiesCategory extends CookiesCategory
 {
     /**
      * Define Laravel's session cookie.

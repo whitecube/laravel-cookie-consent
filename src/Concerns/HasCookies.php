@@ -18,6 +18,7 @@ trait HasCookies
      */
     public function getCookies(): array
     {
+        // TODO : un-group cookies when needed.
         return array_values($this->cookies);
     }
 
