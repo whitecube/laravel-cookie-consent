@@ -2,6 +2,7 @@
 
 namespace Whitecube\LaravelCookieConsent;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie as CookieFacade;
 use Symfony\Component\HttpFoundation\Cookie;
 
@@ -13,11 +14,38 @@ class CookiesManager
     protected CookiesRegistrar $registrar;
 
     /**
+     * The user's current consent preferences.
+     */
+    protected ?array $preferences = null;
+
+    /**
      * Create a new Service Manager instance.
      */
-    public function __construct(CookiesRegistrar $registrar)
+    public function __construct(CookiesRegistrar $registrar, Request $request)
     {
         $this->registrar = $registrar;
+        $this->preferences = $this->getCurrentConsentSettings($request);
+    }
+
+    /**
+     * Retrieve the eventual existing cookie data.
+     */
+    protected function getCurrentConsentSettings(Request $request): ?array
+    {
+        $preferences = ($raw = $request->cookie(config('cookieconsent.cookie.name')))
+            ? json_decode($raw, true)
+            : null;
+
+        if(! $preferences || ! is_int($preferences['consent_at'] ?? null)) {
+            return null;
+        }
+
+        // Check duration in case application settings have changed since the cookie was set.
+        if($preferences['consent_at'] + (config('cookieconsent.cookie.duration') * 60) < time()) {
+            return null;
+        }
+
+        return $preferences;
     }
 
     /**
@@ -26,6 +54,24 @@ class CookiesManager
     public function __call(string $method, array $arguments)
     {
         return $this->registrar->$method(...$arguments);
+    }
+
+    /**
+     * Check if the current preference settings are sufficient. If not,
+     * the cookie preferences notice should be displayed again.
+     */
+    public function shouldDisplayNotice(): bool
+    {
+        if(! $this->preferences) {
+            return true;
+        }
+
+        // Check if each defined cookie has been shown to the user yet.
+        return array_reduce($this->registrar->getCategories(), function($state, $category) {
+            return $state ? true : array_reduce($category->getCookies(), function($state, $cookie) {
+                return $state ? true : !array_key_exists($cookie->name, $this->preferences);
+            }, false);
+        }, false);
     }
 
     /**
@@ -69,17 +115,27 @@ class CookiesManager
      */
     public function renderScripts(bool $withDefault = true): string
     {
-        $output = '';
-
-        if($withDefault) {
-            $output .= $this->getDefaultScriptTag();
-        }
-
-        // TODO : gather accepted scripts.
+        $output = $this->shouldDisplayNotice()
+            ? $this->getNoticeScripts($withDefault)
+            : $this->getConsentedScripts($withDefault);
 
         if(strlen($output)) {
             $output = '<!-- Cookie Consent -->' . PHP_EOL . $output;
         }
+
+        return $output;
+    }
+
+    public function getNoticeScripts(bool $withDefault): string
+    {
+        return $withDefault ? $this->getDefaultScriptTag() : '';
+    }
+
+    protected function getConsentedScripts(bool $withDefault): string
+    {
+        $output = $this->getNoticeScripts($withDefault);
+        
+        // TODO : gather accepted scripts.
 
         return $output;
     }
@@ -96,6 +152,13 @@ class CookiesManager
      * Output the consent alert/modal for current consent state.
      */
     public function renderView(): string
+    {
+        return $this->shouldDisplayNotice()
+            ? $this->getNoticeMarkup()
+            : '';
+    }
+
+    public function getNoticeMarkup(): string
     {
         return view('cookie-consent::cookies', [
             'cookies' => $this->registrar,

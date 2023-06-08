@@ -9,7 +9,15 @@ class ResetController
 {
     public function __invoke(Request $request, CookiesManager $cookies)
     {
-        return redirect()->back()->withoutCookie(
+        $response = ! $request->expectsJson()
+            ? redirect()->back()
+            : response()->json([
+                'status' => 'ok',
+                'scripts' => $cookies->getNoticeScripts(),
+                'notice' => $cookies->getNoticeMarkup(),
+            ]);
+
+        return $response->withoutCookie(
             cookie: config('cookieconsent.cookie.name'),
             domain: config('cookieconsent.cookie.domain'),
         );
