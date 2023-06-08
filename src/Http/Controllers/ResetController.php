@@ -11,6 +11,9 @@ class ResetController
     {
         // TODO.
 
-        return redirect()->back()->withoutCookie('laravel-cookie-consent');
+        return redirect()->back()->withoutCookie(
+            cookie: config('cookieconsent.cookie.name'),
+            domain: config('cookieconsent.cookie.domain'),
+        );
     }
 }

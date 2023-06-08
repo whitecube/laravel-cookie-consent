@@ -11,7 +11,11 @@ class AcceptAllController
     {
         // TODO.
         
-        $consent = cookie('laravel-cookie-consent', json_encode(['test' => true, 'foo' => false]), (60 * 24 * 365));
+        $consent = cookie(config('cookieconsent.cookie.name'), json_encode(['test' => true, 'foo' => false]), config('cookieconsent.cookie.duration'));
+
+        if(! is_null($domain = config('cookieconsent.cookie.domain'))) {
+            $consent = $consent->withDomain($domain);
+        }
 
         return redirect()->back()->withCookie($consent);
     }

@@ -8,8 +8,8 @@ use Whitecube\LaravelCookieConsent\Http\Controllers\ResetController;
 
 Route::group([
     'as' => 'cookieconsent.',
-    'prefix' => 'cookie-consent', // TODO : add config file
-    // TODO : add 'domain' => '' config
+    'domain' => config('cookieconsent.url.domain'),
+    'prefix' => config('cookieconsent.url.prefix'),
 ], function() {
     Route::post('accept-all', AcceptAllController::class)
         ->name('accept.all');

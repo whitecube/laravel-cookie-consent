@@ -36,8 +36,9 @@ This package will auto-register its service provider.
 
 First, publish the package's files:
 
-1. Publish the JavaScript library: `php artisan vendor:publish --tag=laravel-cookie-consent-assets`
-2. Publish the customizable views: `php artisan vendor:publish --tag=laravel-cookie-consent-views`
+1. Publish the configuration file: `php artisan vendor:publish --tag=laravel-cookie-consent-config`
+2. Publish the JavaScript library: `php artisan vendor:publish --tag=laravel-cookie-consent-assets`
+3. Publish the customizable views: `php artisan vendor:publish --tag=laravel-cookie-consent-views`
 
 More on customization below.
 
@@ -143,6 +144,17 @@ This will output a fully functional consent reset button. If you wish to customi
 Or, for even more customization, you can change its template situated in `resources/views/vendor/cookie-consent/button.blade.php` (you'll have to publish the package's views first). Keep in mind that this template is used for all button components in this package, including the "Accept all", "Accept essentials" and "Save configuration" buttons.
 
 If you're wondering why these buttons are wrapped in a `form` element: this way they'll work when JavaScript is disabled whilst preventing browser link prefetching.
+
+### Store user preferences for multiple sub-domains
+
+By default, this package will store the user's preferences for the current domain. If you wish to prompt for consent only once and keep the user's choice across multiple sub-domains, you'll have to configure the `cookieconsent.cookie.domain` setting (located in `config/cookieconsent.php`) as follows:
+
+```php
+'cookie' => [
+    // ...
+    'domain' => '.mydomain.com', // notice de leading "."
+],
+```
 
 ### Keep it accessible
 
