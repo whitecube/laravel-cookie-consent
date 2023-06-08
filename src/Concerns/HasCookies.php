@@ -18,8 +18,14 @@ trait HasCookies
      */
     public function getCookies(): array
     {
-        // TODO : un-group cookies when needed.
-        return array_values($this->cookies);
+        return array_reduce($this->cookies, function($cookies, $item) {
+            if(is_a($item, CookiesGroup::class)) {
+                $cookies = array_merge($cookies, $item->getCookies());
+            } else {
+                $cookies[] = $item;
+            }
+            return $cookies;
+        }, []);
     }
 
     /**
