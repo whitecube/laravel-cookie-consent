@@ -42,9 +42,11 @@ class ServiceProvider extends Provider
         $this->mergeConfigFrom(
             realpath(__DIR__ . '/../config/cookieconsent.php'), 'cookieconsent'
         );
-        
+
         $this->app->singleton(CookiesRegistrar::class, function () {
-            return new CookiesRegistrar();
+            $registrar = new CookiesRegistrar();
+            $registrar->essentials()->consent();
+            return $registrar;
         });
     }
 
