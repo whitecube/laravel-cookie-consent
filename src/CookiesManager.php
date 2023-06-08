@@ -75,7 +75,7 @@ class CookiesManager
     }
 
     /**
-     * TODO
+     * Handle the incoming consent preferences accordingly.
      */
     public function accept(string|array $categories = '*'): Cookie
     {
@@ -89,7 +89,7 @@ class CookiesManager
     }
 
     /**
-     * TODO
+     * Create a new cookie instance for the given consented categories.
      */
     protected function makeConsentCookie(array $categories): Cookie
     {
