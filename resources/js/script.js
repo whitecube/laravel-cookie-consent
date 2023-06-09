@@ -14,17 +14,21 @@ class LaravelCookieConsent {
 
     getElements() {
         this.cookies = document.querySelector('#cookies-policy');
-        this.cookies.classList.add('cookies--js');
+        this.reset = document.querySelector('.cookiereset');
+
+        if(! this.cookies) return;
         this.cookies.classList.remove('cookies--no-js');
         this.customize = this.cookies.querySelector('.cookies__btn--customize');
         this.details = this.cookies.querySelectorAll('.cookies__details');
         this.acceptAll = this.cookies.querySelector('.cookiesBtn--accept');
         this.acceptEssentials = this.cookies.querySelector('.cookiesBtn--essentials');
         this.configure = this.cookies.querySelector('.cookies__customize');
-        this.reset = document.querySelector('.cookiereset');
     }
 
     setEvents() {
+        this.reset.addEventListener('submit', (event) => this.resetCookies(event))
+
+        if(! this.cookies) return;
         for (let i = 0; i < this.details.length; i++) {
             this.details[i].addEventListener('click', (event) => this.openDetails(event));
         }
@@ -32,7 +36,6 @@ class LaravelCookieConsent {
         this.acceptAll.addEventListener('submit', (event) => this.acceptAllCookies(event));
         this.acceptEssentials.addEventListener('submit', (event) => this.acceptEssentialsCookies(event));
         this.configure.addEventListener('submit', (event) => this.configureCookies(event));
-        this.reset.addEventListener('submit', (event) => this.resetCookies(event))
     }
 
     configureCookies(event)  {
@@ -56,6 +59,7 @@ class LaravelCookieConsent {
 
     resetCookies(event) {
         event.preventDefault();
+        if(document.querySelector('#cookies-policy')) return;
         this.cookiesConsent.reset(event.target.action)
     }
 
@@ -77,7 +81,7 @@ class LaravelCookieConsent {
         this.changeText(event, isOpen);
 
         setTimeout(((cookies) => function() {
-            cookies.classList.toggle('cookies--show')
+            cookies.firstElementChild.classList.toggle('cookies--show')
             element.classList.toggle('cookies__expandable--open');
             element.setAttribute('style', 'height:' + (isOpen ? 0 : height) + 'px');
 

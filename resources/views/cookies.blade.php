@@ -1,4 +1,4 @@
-<aside class="cookies cookies--no-js" id="cookies-policy">
+<aside id="cookies-policy" class="cookies cookies--no-js">
     <div class="cookies__alert">
         <div class="cookies__container">
             <div class="cookies__wrapper">
@@ -14,7 +14,6 @@
                     @cookieconsentbutton(action: 'accept.all', label: __('cookieConsent::cookies.all'), attributes: ['class' => 'cookiesBtn cookiesBtn--accept'])
                 </div>
             </div>
-
         </div>
         <a href="#cookies-policy-customize" class="cookies__btn cookies__btn--customize">@lang('cookieConsent::cookies.customize')</a>
         <div class="cookies__expandable cookies__expandable--custom" id="cookies-policy-customize">
@@ -56,4 +55,10 @@
 </aside>
 
 {{-- STYLES : feel free to remove them and add your own --}}
-<link rel="stylesheet" type="text/css" href="{{ asset(mix('app.css', 'vendor/laravel-cookie-consent')) }}">
+@php
+    $style = file_get_contents(asset(mix('app.css', 'vendor/laravel-cookie-consent')))
+@endphp
+
+<style>
+    {!! $style !!}
+</style>

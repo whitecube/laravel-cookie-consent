@@ -12,22 +12,19 @@ export default class Cookies {
     configure(url, data) {
         this.request(url, data)
             .then(response => {
-
+                console.log(response.data)
             });
     }
 
     reset(url) {
         this.request(url)
             .then((response) => {
-                let cookies = response.data.querySelector('.cookies')
+                let tmp = document.createElement('div');
 
-                document.querySelector('body').appendChild(cookies);
+                tmp.innerHTML = response.data.notice;
 
-                cookies.classList.add('cookies--closing');
-
-                setTimeout(function() {
-                    cookies.classList.remove('cookies--closing');
-                }, 210);
+                document.querySelector('body').appendChild(tmp.querySelector('#cookies-policy'));
+                document.querySelector('body').appendChild(tmp.querySelector('style'));
             });
     }
 
@@ -36,13 +33,6 @@ export default class Cookies {
             method: 'post',
             url: url,
             data : data,
-            transformResponse: (response) => {
-                let tmp = document.createElement('div');
-
-                tmp.innerHTML = response;
-
-                return tmp
-            }
         });
     }
 }
