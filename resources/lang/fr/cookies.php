@@ -9,8 +9,8 @@ return [
     'customize' => 'Personnaliser',
     'manage' => 'Gérer les cookies',
     'details' => [
-        'more' => 'Plus d\'info',
-        'less' => 'Moins d\'info',
+        'more' => 'Plus',
+        'less' => 'Moins',
     ],
     'save' => 'Enregistrer'
 ];
