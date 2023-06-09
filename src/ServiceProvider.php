@@ -27,6 +27,10 @@ class ServiceProvider extends Provider
 
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'cookieConsent');
 
+        $this->publishes([
+            realpath(__DIR__ . '/../resources/lang') => $this->app->langPath('vendor/cookieConsent'),
+        ], 'laravel-cookie-consent-lang');
+
         $this->registerBladeDirectives();
 
         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
