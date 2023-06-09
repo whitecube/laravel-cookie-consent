@@ -14,7 +14,7 @@ trait HasCookies
     protected array $cookies = [];
 
     /**
-     * Return all defined cookies.
+     * Return all the defined cookies as a flat array.
      */
     public function getCookies(): array
     {
@@ -26,6 +26,14 @@ trait HasCookies
             }
             return $cookies;
         }, []);
+    }
+
+    /**
+     * Return all the raw defined items.
+     */
+    public function getDefined(): array
+    {
+        return $this->cookies;
     }
 
     /**

@@ -4,7 +4,7 @@ namespace Whitecube\LaravelCookieConsent;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie as CookieFacade;
-use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\HttpFoundation\Cookie as CookieComponent;
 
 class CookiesManager
 {
@@ -49,6 +49,20 @@ class CookiesManager
     }
 
     /**
+     * Create fresh cookie data for the given consented categories.
+     */
+    protected function makeConsentSettings(array $categories): array
+    {
+        return array_reduce($this->registrar->getCategories(), function($values, $category) use ($categories) {
+            $state = in_array($category->key(), $categories);
+            return array_reduce($category->getCookies(), function($values, $cookie) use ($state) {
+                $values[$cookie->name] = $state;
+                return $values;
+            }, $values);
+        }, ['consent_at' => time()]);
+    }
+
+    /**
      * Transfer all undefined method calls to the registrar.
      */
     public function __call(string $method, array $arguments)
@@ -68,42 +82,82 @@ class CookiesManager
 
         // Check if each defined cookie has been shown to the user yet.
         return array_reduce($this->registrar->getCategories(), function($state, $category) {
-            return $state ? true : array_reduce($category->getCookies(), function($state, $cookie) {
+            return $state ? true : array_reduce($category->getCookies(), function(bool $state, Cookie $cookie) {
                 return $state ? true : !array_key_exists($cookie->name, $this->preferences);
             }, false);
         }, false);
     }
 
     /**
+     * Check if the user has given explicit consent for a specific cookie.
+     */
+    public function hasConsentFor(string $key): bool
+    {
+        if(! $this->preferences) {
+            return false;
+        }
+
+        $groups = array_reduce($this->registrar->getCategories(), function($results, $category) use ($key) {
+            return array_reduce($category->getDefined(), function(array $results, Cookie|CookiesGroup $instance) use ($key) {
+                if(is_a($instance, CookiesGroup::class) && $instance->name === $key) {
+                    $results[] = $instance;
+                }
+                return $results;
+            }, $results);
+        }, []);
+
+        $cookies = $groups
+            ? array_unique(array_reduce($groups, fn($cookies, $group) => array_merge($cookies, array_map(fn($cookie) => $cookie->name, $group->getCookies())), []))
+            : [$key];
+
+        foreach($cookies as $cookie) {
+            if(! boolval($this->preferences[$cookie] ?? false)) return false;
+        }
+
+        return true;
+    }
+
+    /**
      * Handle the incoming consent preferences accordingly.
      */
-    public function accept(string|array $categories = '*'): Cookie
+    public function accept(string|array $categories = '*'): ConsentResponse
     {
         if(! is_array($categories) || ! $categories) {
             $categories = array_map(fn($category) => $category->key(), $this->registrar->getCategories());
         }
 
-        // TODO : call all registration callbacks for provided $categories
+        $this->preferences = $this->makeConsentSettings($categories);
 
-        return $this->makeConsentCookie($categories);
+        $response = $this->getConsentResponse();
+        $response->attachCookie($this->makeConsentCookie());
+
+        return $response;
+    }
+
+    /**
+     * Call all the consented cookie callbacks and gather their
+     * scripts and/or cookies that should be returned along the
+     * current request's response.
+     */
+    protected function getConsentResponse(): ConsentResponse
+    {
+        return array_reduce($this->registrar->getCategories(), function($response, $category) {
+            return array_reduce($category->getDefined(), function(ConsentResponse $response, Cookie|CookiesGroup $instance) {
+                return $this->hasConsentFor($instance->name)
+                    ? $response->handleConsent($instance)
+                    : $response;
+            }, $response);
+        }, new ConsentResponse());
     }
 
     /**
      * Create a new cookie instance for the given consented categories.
      */
-    protected function makeConsentCookie(array $categories): Cookie
+    protected function makeConsentCookie(): CookieComponent
     {
-        $value = array_reduce($this->registrar->getCategories(), function($values, $category) use ($categories) {
-            $state = in_array($category->key(), $categories);
-            return array_reduce($category->getCookies(), function($values, $cookie) use ($state) {
-                $values[$cookie->name] = $state;
-                return $values;
-            }, $values);
-        }, ['consent_at' => time()]);
-
         return CookieFacade::make(
             name: config('cookieconsent.cookie.name'),
-            value: json_encode($value),
+            value: json_encode($this->preferences),
             minutes: config('cookieconsent.cookie.duration'),
             domain: config('cookieconsent.cookie.domain'),
             secure: true

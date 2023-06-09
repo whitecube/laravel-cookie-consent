@@ -16,10 +16,6 @@ class ConfigureController
             ->keys()
             ->all();
 
-        $consent = $cookies->accept($categories);
-
-        return $request->expectsJson()
-            ? response()->json(['status' => 'ok'])->withCookie($consent)
-            : redirect()->back()->withCookie($consent);
+        return $cookies->accept($categories)->toResponse($request);
     }
 }
