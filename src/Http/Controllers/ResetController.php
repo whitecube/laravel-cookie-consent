@@ -13,7 +13,7 @@ class ResetController
             ? redirect()->back()
             : response()->json([
                 'status' => 'ok',
-                'scripts' => $cookies->getNoticeScripts(),
+                'scripts' => $cookies->getNoticeScripts(true),
                 'notice' => $cookies->getNoticeMarkup(),
             ]);
 
