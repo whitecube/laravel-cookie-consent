@@ -31,12 +31,17 @@
     }
 
     &--no-js {
+        .cookies__section .cookies__expandable,
         .cookies__expandable:target {
             height: auto;
             visibility: visible;
             opacity: 1;
             transition: height 200ms ease-out,
                         opacity 200ms ease-out;
+        }
+
+        .cookies__details {
+            display: none;
         }
     }
 

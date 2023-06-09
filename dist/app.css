@@ -19,11 +19,15 @@
   opacity: 1;
   transition: height 200ms ease-out, opacity 200ms ease-out;
 }
+.cookies--no-js .cookies__section .cookies__expandable,
 .cookies--no-js .cookies__expandable:target {
   height: auto;
   visibility: visible;
   opacity: 1;
   transition: height 200ms ease-out, opacity 200ms ease-out;
+}
+.cookies--no-js .cookies__details {
+  display: none;
 }
 .cookies--closing {
   opacity: 0;
