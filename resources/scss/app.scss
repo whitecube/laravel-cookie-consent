@@ -71,7 +71,7 @@
     }
 
     &__alert {
-        width: 355px;
+        width: 22em;
         max-width: 90%;
         margin: 5%;
         background: #fff;
@@ -94,19 +94,19 @@
     }
 
     &__wrapper {
-        padding: 16px 24px;
+        padding: 1em 1.5em;
     }
 
     &__title {
         font-weight: bold;
         line-height: 1.4em;
         margin-bottom: 0.8em;
-        color: #233232;
+        color: #2C2E30;
     }
 
     &__intro {
         font-weight: 450;
-        font-size: 14px;
+        font-size: 0.875em;
         line-height: 1.4em;
         color: #2C2E30;
 
@@ -124,7 +124,7 @@
 
             &:hover,
             &:focus {
-                color: #135868;
+                color: #7959EF;
             }
         }
     }
@@ -143,8 +143,8 @@
         &__link {
             font: inherit;
             display: block;
-            background: #135868;
-            border: 1px solid #135868;
+            background: #7959EF;
+            border: 1px solid #7959EF;
             border-radius: 4px;
             margin: 0;
             padding: 0.8em 1em;
@@ -170,12 +170,12 @@
         &--customize {
             display: block;
             font-weight: 600;
-            font-size: 14px;
-            line-height: 16px;
+            font-size: 0.875em;
+            line-height: 1em;
             text-decoration: none;
             color: #2C2E30;
             position: relative;
-            padding: 18px 24px;
+            padding: 1.125em 1.5em;
             border-top: 1px solid #E7E8E9;
         }
     }
@@ -186,7 +186,7 @@
     }
 
     &__section {
-        padding: 0 24px;
+        padding: 0 1.5em;
     }
 
     &__section + .cookies__section {
@@ -245,7 +245,7 @@
     }
 
     &__category input:checked + .cookies__box:after {
-        background: #135868;
+        background: #7959EF;
         opacity: 0.6;
     }
 
@@ -254,28 +254,27 @@
     }
 
     &__label {
+        font-size: 0.875em;
         font-weight: bold;
-        color: #233232;
+        color: #2C2E30;
     }
 
     &__info {
         font-weight: 450;
-        font-size: 14px;
-        line-height: 22px;
-
+        font-size: 0.875em;
+        line-height: 1.4em;
     }
 
     &__details {
         display: block;
-        color: #135868;
-        font-size: 14px;
-
-        margin: 10px 0 15px;
+        color: #7959EF;
+        font-size: 0.875em;
+        margin: 0.625em 0 0.9em;
         transition: color 200ms ease-out;
 
         &:hover,
         &:focus {
-            color: #135868;
+            color: #7959EF;
         }
     }
 
@@ -303,7 +302,7 @@
     }
 
     &__description {
-        padding-top: 5px;
+        padding-top: 0.3em;
         display: block;
         width: 100%;
         line-height: 120%;
@@ -312,7 +311,7 @@
 
     &__save {
         border-top: 1px solid #E7E8E9;
-        padding: 12px 24px;
+        padding: 0.75em 1.5em;
         margin-top: 0.4em;
         display: flex;
         justify-content: flex-end;

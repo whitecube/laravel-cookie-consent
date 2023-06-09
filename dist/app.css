@@ -48,7 +48,7 @@
   transition: height 300ms ease-out, opacity 300ms ease-out, visibility 0s 300ms linear;
 }
 .cookies__alert {
-  width: 355px;
+  width: 22em;
   max-width: 90%;
   margin: 5%;
   background: #fff;
@@ -65,17 +65,17 @@
   transition: height 300ms ease-out, opacity 300ms ease-out, visibility 0s 100ms linear;
 }
 .cookies__wrapper {
-  padding: 16px 24px;
+  padding: 1em 1.5em;
 }
 .cookies__title {
   font-weight: bold;
   line-height: 1.4em;
   margin-bottom: 0.8em;
-  color: #233232;
+  color: #2C2E30;
 }
 .cookies__intro {
   font-weight: 450;
-  font-size: 14px;
+  font-size: 0.875em;
   line-height: 1.4em;
   color: #2C2E30;
 }
@@ -90,7 +90,7 @@
   transition: color 200ms ease-out;
 }
 .cookies__intro a:hover, .cookies__intro a:focus {
-  color: #135868;
+  color: #7959EF;
 }
 .cookies__actions {
   margin-top: 1em;
@@ -105,8 +105,8 @@
 .cookies .cookiesBtn__link {
   font: inherit;
   display: block;
-  background: #135868;
-  border: 1px solid #135868;
+  background: #7959EF;
+  border: 1px solid #7959EF;
   border-radius: 4px;
   margin: 0;
   padding: 0.8em 1em;
@@ -127,12 +127,12 @@
 .cookies__btn--customize {
   display: block;
   font-weight: 600;
-  font-size: 14px;
-  line-height: 16px;
+  font-size: 0.875em;
+  line-height: 1em;
   text-decoration: none;
   color: #2C2E30;
   position: relative;
-  padding: 18px 24px;
+  padding: 1.125em 1.5em;
   border-top: 1px solid #E7E8E9;
 }
 .cookies__sections {
@@ -140,7 +140,7 @@
   overflow: scroll;
 }
 .cookies__section {
-  padding: 0 24px;
+  padding: 0 1.5em;
 }
 .cookies__section + .cookies__section {
   border-top: 1px solid #eee;
@@ -190,30 +190,31 @@
   transition: transform 200ms ease-out;
 }
 .cookies__category input:checked + .cookies__box:after {
-  background: #135868;
+  background: #7959EF;
   opacity: 0.6;
 }
 .cookies__category input:checked + .cookies__box:before {
   transform: translateX(0.55em);
 }
 .cookies__label {
+  font-size: 0.875em;
   font-weight: bold;
-  color: #233232;
+  color: #2C2E30;
 }
 .cookies__info {
   font-weight: 450;
-  font-size: 14px;
-  line-height: 22px;
+  font-size: 0.875em;
+  line-height: 1.4em;
 }
 .cookies__details {
   display: block;
-  color: #135868;
-  font-size: 14px;
-  margin: 10px 0 15px;
+  color: #7959EF;
+  font-size: 0.875em;
+  margin: 0.625em 0 0.9em;
   transition: color 200ms ease-out;
 }
 .cookies__details:hover, .cookies__details:focus {
-  color: #135868;
+  color: #7959EF;
 }
 .cookies__definitions {
   font-size: 0.875em;
@@ -235,7 +236,7 @@
   text-align: right;
 }
 .cookies__description {
-  padding-top: 5px;
+  padding-top: 0.3em;
   display: block;
   width: 100%;
   line-height: 120%;
@@ -243,7 +244,7 @@
 }
 .cookies__save {
   border-top: 1px solid #E7E8E9;
-  padding: 12px 24px;
+  padding: 0.75em 1.5em;
   margin-top: 0.4em;
   display: flex;
   justify-content: flex-end;
