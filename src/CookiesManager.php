@@ -174,7 +174,7 @@ class CookiesManager
             : $this->getConsentedScripts($withDefault);
 
         if(strlen($output)) {
-            $output = '<!-- Cookie Consent -->' . PHP_EOL . $output;
+            $output = '<!-- Cookie Consent -->' . $output;
         }
 
         return $output;
@@ -188,8 +188,10 @@ class CookiesManager
     protected function getConsentedScripts(bool $withDefault): string
     {
         $output = $this->getNoticeScripts($withDefault);
-        
-        // TODO : gather accepted scripts.
+
+        foreach ($this->getConsentResponse()->getResponseScripts() ?? [] as $tag) {
+            $output .= $tag;
+        }
 
         return $output;
     }

@@ -115,7 +115,7 @@ class ConsentResponse
     /**
      * Prepare the collected scripts for display.
      */
-    protected function getResponseScripts(): ?string
+    public function getResponseScripts(): ?array
     {
         if(! $this->scripts) {
             return null;
@@ -123,7 +123,7 @@ class ConsentResponse
 
         // TODO : implode scripts and add a useful data-* attribute
 
-        return '';
+        return $this->scripts;
     }
 
     /**
