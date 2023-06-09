@@ -25,6 +25,8 @@ class ServiceProvider extends Provider
             realpath(__DIR__ . '/../resources/views') => resource_path('views/vendor/cookie-consent'),
         ], 'laravel-cookie-consent-views');
 
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'cookieConsent');
+
         $this->registerBladeDirectives();
 
         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
