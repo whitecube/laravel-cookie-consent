@@ -14,12 +14,12 @@ class CookiesRegistrar
     protected array $categories = [];
 
     /**
-     * Access the pre-defined "operational" consent-category.
+     * Access the pre-defined "essentials" consent-category.
      */
-    public function operational(): CookiesCategory
+    public function essentials(): CookiesCategory
     {
-        return $this->getOrMakeCategory('operational', function(string $key) {
-            return new OperationalCookiesCategory($key);
+        return $this->getOrMakeCategory('essentials', function(string $key) {
+            return new EssentialCookiesCategory($key);
         });
     }
 
@@ -72,6 +72,14 @@ class CookiesRegistrar
     public function getCategories(): array
     {
         return array_values($this->categories);
+    }
+
+    /**
+     * Check if the provided key is a defined cookies consent-category.
+     */
+    public function hasCategory(string $key): bool
+    {
+        return array_key_exists($key, $this->categories);
     }
 
     /**

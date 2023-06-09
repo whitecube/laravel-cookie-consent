@@ -14,11 +14,26 @@ trait HasCookies
     protected array $cookies = [];
 
     /**
-     * Return all defined cookies.
+     * Return all the defined cookies as a flat array.
      */
     public function getCookies(): array
     {
-        return array_values($this->cookies);
+        return array_reduce($this->cookies, function($cookies, $item) {
+            if(is_a($item, CookiesGroup::class)) {
+                $cookies = array_merge($cookies, $item->getCookies());
+            } else {
+                $cookies[] = $item;
+            }
+            return $cookies;
+        }, []);
+    }
+
+    /**
+     * Return all the raw defined items.
+     */
+    public function getDefined(): array
+    {
+        return $this->cookies;
     }
 
     /**
