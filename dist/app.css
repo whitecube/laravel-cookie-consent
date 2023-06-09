@@ -17,14 +17,20 @@
   height: auto;
   visibility: visible;
   opacity: 1;
-  transition: height 200ms ease-out, opacity 200ms ease-out;
+  transition: height 300ms ease-out, opacity 300ms ease-out;
+}
+.cookies--js .cookies__container.cookies__container--hide {
+  height: 0;
+  visibility: hidden;
+  opacity: 0;
+  transition: height 300ms ease-out, opacity 300ms ease-out, visibility 0s 300ms linear;
 }
 .cookies--no-js .cookies__section .cookies__expandable,
 .cookies--no-js .cookies__expandable:target {
   height: auto;
   visibility: visible;
   opacity: 1;
-  transition: height 200ms ease-out, opacity 200ms ease-out;
+  transition: height 300ms ease-out, opacity 300ms ease-out;
 }
 .cookies--no-js .cookies__details {
   display: none;
@@ -34,10 +40,12 @@
   transform: translateY(10px);
 }
 .cookies__expandable {
+  display: block;
+  overflow: hidden;
   height: 0;
   visibility: hidden;
   opacity: 0;
-  transition: height 200ms ease-out, opacity 200ms ease-out, visibility 0s 200ms linear;
+  transition: height 300ms ease-out, opacity 300ms ease-out, visibility 0s 300ms linear;
 }
 .cookies__alert {
   width: 355px;
@@ -51,6 +59,12 @@
 .cookies__container {
   display: block;
   overflow: hidden;
+  height: auto;
+  visibility: visible;
+  opacity: 1;
+  transition: height 300ms ease-out, opacity 300ms ease-out, visibility 0s 100ms linear;
+}
+.cookies__wrapper {
   padding: 16px 24px;
 }
 .cookies__title {
@@ -120,10 +134,6 @@
   position: relative;
   padding: 18px 24px;
   border-top: 1px solid #E7E8E9;
-}
-.cookies__expandable {
-  display: block;
-  overflow: hidden;
 }
 .cookies__sections {
   max-height: 500px;

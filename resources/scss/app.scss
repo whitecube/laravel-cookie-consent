@@ -6,7 +6,6 @@
     max-height: 100%;
     max-width: 100%;
     overflow: auto;
-
     z-index: 9999;
     transition: transform 200ms ease-out,
                 opacity 200ms ease-out;
@@ -25,8 +24,18 @@
             height: auto;
             visibility: visible;
             opacity: 1;
-            transition: height 200ms ease-out,
-                        opacity 200ms ease-out;
+            transition: height 300ms ease-out,
+                        opacity 300ms ease-out;
+        }
+
+        .cookies__container.cookies__container--hide {
+            height: 0;
+            visibility: hidden;
+            opacity: 0;
+            transition: height 300ms ease-out,
+                        opacity 300ms ease-out,
+                        visibility 0s 300ms linear;
+
         }
     }
 
@@ -36,8 +45,8 @@
             height: auto;
             visibility: visible;
             opacity: 1;
-            transition: height 200ms ease-out,
-                        opacity 200ms ease-out;
+            transition: height 300ms ease-out,
+                        opacity 300ms ease-out;
         }
 
         .cookies__details {
@@ -51,12 +60,14 @@
     }
 
     &__expandable {
+        display: block;
+        overflow: hidden;
         height: 0;
         visibility: hidden;
         opacity: 0;
-        transition: height 200ms ease-out,
-                    opacity 200ms ease-out,
-                    visibility 0s 200ms linear;
+        transition: height 300ms ease-out,
+                    opacity 300ms ease-out,
+                    visibility 0s 300ms linear;
     }
 
     &__alert {
@@ -74,6 +85,15 @@
     &__container {
         display: block;
         overflow: hidden;
+        height: auto;
+        visibility: visible;
+        opacity: 1;
+        transition: height 300ms ease-out,
+                    opacity 300ms ease-out,
+                    visibility 0s 100ms linear;
+    }
+
+    &__wrapper {
         padding: 16px 24px;
     }
 
@@ -158,11 +178,6 @@
             padding: 18px 24px;
             border-top: 1px solid #E7E8E9;
         }
-    }
-
-    &__expandable {
-        display: block;
-        overflow: hidden;
     }
 
     &__sections {

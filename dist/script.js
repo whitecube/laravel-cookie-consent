@@ -170,19 +170,18 @@ var LaravelCookieConsent = /*#__PURE__*/function () {
   }, {
     key: "openDetails",
     value: function openDetails(event) {
-      event.preventDefault();
-      this.toggleExpand(event);
+      this.toggleExpand(event, false);
     }
   }, {
     key: "toggleExpand",
     value: function toggleExpand(event) {
+      var hide = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
       event.preventDefault();
       event.target.blur();
-      var element = this.cookies.querySelector(event.target.getAttribute('href'));
-      var content = element.firstElementChild,
+      var element = this.cookies.querySelector(event.target.getAttribute('href')),
+        content = element.firstElementChild,
         height = content.offsetHeight,
         isOpen = element.classList.contains('cookies__expandable--open');
-      this.changeText(event, isOpen);
       element.setAttribute('style', 'height:' + (isOpen ? height : 0) + 'px');
       setTimeout(function (cookies) {
         return function () {
@@ -191,7 +190,25 @@ var LaravelCookieConsent = /*#__PURE__*/function () {
           element.setAttribute('style', 'height:' + (isOpen ? 0 : height) + 'px');
           setTimeout(function () {
             element.removeAttribute('style');
-          }, 200);
+          }, 310);
+        };
+      }(this.cookies), 10);
+      if (!hide) return;
+      this.hideNotice(isOpen);
+    }
+  }, {
+    key: "hideNotice",
+    value: function hideNotice(isOpen) {
+      var container = this.cookies.querySelector('.cookies__container'),
+        containerHeight = container.firstElementChild.offsetHeight;
+      container.setAttribute('style', 'height:' + (!isOpen ? containerHeight : 0) + 'px');
+      setTimeout(function (cookies) {
+        return function () {
+          container.classList.toggle('cookies__container--hide');
+          container.setAttribute('style', 'height:' + (isOpen ? containerHeight : 0) + 'px');
+          setTimeout(function () {
+            container.removeAttribute('style');
+          }, 310);
         };
       }(this.cookies), 10);
     }

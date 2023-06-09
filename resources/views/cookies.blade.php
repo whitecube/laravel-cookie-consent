@@ -1,17 +1,20 @@
 <aside class="cookies cookies--no-js" id="cookies-policy">
     <div class="cookies__alert">
         <div class="cookies__container">
-            <p class="cookies__title">@lang('cookieConsent::cookies.title')</p>
-            <div class="cookies__intro">
-                <p>@lang('cookieConsent::cookies.intro')</p>
-                @if(config('cookieconsent.legal'))
-                    <p>@lang('cookieConsent::cookies.link', ['url' => route(config('cookieconsent.legal'))])</p>
-                @endif
+            <div class="cookies__wrapper">
+                <p class="cookies__title">@lang('cookieConsent::cookies.title')</p>
+                <div class="cookies__intro">
+                    <p>@lang('cookieConsent::cookies.intro')</p>
+                    @if(config('cookieconsent.legal'))
+                        <p>@lang('cookieConsent::cookies.link', ['url' => route(config('cookieconsent.legal'))])</p>
+                    @endif
+                </div>
+                <div class="cookies__actions">
+                    @cookieconsentbutton(action: 'accept.essentials', label: __('cookieConsent::cookies.essentials'), attributes: ['class' => 'cookiesBtn cookiesBtn--essentials'])
+                    @cookieconsentbutton(action: 'accept.all', label: __('cookieConsent::cookies.all'), attributes: ['class' => 'cookiesBtn cookiesBtn--accept'])
+                </div>
             </div>
-            <div class="cookies__actions">
-                @cookieconsentbutton(action: 'accept.essentials', label: __('cookieConsent::cookies.essentials'), attributes: ['class' => 'cookiesBtn cookiesBtn--essentials'])
-                @cookieconsentbutton(action: 'accept.all', label: __('cookieConsent::cookies.all'), attributes: ['class' => 'cookiesBtn cookiesBtn--accept'])
-            </div>
+
         </div>
         <a href="#cookies-policy-customize" class="cookies__btn cookies__btn--customize">@lang('cookieConsent::cookies.customize')</a>
         <div class="cookies__expandable cookies__expandable--custom" id="cookies-policy-customize">

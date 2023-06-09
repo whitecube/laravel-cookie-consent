@@ -60,20 +60,17 @@ class LaravelCookieConsent {
     }
 
     openDetails(event) {
-        event.preventDefault();
-        this.toggleExpand(event);
+        this.toggleExpand(event, false);
     }
 
-    toggleExpand(event) {
+    toggleExpand(event, hide = true) {
         event.preventDefault();
         event.target.blur();
 
-        let element = this.cookies.querySelector(event.target.getAttribute('href'))
-        let content = element.firstElementChild,
+        let element = this.cookies.querySelector(event.target.getAttribute('href')),
+            content = element.firstElementChild,
             height = content.offsetHeight,
             isOpen = element.classList.contains('cookies__expandable--open');
-
-        this.changeText(event, isOpen)
 
         element.setAttribute('style', 'height:' + (isOpen ? height : 0) + 'px');
 
@@ -84,7 +81,26 @@ class LaravelCookieConsent {
 
             setTimeout(function() {
                 element.removeAttribute('style');
-            }, 200);
+            }, 310);
+        })(this.cookies), 10);
+
+        if(!hide) return;
+        this.hideNotice(isOpen)
+    }
+
+    hideNotice(isOpen) {
+        let container = this.cookies.querySelector('.cookies__container'),
+            containerHeight = container.firstElementChild.offsetHeight;
+
+        container.setAttribute('style', 'height:' + (!isOpen ? containerHeight : 0) + 'px');
+
+        setTimeout(((cookies) => function() {
+            container.classList.toggle('cookies__container--hide');
+            container.setAttribute('style', 'height:' + (isOpen ? containerHeight : 0) + 'px');
+
+            setTimeout(function() {
+                container.removeAttribute('style');
+            }, 310);
         })(this.cookies), 10);
     }
 
