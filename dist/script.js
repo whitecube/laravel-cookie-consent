@@ -183,6 +183,7 @@ var LaravelCookieConsent = /*#__PURE__*/function () {
         height = content.offsetHeight,
         isOpen = element.classList.contains('cookies__expandable--open');
       element.setAttribute('style', 'height:' + (isOpen ? height : 0) + 'px');
+      this.changeText(event, isOpen);
       setTimeout(function (cookies) {
         return function () {
           cookies.classList.toggle('cookies--show');

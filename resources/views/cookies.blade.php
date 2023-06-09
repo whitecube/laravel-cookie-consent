@@ -27,8 +27,8 @@
                             <input type="checkbox" name="categories[]" value="{{ $category->key() }}" id="cookies-policy-check-{{ $category->key() }}" />
                             <span class="cookies__box">
                                 <strong class="cookies__label">{{ $category->key() }}</strong>
-                                <a href="#cookies-policy-{{ $category->key() }}" class="cookies__details" data-text="{{ json_encode(__('cookieConsent::cookies.details')) }}">@lang('cookieConsent::cookies.details.more')</a>
                             </span>
+                            <p class="cookies__info">Lorem, ipsum, dolor sit amet consectetur adipisicing elit.</p>
                         </label>
 
                         <div class="cookies__expandable" id="cookies-policy-{{ $category->key() }}">
@@ -42,6 +42,8 @@
                                 @endforeach
                             </ul>
                         </div>
+                        <a href="#cookies-policy-{{ $category->key() }}" class="cookies__details" data-text="{{ json_encode(__('cookieConsent::cookies.details')) }}">@lang('cookieConsent::cookies.details.more')</a>
+
                     </div>
                     @endforeach
                 </div>

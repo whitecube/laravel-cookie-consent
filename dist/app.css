@@ -167,7 +167,7 @@
   content: "";
   display: block;
   position: absolute;
-  top: 35%;
+  top: 50%;
   border-radius: 1.4em;
 }
 .cookies__box:after {
@@ -200,10 +200,16 @@
   font-weight: bold;
   color: #233232;
 }
+.cookies__info {
+  font-weight: 450;
+  font-size: 14px;
+  line-height: 22px;
+}
 .cookies__details {
   display: block;
   color: #135868;
-  margin-top: 5px;
+  font-size: 14px;
+  margin: 10px 0 15px;
   transition: color 200ms ease-out;
 }
 .cookies__details:hover, .cookies__details:focus {
@@ -212,37 +218,27 @@
 .cookies__definitions {
   font-size: 0.875em;
   line-height: 1.2em;
-  padding-bottom: 1.6em;
+  padding-top: 1em;
+  padding-top: 0.8em;
   color: #676767;
-}
-.cookies__cookie {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
 }
 .cookies__cookie + .cookies__cookie {
   margin-top: 1em;
 }
 .cookies__name {
-  display: block;
-  flex-grow: 1;
-  flex-shrink: 0;
-  text-align: left;
+  display: inline;
   font-weight: bold;
   color: #676767;
 }
 .cookies__duration {
-  display: block;
-  flex-grow: 0;
-  flex-shrink: 0;
+  display: inline;
   text-align: right;
-  font-style: italic;
 }
 .cookies__description {
+  padding-top: 5px;
   display: block;
   width: 100%;
-  flex-grow: 0;
-  flex-shrink: 0;
+  line-height: 120%;
   text-align: left;
 }
 .cookies__save {

@@ -219,7 +219,7 @@
             content: '';
             display: block;
             position: absolute;
-            top: 35%;
+            top: 50%;
             border-radius: 1.4em;
         }
         &:after {
@@ -258,10 +258,19 @@
         color: #233232;
     }
 
+    &__info {
+        font-weight: 450;
+        font-size: 14px;
+        line-height: 22px;
+
+    }
+
     &__details {
         display: block;
         color: #135868;
-        margin-top: 5px;
+        font-size: 14px;
+
+        margin: 10px 0 15px;
         transition: color 200ms ease-out;
 
         &:hover,
@@ -273,14 +282,9 @@
     &__definitions {
         font-size: 0.875em;
         line-height: 1.2em;
-        padding-bottom: 1.6em;
+        padding-top: 1em;
+        padding-top: 0.8em;
         color: #676767;
-    }
-
-    &__cookie {
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
     }
 
     &__cookie + .cookies__cookie {
@@ -288,27 +292,21 @@
     }
 
     &__name {
-        display: block;
-        flex-grow: 1;
-        flex-shrink: 0;
-        text-align: left;
+        display: inline;
         font-weight: bold;
         color: #676767;
     }
 
     &__duration {
-        display: block;
-        flex-grow: 0;
-        flex-shrink: 0;
+        display: inline;
         text-align: right;
-        font-style: italic;
     }
 
     &__description {
+        padding-top: 5px;
         display: block;
         width: 100%;
-        flex-grow: 0;
-        flex-shrink: 0;
+        line-height: 120%;
         text-align: left;
     }
 
