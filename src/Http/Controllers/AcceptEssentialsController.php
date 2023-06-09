@@ -9,8 +9,6 @@ class AcceptEssentialsController
 {
     public function __invoke(Request $request, CookiesManager $cookies)
     {
-        // TODO.
-        
-        return redirect()->back();
+        return $cookies->accept(['essentials'])->toResponse($request);
     }
 }

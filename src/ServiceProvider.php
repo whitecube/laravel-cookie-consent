@@ -14,6 +14,10 @@ class ServiceProvider extends Provider
     public function boot()
     {
         $this->publishes([
+            realpath(__DIR__ . '/../config/cookieconsent.php') => config_path('cookieconsent.php'),
+        ], 'laravel-cookie-consent-config');
+
+        $this->publishes([
             realpath(__DIR__ . '/../dist') => public_path('vendor/laravel-cookie-consent'),
         ], 'laravel-cookie-consent-assets');
 
@@ -41,8 +45,14 @@ class ServiceProvider extends Provider
      */
     public function register()
     {
+        $this->mergeConfigFrom(
+            realpath(__DIR__ . '/../config/cookieconsent.php'), 'cookieconsent'
+        );
+
         $this->app->singleton(CookiesRegistrar::class, function () {
-            return new CookiesRegistrar();
+            $registrar = new CookiesRegistrar();
+            $registrar->essentials()->consent();
+            return $registrar;
         });
     }
 
