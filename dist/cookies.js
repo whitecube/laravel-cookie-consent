@@ -6259,7 +6259,6 @@ var cookies = /*#__PURE__*/function () {
     value: function reset() {
       this.request(this.config['reset']).then(function (response) {
         var tmp = document.createElement('div');
-        console.log(response.data.notice);
         tmp.innerHTML = response.data.notice;
         document.body.appendChild(tmp.querySelector('#cookies-policy'));
         document.body.appendChild(tmp.querySelector('style'));
