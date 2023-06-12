@@ -18,6 +18,9 @@
   border-top: none;
   border-bottom: 1px solid #E7E8E9;
 }
+#cookies-policy .cookies--show .cookies__btn svg {
+  transform: rotate(180deg);
+}
 #cookies-policy .cookies--no-js .cookies__section .cookies__expandable,
 #cookies-policy .cookies--no-js .cookies__expandable:target {
   height: auto;
@@ -101,7 +104,9 @@
   gap: 4px;
 }
 #cookies-policy .cookies__btn--customize {
-  display: block;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-weight: 600;
   font-size: 0.875em;
   line-height: 1em;
@@ -110,6 +115,9 @@
   position: relative;
   padding: 1.125em 1.5em;
   border-top: 1px solid #E7E8E9;
+}
+#cookies-policy .cookies__btn svg {
+  transition: transform 200ms ease-out;
 }
 #cookies-policy .cookies__sections {
   max-height: 500px;

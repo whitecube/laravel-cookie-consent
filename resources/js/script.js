@@ -16,26 +16,30 @@ class LaravelCookieConsent {
         this.cookies = document.querySelector('#cookies-policy');
         this.reset = document.querySelector('.cookiereset');
 
-        if(! this.cookies) return;
-        this.cookies.classList.remove('cookies--no-js');
-        this.customize = this.cookies.querySelector('.cookies__btn--customize');
-        this.details = this.cookies.querySelectorAll('.cookies__details');
-        this.acceptAll = this.cookies.querySelector('.cookiesBtn--accept');
-        this.acceptEssentials = this.cookies.querySelector('.cookiesBtn--essentials');
-        this.configure = this.cookies.querySelector('.cookies__customize');
+        if(this.cookies) {
+            this.cookies.classList.remove('cookies--no-js');
+            this.customize = this.cookies.querySelector('.cookies__btn--customize');
+            this.details = this.cookies.querySelectorAll('.cookies__details');
+            this.acceptAll = this.cookies.querySelector('.cookiesBtn--accept');
+            this.acceptEssentials = this.cookies.querySelector('.cookiesBtn--essentials');
+            this.configure = this.cookies.querySelector('.cookies__customize');
+        }
     }
 
     setEvents() {
-        this.reset.addEventListener('submit', (event) => this.resetCookies(event))
-
-        if(! this.cookies) return;
-        for (let i = 0; i < this.details.length; i++) {
-            this.details[i].addEventListener('click', (event) => this.openDetails(event));
+        if(this.reset) {
+            this.reset.addEventListener('submit', (event) => this.resetCookies(event))
         }
-        this.customize.addEventListener('click', (event) => this.toggleExpand(event));
-        this.acceptAll.addEventListener('submit', (event) => this.acceptAllCookies(event));
-        this.acceptEssentials.addEventListener('submit', (event) => this.acceptEssentialsCookies(event));
-        this.configure.addEventListener('submit', (event) => this.configureCookies(event));
+
+        if(this.cookies) {
+            for (let i = 0; i < this.details.length; i++) {
+                this.details[i].addEventListener('click', (event) => this.openDetails(event));
+            }
+            this.customize.addEventListener('click', (event) => this.toggleExpand(event, this.customize));
+            this.acceptAll.addEventListener('submit', (event) => this.acceptAllCookies(event));
+            this.acceptEssentials.addEventListener('submit', (event) => this.acceptEssentialsCookies(event));
+            this.configure.addEventListener('submit', (event) => this.configureCookies(event));
+        }
     }
 
     configureCookies(event)  {
@@ -64,14 +68,14 @@ class LaravelCookieConsent {
     }
 
     openDetails(event) {
-        this.toggleExpand(event, false);
+        this.toggleExpand(event, event.target, false);
     }
 
-    toggleExpand(event, hide = true) {
+    toggleExpand(event, el, hide = true) {
         event.preventDefault();
         event.target.blur();
 
-        let element = this.cookies.querySelector(event.target.getAttribute('href')),
+        let element = this.cookies.querySelector(el.getAttribute('href')),
             content = element.firstElementChild,
             height = content.offsetHeight,
             isOpen = element.classList.contains('cookies__expandable--open');

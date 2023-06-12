@@ -101,39 +101,43 @@ var LaravelCookieConsent = /*#__PURE__*/function () {
     value: function getElements() {
       this.cookies = document.querySelector('#cookies-policy');
       this.reset = document.querySelector('.cookiereset');
-      if (!this.cookies) return;
-      this.cookies.classList.remove('cookies--no-js');
-      this.customize = this.cookies.querySelector('.cookies__btn--customize');
-      this.details = this.cookies.querySelectorAll('.cookies__details');
-      this.acceptAll = this.cookies.querySelector('.cookiesBtn--accept');
-      this.acceptEssentials = this.cookies.querySelector('.cookiesBtn--essentials');
-      this.configure = this.cookies.querySelector('.cookies__customize');
+      if (this.cookies) {
+        this.cookies.classList.remove('cookies--no-js');
+        this.customize = this.cookies.querySelector('.cookies__btn--customize');
+        this.details = this.cookies.querySelectorAll('.cookies__details');
+        this.acceptAll = this.cookies.querySelector('.cookiesBtn--accept');
+        this.acceptEssentials = this.cookies.querySelector('.cookiesBtn--essentials');
+        this.configure = this.cookies.querySelector('.cookies__customize');
+      }
     }
   }, {
     key: "setEvents",
     value: function setEvents() {
       var _this = this;
-      this.reset.addEventListener('submit', function (event) {
-        return _this.resetCookies(event);
-      });
-      if (!this.cookies) return;
-      for (var i = 0; i < this.details.length; i++) {
-        this.details[i].addEventListener('click', function (event) {
-          return _this.openDetails(event);
+      if (this.reset) {
+        this.reset.addEventListener('submit', function (event) {
+          return _this.resetCookies(event);
         });
       }
-      this.customize.addEventListener('click', function (event) {
-        return _this.toggleExpand(event);
-      });
-      this.acceptAll.addEventListener('submit', function (event) {
-        return _this.acceptAllCookies(event);
-      });
-      this.acceptEssentials.addEventListener('submit', function (event) {
-        return _this.acceptEssentialsCookies(event);
-      });
-      this.configure.addEventListener('submit', function (event) {
-        return _this.configureCookies(event);
-      });
+      if (this.cookies) {
+        for (var i = 0; i < this.details.length; i++) {
+          this.details[i].addEventListener('click', function (event) {
+            return _this.openDetails(event);
+          });
+        }
+        this.customize.addEventListener('click', function (event) {
+          return _this.toggleExpand(event, _this.customize);
+        });
+        this.acceptAll.addEventListener('submit', function (event) {
+          return _this.acceptAllCookies(event);
+        });
+        this.acceptEssentials.addEventListener('submit', function (event) {
+          return _this.acceptEssentialsCookies(event);
+        });
+        this.configure.addEventListener('submit', function (event) {
+          return _this.configureCookies(event);
+        });
+      }
     }
   }, {
     key: "configureCookies",
@@ -167,15 +171,15 @@ var LaravelCookieConsent = /*#__PURE__*/function () {
   }, {
     key: "openDetails",
     value: function openDetails(event) {
-      this.toggleExpand(event, false);
+      this.toggleExpand(event, event.target, false);
     }
   }, {
     key: "toggleExpand",
-    value: function toggleExpand(event) {
-      var hide = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+    value: function toggleExpand(event, el) {
+      var hide = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
       event.preventDefault();
       event.target.blur();
-      var element = this.cookies.querySelector(event.target.getAttribute('href')),
+      var element = this.cookies.querySelector(el.getAttribute('href')),
         content = element.firstElementChild,
         height = content.offsetHeight,
         isOpen = element.classList.contains('cookies__expandable--open');

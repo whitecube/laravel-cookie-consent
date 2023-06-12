@@ -23,6 +23,10 @@
                 border-top: none;
                 border-bottom: 1px solid #E7E8E9;
             }
+
+            svg {
+                transform: rotate(180deg)
+            }
         }
     }
 
@@ -138,7 +142,9 @@
 
     &__btn {
         &--customize {
-            display: block;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             font-weight: 600;
             font-size: 0.875em;
             line-height: 1em;
@@ -147,6 +153,10 @@
             position: relative;
             padding: 1.125em 1.5em;
             border-top: 1px solid #E7E8E9;
+        }
+
+        svg {
+            transition: transform 200ms ease-out;
         }
     }
 

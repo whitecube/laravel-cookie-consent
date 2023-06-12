@@ -15,7 +15,12 @@
                 </div>
             </div>
         </div>
-        <a href="#cookies-policy-customize" class="cookies__btn cookies__btn--customize">@lang('cookieConsent::cookies.customize')</a>
+            <a href="#cookies-policy-customize" class="cookies__btn cookies__btn--customize">
+                <span>@lang('cookieConsent::cookies.customize')</span>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M14.7559 11.9782C15.0814 11.6527 15.0814 11.1251 14.7559 10.7996L10.5893 6.63297C10.433 6.47669 10.221 6.3889 10 6.38889C9.77899 6.38889 9.56703 6.47669 9.41075 6.63297L5.24408 10.7996C4.91864 11.1251 4.91864 11.6527 5.24408 11.9782C5.56951 12.3036 6.09715 12.3036 6.42259 11.9782L10 8.40074L13.5774 11.9782C13.9028 12.3036 14.4305 12.3036 14.7559 11.9782Z" fill="#2C2E30"/>
+                </svg>
+            </a>
         <div class="cookies__expandable cookies__expandable--custom" id="cookies-policy-customize">
             <form action="{{ route('cookieconsent.accept.configuration')}}" method="post" class="cookies__customize">
                 @csrf
