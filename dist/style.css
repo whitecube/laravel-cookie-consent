@@ -90,6 +90,7 @@
   margin-top: 0;
 }
 #cookies-policy .cookies__intro a {
+  text-decoration: underline;
   color: inherit;
   transition: color 200ms ease-out;
 }

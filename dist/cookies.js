@@ -6261,11 +6261,14 @@ var cookies = /*#__PURE__*/function () {
         var tmp = document.createElement('div');
         tmp.innerHTML = response.data.notice;
         document.body.appendChild(tmp.querySelector('#cookies-policy'));
-        document.body.appendChild(tmp.querySelector('style'));
-        var scripts = tmp.querySelector('script');
-        var script = document.createElement('script');
-        script.textContent = scripts.textContent;
-        document.body.appendChild(script);
+        var style = tmp.querySelector('style');
+        if (style) document.body.appendChild(tmp.querySelector('style'));
+        var script = tmp.querySelector('script');
+        if (script) {
+          var newScript = document.createElement('script');
+          newScript.textContent = script.textContent;
+          document.body.appendChild(newScript);
+        }
       });
     }
   }, {

@@ -114,8 +114,8 @@ function close() {
       var script = cookies.nextElementSibling;
       var style = script.nextElementSibling;
       cookies.parentNode.removeChild(cookies);
-      script.parentNode.removeChild(script);
-      style.parentNode.removeChild(style);
+      if (script && script.nodeName == 'SCRIPT') script.parentNode.removeChild(script);
+      if (style && style.nodeName == 'STYLE') style.parentNode.removeChild(style);
     };
   }(cookies), 210);
 }

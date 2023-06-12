@@ -24,12 +24,17 @@ class cookies {
                 tmp.innerHTML = response.data.notice;
 
                 document.body.appendChild(tmp.querySelector('#cookies-policy'));
-                document.body.appendChild(tmp.querySelector('style'));
 
-                const scripts = tmp.querySelector('script');
-                const script = document.createElement('script');
-                script.textContent = scripts.textContent;
-                document.body.appendChild(script);
+                let style = tmp.querySelector('style')
+                if(style) document.body.appendChild(tmp.querySelector('style'));
+
+                const script = tmp.querySelector('script');
+
+                if(script) {
+                    const newScript = document.createElement('script');
+                    newScript.textContent = script.textContent;
+                    document.body.appendChild(newScript);
+                }
             });
     }
 
