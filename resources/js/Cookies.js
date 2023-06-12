@@ -21,11 +21,16 @@ class cookies {
         this.request(this.config['reset'])
             .then((response) => {
                 let tmp = document.createElement('div');
-
+                console.log(response.data.notice);
                 tmp.innerHTML = response.data.notice;
 
-                document.querySelector('body').appendChild(tmp.querySelector('#cookies-policy'));
-                document.querySelector('body').appendChild(tmp.querySelector('style'));
+                document.body.appendChild(tmp.querySelector('#cookies-policy'));
+                document.body.appendChild(tmp.querySelector('style'));
+
+                const scripts = tmp.querySelector('script');
+                const script = document.createElement('script');
+                script.textContent = scripts.textContent;
+                document.body.appendChild(script);
             });
     }
 
