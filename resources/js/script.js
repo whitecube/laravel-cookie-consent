@@ -67,7 +67,6 @@ function toggleExpand(event, el, hide = true) {
 
     element.setAttribute('style', 'height:' + (isOpen ? height : 0) + 'px');
 
-    console.log(text);
     if(!hide) {
         event.target.textContent = isOpen
             ? text.more

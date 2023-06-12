@@ -1,1 +1,280 @@
-(()=>{var e,t={670:()=>{var e=document.querySelector("#cookies-policy");e.classList.remove("cookies--no-js");var t=document.querySelector(".cookiereset");if(e){e.classList.remove("cookies--no-js");var o=e.querySelector(".cookies__btn--customize"),n=e.querySelectorAll(".cookies__details"),r=e.querySelector(".cookiesBtn--accept"),i=e.querySelector(".cookiesBtn--essentials"),s=e.querySelector(".cookies__customize"),c=JSON.parse(e.getAttribute("data-text"));e.removeAttribute("data-text")}if(t&&t.addEventListener("submit",(function(e){return function(e){if(e.preventDefault(),document.querySelector("#cookies-policy"))return;window.LaravelCookieConsent.reset()}(e)})),e){for(var l=0;l<n.length;l++)n[l].addEventListener("click",(function(e){return a(e)}));o.addEventListener("click",(function(e){return u(e,o)})),r.addEventListener("submit",(function(e){return function(e){e.preventDefault(),window.LaravelCookieConsent.acceptAll(),f()}(e)})),i.addEventListener("submit",(function(e){return function(e){e.preventDefault(),window.LaravelCookieConsent.acceptEssentials(),f()}(e)})),s.addEventListener("submit",(function(e){return function(e){e.preventDefault();var t=new FormData(e.target);window.LaravelCookieConsent.configure(t),f()}(e)}))}function a(e){u(e,e.target,!1)}function u(t,o){var n=!(arguments.length>2&&void 0!==arguments[2])||arguments[2];t.preventDefault(),t.target.blur();var r=e.querySelector(o.getAttribute("href")),i=r.firstElementChild.offsetHeight,s=r.classList.contains("cookies__expandable--open");r.setAttribute("style","height:"+(s?i:0)+"px"),console.log(c),n||(t.target.textContent=s?c.more:c.less),setTimeout(function(e){return function(){e.firstElementChild.classList.toggle("cookies--show"),r.classList.toggle("cookies__expandable--open"),r.setAttribute("style","height:"+(s?0:i)+"px"),setTimeout((function(){r.removeAttribute("style")}),310)}}(e),10),n&&function(t){var o=e.querySelector(".cookies__container"),n=o.firstElementChild.offsetHeight;o.setAttribute("style","height:"+(t?0:n)+"px"),setTimeout((function(){o.classList.toggle("cookies__container--hide"),o.setAttribute("style","height:"+(t?n:0)+"px"),setTimeout((function(){o.removeAttribute("style")}),310)}),10)}(s)}function f(){e.classList.add("cookies--closing"),setTimeout(function(e){return function(){var t=e.nextElementSibling,o=t.nextElementSibling;e.parentNode.removeChild(e),t.parentNode.removeChild(t),o.parentNode.removeChild(o)}}(e),210)}},711:()=>{}},o={};function n(e){var r=o[e];if(void 0!==r)return r.exports;var i=o[e]={exports:{}};return t[e](i,i.exports,n),i.exports}n.m=t,e=[],n.O=(t,o,r,i)=>{if(!o){var s=1/0;for(u=0;u<e.length;u++){for(var[o,r,i]=e[u],c=!0,l=0;l<o.length;l++)(!1&i||s>=i)&&Object.keys(n.O).every((e=>n.O[e](o[l])))?o.splice(l--,1):(c=!1,i<s&&(s=i));if(c){e.splice(u--,1);var a=r();void 0!==a&&(t=a)}}return t}i=i||0;for(var u=e.length;u>0&&e[u-1][2]>i;u--)e[u]=e[u-1];e[u]=[o,r,i]},n.o=(e,t)=>Object.prototype.hasOwnProperty.call(e,t),(()=>{var e={663:0,296:0};n.O.j=t=>0===e[t];var t=(t,o)=>{var r,i,[s,c,l]=o,a=0;if(s.some((t=>0!==e[t]))){for(r in c)n.o(c,r)&&(n.m[r]=c[r]);if(l)var u=l(n)}for(t&&t(o);a<s.length;a++)i=s[a],n.o(e,i)&&e[i]&&e[i][0](),e[i]=0;return n.O(u)},o=self.webpackChunklaravel_cookie_consent=self.webpackChunklaravel_cookie_consent||[];o.forEach(t.bind(null,0)),o.push=t.bind(null,o.push.bind(o))})(),n.O(void 0,[296],(()=>n(670)));var r=n.O(void 0,[296],(()=>n(711)));r=n.O(r)})();
+/******/ (() => { // webpackBootstrap
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "./resources/js/script.js":
+/*!********************************!*\
+  !*** ./resources/js/script.js ***!
+  \********************************/
+/***/ (() => {
+
+var cookies = document.querySelector('#cookies-policy');
+cookies.classList.remove('cookies--no-js');
+var reset = document.querySelector('.cookiereset');
+if (cookies) {
+  cookies.classList.remove('cookies--no-js');
+  var customize = cookies.querySelector('.cookies__btn--customize');
+  var details = cookies.querySelectorAll('.cookies__details');
+  var acceptAll = cookies.querySelector('.cookiesBtn--accept');
+  var acceptEssentials = cookies.querySelector('.cookiesBtn--essentials');
+  var configure = cookies.querySelector('.cookies__customize');
+  var text = JSON.parse(cookies.getAttribute('data-text'));
+  cookies.removeAttribute('data-text');
+}
+if (reset) {
+  reset.addEventListener('submit', function (event) {
+    return resetCookies(event);
+  });
+}
+if (cookies) {
+  for (var i = 0; i < details.length; i++) {
+    details[i].addEventListener('click', function (event) {
+      return openDetails(event);
+    });
+  }
+  customize.addEventListener('click', function (event) {
+    return toggleExpand(event, customize);
+  });
+  acceptAll.addEventListener('submit', function (event) {
+    return acceptAllCookies(event);
+  });
+  acceptEssentials.addEventListener('submit', function (event) {
+    return acceptEssentialsCookies(event);
+  });
+  configure.addEventListener('submit', function (event) {
+    return configureCookies(event);
+  });
+}
+function configureCookies(event) {
+  event.preventDefault();
+  var formData = new FormData(event.target);
+  window.LaravelCookieConsent.configure(formData);
+  close();
+}
+function acceptAllCookies(event) {
+  event.preventDefault();
+  window.LaravelCookieConsent.acceptAll();
+  close();
+}
+function acceptEssentialsCookies(event) {
+  event.preventDefault();
+  window.LaravelCookieConsent.acceptEssentials();
+  close();
+}
+function resetCookies(event) {
+  event.preventDefault();
+  if (document.querySelector('#cookies-policy')) return;
+  window.LaravelCookieConsent.reset();
+}
+function openDetails(event) {
+  toggleExpand(event, event.target, false);
+}
+function toggleExpand(event, el) {
+  var hide = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+  event.preventDefault();
+  event.target.blur();
+  var element = cookies.querySelector(el.getAttribute('href')),
+    content = element.firstElementChild,
+    height = content.offsetHeight,
+    isOpen = element.classList.contains('cookies__expandable--open');
+  element.setAttribute('style', 'height:' + (isOpen ? height : 0) + 'px');
+  if (!hide) {
+    event.target.textContent = isOpen ? text.more : text.less;
+  }
+  setTimeout(function (cookies) {
+    return function () {
+      cookies.firstElementChild.classList.toggle('cookies--show');
+      element.classList.toggle('cookies__expandable--open');
+      element.setAttribute('style', 'height:' + (isOpen ? 0 : height) + 'px');
+      setTimeout(function () {
+        element.removeAttribute('style');
+      }, 310);
+    };
+  }(cookies), 10);
+  if (!hide) return;
+  hideNotice(isOpen);
+}
+function hideNotice(isOpen) {
+  var container = cookies.querySelector('.cookies__container'),
+    containerHeight = container.firstElementChild.offsetHeight;
+  container.setAttribute('style', 'height:' + (!isOpen ? containerHeight : 0) + 'px');
+  setTimeout(function (cookies) {
+    return function () {
+      container.classList.toggle('cookies__container--hide');
+      container.setAttribute('style', 'height:' + (isOpen ? containerHeight : 0) + 'px');
+      setTimeout(function () {
+        container.removeAttribute('style');
+      }, 310);
+    };
+  }(cookies), 10);
+}
+function close() {
+  cookies.classList.add('cookies--closing');
+  setTimeout(function (cookies) {
+    return function () {
+      var script = cookies.nextElementSibling;
+      var style = script.nextElementSibling;
+      cookies.parentNode.removeChild(cookies);
+      script.parentNode.removeChild(script);
+      style.parentNode.removeChild(style);
+    };
+  }(cookies), 210);
+}
+
+/***/ }),
+
+/***/ "./resources/scss/style.scss":
+/*!***********************************!*\
+  !*** ./resources/scss/style.scss ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = __webpack_modules__;
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/chunk loaded */
+/******/ 	(() => {
+/******/ 		var deferred = [];
+/******/ 		__webpack_require__.O = (result, chunkIds, fn, priority) => {
+/******/ 			if(chunkIds) {
+/******/ 				priority = priority || 0;
+/******/ 				for(var i = deferred.length; i > 0 && deferred[i - 1][2] > priority; i--) deferred[i] = deferred[i - 1];
+/******/ 				deferred[i] = [chunkIds, fn, priority];
+/******/ 				return;
+/******/ 			}
+/******/ 			var notFulfilled = Infinity;
+/******/ 			for (var i = 0; i < deferred.length; i++) {
+/******/ 				var [chunkIds, fn, priority] = deferred[i];
+/******/ 				var fulfilled = true;
+/******/ 				for (var j = 0; j < chunkIds.length; j++) {
+/******/ 					if ((priority & 1 === 0 || notFulfilled >= priority) && Object.keys(__webpack_require__.O).every((key) => (__webpack_require__.O[key](chunkIds[j])))) {
+/******/ 						chunkIds.splice(j--, 1);
+/******/ 					} else {
+/******/ 						fulfilled = false;
+/******/ 						if(priority < notFulfilled) notFulfilled = priority;
+/******/ 					}
+/******/ 				}
+/******/ 				if(fulfilled) {
+/******/ 					deferred.splice(i--, 1)
+/******/ 					var r = fn();
+/******/ 					if (r !== undefined) result = r;
+/******/ 				}
+/******/ 			}
+/******/ 			return result;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/jsonp chunk loading */
+/******/ 	(() => {
+/******/ 		// no baseURI
+/******/ 		
+/******/ 		// object to store loaded and loading chunks
+/******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
+/******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
+/******/ 		var installedChunks = {
+/******/ 			"/script": 0,
+/******/ 			"style": 0
+/******/ 		};
+/******/ 		
+/******/ 		// no chunk on demand loading
+/******/ 		
+/******/ 		// no prefetching
+/******/ 		
+/******/ 		// no preloaded
+/******/ 		
+/******/ 		// no HMR
+/******/ 		
+/******/ 		// no HMR manifest
+/******/ 		
+/******/ 		__webpack_require__.O.j = (chunkId) => (installedChunks[chunkId] === 0);
+/******/ 		
+/******/ 		// install a JSONP callback for chunk loading
+/******/ 		var webpackJsonpCallback = (parentChunkLoadingFunction, data) => {
+/******/ 			var [chunkIds, moreModules, runtime] = data;
+/******/ 			// add "moreModules" to the modules object,
+/******/ 			// then flag all "chunkIds" as loaded and fire callback
+/******/ 			var moduleId, chunkId, i = 0;
+/******/ 			if(chunkIds.some((id) => (installedChunks[id] !== 0))) {
+/******/ 				for(moduleId in moreModules) {
+/******/ 					if(__webpack_require__.o(moreModules, moduleId)) {
+/******/ 						__webpack_require__.m[moduleId] = moreModules[moduleId];
+/******/ 					}
+/******/ 				}
+/******/ 				if(runtime) var result = runtime(__webpack_require__);
+/******/ 			}
+/******/ 			if(parentChunkLoadingFunction) parentChunkLoadingFunction(data);
+/******/ 			for(;i < chunkIds.length; i++) {
+/******/ 				chunkId = chunkIds[i];
+/******/ 				if(__webpack_require__.o(installedChunks, chunkId) && installedChunks[chunkId]) {
+/******/ 					installedChunks[chunkId][0]();
+/******/ 				}
+/******/ 				installedChunks[chunkId] = 0;
+/******/ 			}
+/******/ 			return __webpack_require__.O(result);
+/******/ 		}
+/******/ 		
+/******/ 		var chunkLoadingGlobal = self["webpackChunklaravel_cookie_consent"] = self["webpackChunklaravel_cookie_consent"] || [];
+/******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
+/******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
+/******/ 	__webpack_require__.O(undefined, ["style"], () => (__webpack_require__("./resources/js/script.js")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["style"], () => (__webpack_require__("./resources/scss/style.scss")))
+/******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
+/******/ 	
+/******/ })()
+;
