@@ -2,5 +2,5 @@ let mix = require('laravel-mix');
 
 mix.setPublicPath('dist')
     .js('resources/js/script.js', 'dist')
-    .sass('resources/scss/app.scss', 'dist')
-    .version();
+    .js('resources/js/cookies.js', 'dist')
+    .sass('resources/scss/style.scss', 'dist');

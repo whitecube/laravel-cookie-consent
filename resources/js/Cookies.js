@@ -1,23 +1,24 @@
 import Axios from "axios";
 
-export default class Cookies {
-    acceptAll(url) {
-        this.request(url);
+class cookies {
+    constructor(config) {
+        this.config = JSON.parse(config);
     }
 
-    acceptEssentials(url) {
-        this.request(url);
+    acceptAll() {
+        this.request(this.config['accept.all']);
     }
 
-    configure(url, data) {
-        this.request(url, data)
-            .then(response => {
-                console.log(response.data)
-            });
+    acceptEssentials() {
+        this.request(this.config['accept.essentials']);
     }
 
-    reset(url) {
-        this.request(url)
+    configure(data) {
+        this.request(this.config['accept.configuration'], data);
+    }
+
+    reset() {
+        this.request(this.config['reset'])
             .then((response) => {
                 let tmp = document.createElement('div');
 
@@ -36,3 +37,7 @@ export default class Cookies {
         });
     }
 }
+
+window.addEventListener('load', () => {
+    window.LaravelCookieConsent = new cookies('{config}');
+});

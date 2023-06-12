@@ -2,7 +2,7 @@
     <div class="cookies__alert">
         <div class="cookies__container">
             <div class="cookies__wrapper">
-                <p class="cookies__title">@lang('cookieConsent::cookies.title')</p>
+                <h2 class="cookies__title">@lang('cookieConsent::cookies.title')</h2>
                 <div class="cookies__intro">
                     <p>@lang('cookieConsent::cookies.intro')</p>
                     @if(config('cookieconsent.legal'))
@@ -26,9 +26,9 @@
                 @csrf
                 <div class="cookies__sections">
                 @foreach($cookies->getCategories() as $category)
-                    <div class="cookies__section">
+                <div class="cookies__section">
                         <label for="cookies-policy-check-{{ $category->key() }}" class="cookies__category">
-                            <input type="checkbox" name="categories[]" value="{{ $category->key() }}" id="cookies-policy-check-{{ $category->key() }}" />
+                            <input type="checkbox" name="categories[]" value="{{ $category->key() }}" id="cookies-policy-check-{{ $category->key() }}"{{ $category->key() === 'essentials' ? ' checked disabled' : '' }}/>
                             <span class="cookies__box">
                                 <strong class="cookies__label">{{ $category->key() }}</strong>
                             </span>
@@ -46,7 +46,7 @@
                                 @endforeach
                             </ul>
                         </div>
-                        <a href="#cookies-policy-{{ $category->key() }}" class="cookies__details" data-text="{{ json_encode(__('cookieConsent::cookies.details')) }}">@lang('cookieConsent::cookies.details.more')</a>
+                        <a href="#cookies-policy-{{ $category->key() }}" class="cookies__details">@lang('cookieConsent::cookies.details.more')</a>
 
                     </div>
                     @endforeach
@@ -60,6 +60,10 @@
 </aside>
 
 {{-- STYLES : feel free to remove them and add your own --}}
+
+<script>
+    {!! file_get_contents(LCC_ROOT . '/dist/script.js') !!}
+</script>
 <style>
-    {!! file_get_contents(LCC_ROOT . '/dist/app.css') !!}
+    {!! file_get_contents(LCC_ROOT . '/dist/style.css') !!}
 </style>
