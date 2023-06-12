@@ -1,8 +1,8 @@
 <?php
 return [
     'title' => 'Nous utilisons des cookies',
-    'intro' => 'Lorem ipsum dolor sit amet, consectetur adipisicing, elit. Tempore magnam, consectetur corporis quo distinctio aperiam! Quo modi unde suscipit earum accusantium molestiae ullam, consequatur maiores cum, et accusamus exercitationem numquam?',
-    'link' => 'Consultez notre <a href=":url">politique de cookies</a> pour plus d\'informations.',
+    'intro' => 'Ce site utilise des cookies pour améliorer votre expérience utilisateur.',
+    'link' => 'Consultez notre <a href=":url">politique d\'utilisation des cookies</a> pour en savoir plus.',
 
     'essentials' => 'Cookies essentiels',
     'all' => 'Accepter tout',
