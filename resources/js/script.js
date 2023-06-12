@@ -9,6 +9,8 @@ if(cookies) {
     var acceptAll = cookies.querySelector('.cookiesBtn--accept');
     var acceptEssentials = cookies.querySelector('.cookiesBtn--essentials');
     var configure = cookies.querySelector('.cookies__customize');
+    var text = JSON.parse(cookies.getAttribute('data-text'))
+    cookies.removeAttribute('data-text');
 }
 
 if(reset) {
@@ -65,10 +67,11 @@ function toggleExpand(event, el, hide = true) {
 
     element.setAttribute('style', 'height:' + (isOpen ? height : 0) + 'px');
 
+    console.log(text);
     if(!hide) {
         event.target.textContent = isOpen
-            ? window.LaravelCookieConsent.config.more
-            : window.LaravelCookieConsent.config.less
+            ? text.more
+            : text.less
     }
 
     setTimeout(((cookies) => function() {
