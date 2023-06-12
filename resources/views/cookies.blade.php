@@ -55,10 +55,6 @@
 </aside>
 
 {{-- STYLES : feel free to remove them and add your own --}}
-@php
-    $style = file_get_contents(asset(mix('app.css', 'vendor/laravel-cookie-consent')))
-@endphp
-
 <style>
-    {!! $style !!}
+    {!! file_get_contents(LCC_ROOT . '/dist/app.css') !!}
 </style>
