@@ -1,24 +1,26 @@
-import Axios from "axios";
+import axios from "axios";
 
-class cookies {
+class LaravelCookieConsent {
+    config;
+
     constructor(config) {
-        this.config = JSON.parse(config);
+        this.config = config;
     }
 
     acceptAll() {
-        this.request(this.config['accept.all']);
+        return this.request(this.config['accept.all']);
     }
 
     acceptEssentials() {
-        this.request(this.config['accept.essentials']);
+        return this.request(this.config['accept.essentials']);
     }
 
     configure(data) {
-        this.request(this.config['accept.configuration'], data);
+        return this.request(this.config['accept.configuration'], data);
     }
 
     reset() {
-        this.request(this.config['reset'])
+        return this.request(this.config['reset'])
             .then((response) => {
                 let tmp = document.createElement('div');
                 tmp.innerHTML = response.data.notice;
@@ -34,14 +36,10 @@ class cookies {
     }
 
     request(url, data = null) {
-        return Axios({
-            method: 'post',
-            url: url,
-            data : data,
-        });
+        return axios.post(url, data);
     }
 }
 
 window.addEventListener('load', () => {
-    window.LaravelCookieConsent = new cookies('{config}');
+    window.LaravelCookieConsent = new LaravelCookieConsent({config:1});
 });

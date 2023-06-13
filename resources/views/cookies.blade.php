@@ -32,7 +32,9 @@
                             <span class="cookies__box">
                                 <strong class="cookies__label">{{ $category->key() }}</strong>
                             </span>
-                            <p class="cookies__info">Lorem, ipsum, dolor sit amet consectetur adipisicing elit.</p>
+                            @if($category->description)
+                                <p class="cookies__info">{{ $category->description }}</p>
+                            @endif
                         </label>
 
                         <div class="cookies__expandable" id="cookies-policy-{{ $category->key() }}">
@@ -41,7 +43,9 @@
                                 <li class="cookies__cookie">
                                     <p class="cookies__name">{{ $cookie->name }}</p>
                                     <p class="cookies__duration">{{ \Carbon\CarbonInterval::minutes($cookie->duration)->cascade() }}</p>
-                                    <p class="cookies__description">Lorem, ipsum, dolor sit amet consectetur adipisicing elit. Id placeat corporis repellat excepturi maiores quisquam.</p>
+                                    @if($cookie->description)
+                                        <p class="cookies__description">{{ $cookie->description }}</p>
+                                    @endif
                                 </li>
                                 @endforeach
                             </ul>
@@ -59,11 +63,11 @@
     </div>
 </aside>
 
-{{-- STYLES : feel free to remove them and add your own --}}
+{{-- STYLES & SCRIPT : feel free to remove them and add your own --}}
 
-<script>
+<script data-cookie-consent>
     {!! file_get_contents(LCC_ROOT . '/dist/script.js') !!}
 </script>
-<style>
+<style data-cookie-consent>
     {!! file_get_contents(LCC_ROOT . '/dist/style.css') !!}
 </style>
