@@ -208,7 +208,7 @@
             width: 2.5em;
             height: 1.4em;
             margin-top: -0.7em;
-            background: #ddd;
+            background: #E7E8E9;
             z-index: 0;
             transition: background 200ms ease-out;
         }
@@ -236,7 +236,7 @@
 
     &__label {
         font-size: 0.875em;
-        font-weight: bold;
+        font-weight: 600;
         color: #2C2E30;
     }
 
@@ -244,6 +244,7 @@
         font-weight: 450;
         font-size: 0.875em;
         line-height: 1.4em;
+        color: #2C2E30;
     }
 
     &__details {
@@ -273,13 +274,15 @@
 
     &__name {
         display: inline;
-        font-weight: bold;
-        color: #676767;
+        font-weight: 600;
+        line-height: 22px;
+        color: #8A8E92;
     }
 
     &__duration {
         display: inline;
         text-align: right;
+        color: #8A8E92;
     }
 
     &__description {
@@ -288,6 +291,7 @@
         width: 100%;
         line-height: 120%;
         text-align: left;
+        color: #8A8E92;
     }
 
     &__save {
