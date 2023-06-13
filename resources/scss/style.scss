@@ -26,9 +26,6 @@
             }
         }
     }
-}
-#cookies-policy .cookies {
-
 
     &--no-js {
         .cookies__section .cookies__expandable,
@@ -43,8 +40,17 @@
         .cookies__details {
             display: none;
         }
-    }
 
+        .cookies__sections {
+            max-height: fit-content;
+        }
+
+        svg {
+            display: none;
+        }
+    }
+}
+#cookies-policy .cookies {
     &__expandable {
         display: block;
         overflow: hidden;
@@ -67,7 +73,8 @@
     &__alert {
         width: 22em;
         max-width: 90%;
-        margin: 5%;
+        max-height: 90%;
+        margin: 4%;
         background: #fff;
         border-radius: 8px;
         border: 1px solid #E7E8E9;
@@ -162,7 +169,7 @@
     }
 
     &__sections {
-        max-height: 500px;
+        max-height: 450px;
         overflow: scroll;
     }
 

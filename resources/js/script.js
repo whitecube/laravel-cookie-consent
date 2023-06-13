@@ -1,35 +1,35 @@
 var cookies = document.querySelector('#cookies-policy');
-cookies.classList.remove('cookies--no-js');
 var reset = document.querySelector('.cookiereset');
-
-if(cookies) {
-    initCookies();
-    var customize = cookies.querySelector('.cookies__btn--customize');
-    var details = cookies.querySelectorAll('.cookies__details');
-    var acceptAll = cookies.querySelector('.cookiesBtn--accept');
-    var acceptEssentials = cookies.querySelector('.cookiesBtn--essentials');
-    var configure = cookies.querySelector('.cookies__customize');
-    var text = JSON.parse(cookies.getAttribute('data-text'))
-    cookies.removeAttribute('data-text');
-}
 
 if(reset) {
     reset.addEventListener('submit', (event) => resetCookies(event))
 }
 
 if(cookies) {
+    var customize = cookies.querySelector('.cookies__btn--customize');
+    var details = cookies.querySelectorAll('.cookies__details');
+    var acceptAll = cookies.querySelector('.cookiesBtn--accept');
+    var acceptEssentials = cookies.querySelector('.cookiesBtn--essentials');
+    var configure = cookies.querySelector('.cookies__customize');
+    var text = JSON.parse(cookies.getAttribute('data-text'))
+
+    initCookies();
+
     for (let i = 0; i < details.length; i++) {
-        details[i].addEventListener('click', (event) => openDetails(event));
+        details[i].addEventListener('click', (event) => toggleExpand(event, event.target, false));
     }
     customize.addEventListener('click', (event) => toggleExpand(event, customize));
     acceptAll.addEventListener('submit', (event) => acceptAllCookies(event));
     acceptEssentials.addEventListener('submit', (event) => acceptEssentialsCookies(event));
     configure.addEventListener('submit', (event) => configureCookies(event));
+    window.addEventListener('resize', (event) => resize(event));
 }
 
 function initCookies() {
+    cookies.removeAttribute('data-text');
     cookies.classList.remove('cookies--no-js');
     cookies.classList.add('cookies--closing');
+
     setTimeout(function() {
         cookies.classList.remove('cookies--closing');
     }, 310);
@@ -60,8 +60,12 @@ function resetCookies(event) {
     window.LaravelCookieConsent.reset()
 }
 
-function openDetails(event) {
-    toggleExpand(event, event.target, false);
+function resize() {
+    if (window.innerHeight <= cookies.offsetHeight) {
+        cookies.querySelector('.cookies__sections').style.maxHeight = '50vh';
+    } else {
+        cookies.querySelector('.cookies__sections').removeAttribute('style')
+    }
 }
 
 function toggleExpand(event, el, hide = true) {
@@ -75,11 +79,7 @@ function toggleExpand(event, el, hide = true) {
 
     element.setAttribute('style', 'height:' + (isOpen ? height : 0) + 'px');
 
-    if(!hide) {
-        event.target.textContent = isOpen
-            ? text.more
-            : text.less
-    }
+    changeText(hide, isOpen, event);
 
     setTimeout(((cookies) => function() {
         element.classList.toggle('cookies__expandable--open');
@@ -90,11 +90,20 @@ function toggleExpand(event, el, hide = true) {
         }, 310);
     })(cookies), 10);
 
-    if(!hide) return;
-    hideNotice(isOpen)
+    hideNotice(hide, isOpen)
 }
 
-function hideNotice(isOpen) {
+function  changeText(hide, isOpen, event) {
+    if(hide) return;
+
+    event.target.textContent = isOpen
+        ? text.more
+        : text.less
+}
+
+function hideNotice(hide, isOpen) {
+    if(!hide) return;
+
     var container = cookies.querySelector('.cookies__container'),
         containerHeight = container.firstElementChild.offsetHeight;
 
@@ -107,7 +116,7 @@ function hideNotice(isOpen) {
 
         setTimeout(function() {
             container.removeAttribute('style');
-        }, 310);
+        }, 320);
     })(cookies), 10);
 }
 
@@ -115,13 +124,13 @@ function close() {
     cookies.classList.add('cookies--closing');
 
     setTimeout(((cookies) => { return () => {
-        var script = cookies.nextElementSibling;
-        var style = script.nextElementSibling;
+        let scripts = cookies.parentNode.querySelectorAll('[data-cookie-consent]');
+
+        scripts.forEach(script => {
+            script.parentNode.removeChild(script);
+        });
 
         cookies.parentNode.removeChild(cookies);
-
-        if (script && script.nodeName == 'SCRIPT') script.parentNode.removeChild(script);
-        if (style && style.nodeName == 'STYLE') style.parentNode.removeChild(style);
 
     }})(cookies), 210);
 }

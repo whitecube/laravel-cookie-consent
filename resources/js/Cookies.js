@@ -53,7 +53,7 @@ class LaravelCookieConsent {
 
                 let scripts = tmp.querySelectorAll('[data-cookie-consent]');
 
-                if(scripts.length) {
+                if (! scripts.length) {
                     return;
                 }
 
