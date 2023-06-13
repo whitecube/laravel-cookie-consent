@@ -199,7 +199,8 @@ class CookiesManager
     protected function getDefaultScriptTag(): string
     {
         return '<script '
-            . 'src="' . asset(mix('script.js', 'vendor/laravel-cookie-consent')) . '" '
+            . 'src="' . route('cookieconsent.script') . '?id='
+            . md5(\filemtime(LCC_ROOT . '/dist/script.js')) . '" '
             . 'defer'
             . '></script>';
     }

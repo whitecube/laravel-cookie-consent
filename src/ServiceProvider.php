@@ -29,6 +29,12 @@ class ServiceProvider extends Provider
             realpath(__DIR__ . '/../resources/views') => resource_path('views/vendor/cookie-consent'),
         ], 'laravel-cookie-consent-views');
 
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'cookieConsent');
+
+        $this->publishes([
+            realpath(__DIR__ . '/../resources/lang') => $this->app->langPath('vendor/cookieConsent'),
+        ], 'laravel-cookie-consent-lang');
+
         $this->registerBladeDirectives();
 
         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
@@ -39,6 +45,8 @@ class ServiceProvider extends Provider
      */
     public function register()
     {
+        define('LCC_ROOT', realpath(__DIR__ . '/..'));
+
         $this->mergeConfigFrom(
             realpath(__DIR__ . '/../config/cookieconsent.php'), 'cookieconsent'
         );
