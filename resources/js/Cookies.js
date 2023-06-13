@@ -25,18 +25,24 @@ class LaravelCookieConsent {
                 let tmp = document.createElement('div');
                 tmp.innerHTML = response.data.notice;
 
-                document.body.appendChild(tmp.querySelector('#cookies-policy'));
+                let cookies = tmp.querySelector('#cookies-policy')
+                document.body.appendChild(cookies);
 
-                let style = tmp.querySelector('style')
-                if(style) document.body.appendChild(tmp.querySelector('style'));
+                let scripts = tmp.querySelectorAll('[data-cookie-consent]');
 
-                const script = tmp.querySelector('script');
-
-                if(script) {
-                    const newScript = document.createElement('script');
-                    newScript.textContent = script.textContent;
-                    document.body.appendChild(newScript);
+                if(scripts.length) {
+                    return;
                 }
+
+                scripts.forEach(script => {
+                    if (script.nodeName == 'SCRIPT') {
+                        const newScript = document.createElement('script');
+                        newScript.textContent = script.textContent;
+                        document.body.appendChild(newScript);
+                    } else {
+                        document.body.appendChild(script);
+                    }
+                });
             });
     }
 
