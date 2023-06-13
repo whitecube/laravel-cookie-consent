@@ -3,7 +3,7 @@ cookies.classList.remove('cookies--no-js');
 var reset = document.querySelector('.cookiereset');
 
 if(cookies) {
-    cookies.classList.remove('cookies--no-js');
+    initCookies();
     var customize = cookies.querySelector('.cookies__btn--customize');
     var details = cookies.querySelectorAll('.cookies__details');
     var acceptAll = cookies.querySelector('.cookiesBtn--accept');
@@ -25,6 +25,14 @@ if(cookies) {
     acceptAll.addEventListener('submit', (event) => acceptAllCookies(event));
     acceptEssentials.addEventListener('submit', (event) => acceptEssentialsCookies(event));
     configure.addEventListener('submit', (event) => configureCookies(event));
+}
+
+function initCookies() {
+    cookies.classList.remove('cookies--no-js');
+    cookies.classList.add('cookies--closing');
+    setTimeout(function() {
+        cookies.classList.remove('cookies--closing');
+    }, 310);
 }
 
 function configureCookies(event)  {
@@ -74,7 +82,6 @@ function toggleExpand(event, el, hide = true) {
     }
 
     setTimeout(((cookies) => function() {
-        cookies.firstElementChild.classList.toggle('cookies--show')
         element.classList.toggle('cookies__expandable--open');
         element.setAttribute('style', 'height:' + (isOpen ? 0 : height) + 'px');
 
@@ -94,6 +101,7 @@ function hideNotice(isOpen) {
     container.setAttribute('style', 'height:' + (!isOpen ? containerHeight : 0) + 'px');
 
     setTimeout(((cookies) => function() {
+        cookies.classList.toggle('cookies--show')
         container.classList.toggle('cookies__container--hide');
         container.setAttribute('style', 'height:' + (isOpen ? containerHeight : 0) + 'px');
 

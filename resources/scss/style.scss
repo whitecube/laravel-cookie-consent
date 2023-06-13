@@ -14,9 +14,6 @@
         opacity: 0;
         transform: translateY(10px);
     }
-
-}
-#cookies-policy .cookies {
     &--show {
         .cookies__btn {
             &--customize {
@@ -29,6 +26,9 @@
             }
         }
     }
+}
+#cookies-policy .cookies {
+
 
     &--no-js {
         .cookies__section .cookies__expandable,

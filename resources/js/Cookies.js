@@ -8,15 +8,38 @@ class LaravelCookieConsent {
     }
 
     acceptAll() {
-        return this.request(this.config['accept.all']);
+        return this.request(this.config['accept.all'])
+            .then((response) => {
+                this.addScripts(response.data)
+            });
     }
 
     acceptEssentials() {
-        return this.request(this.config['accept.essentials']);
+        return this.request(this.config['accept.essentials'])
+            .then((response) => {
+                this.addScripts(response.data)
+            });
     }
 
     configure(data) {
-        return this.request(this.config['accept.configuration'], data);
+        return this.request(this.config['accept.configuration'], data)
+            .then((response) => {
+                this.addScripts(response.data)
+            });
+    }
+
+    addScripts(data) {
+        if(data.scripts && data.scripts.length) {
+            data.scripts.forEach(script => {
+                let tmp = document.createElement('div');
+                tmp.innerHTML = script;
+
+                let newScript = tmp.querySelector('script')
+                newScript.setAttribute('data-cookie-consent', true);
+
+                document.head.appendChild(newScript);
+            });
+        }
     }
 
     reset() {
