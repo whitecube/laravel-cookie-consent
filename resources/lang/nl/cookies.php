@@ -1,16 +1,16 @@
 <?php
 return [
-    'title' => 'We use cookies',
-    'intro' => 'Lorem ipsum dolor sit amet, consectetur adipisicing, elit. Tempore magnam, consectetur corporis quo distinctio aperiam! Quo modi unde suscipit earum accusantium molestiae ullam, consequatur maiores cum, et accusamus exercitationem numquam?',
-    'link' => 'Check our <a href=":url">cookies policy</a> for more information.',
+    'title' => 'Wij gebruiken cookies',
+    'intro' => 'Deze website maakt gebruik van cookies om de gebruikerservaring te verbeteren.',
+    'link' => 'Bekijk ons <a href=":url">cookiebeleid</a> voor meer informatie.',
 
-    'essentials' => 'Only essentials',
-    'all' => 'Accept all',
-    'customize' => 'Customize',
-    'manage' => 'Manage cookies',
+    'essentials' => 'Essentiële cookies',
+    'all' => 'Alles accepteren',
+    'customize' => 'Aanpassen',
+    'manage' => 'Cookies beheren',
     'details' => [
-        'more' => 'More details',
-        'less' => 'Less details',
+        'more' => 'Meer',
+        'less' => 'Minder',
     ],
-    'save' => 'Save settings'
+    'save' => 'Instellingen opslaan'
 ];
