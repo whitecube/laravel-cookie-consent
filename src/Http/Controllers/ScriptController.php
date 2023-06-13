@@ -19,9 +19,7 @@ class ScriptController
             . '"accept.all": "' . route('cookieconsent.accept.all') . '",'
             . '"accept.essentials": "' . route('cookieconsent.accept.essentials') . '",'
             . '"accept.configuration": "' . route('cookieconsent.accept.configuration') . '",'
-            . '"reset": "' . route('cookieconsent.reset') . '",'
-            . '"more": "' . __('cookieConsent::cookies.details.more') . '",'
-            . '"less": "' . __('cookieConsent::cookies.details.less') . '"'
+            . '"reset": "' . route('cookieconsent.reset') . '"'
             . '}';
     }
 }

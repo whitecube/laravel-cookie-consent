@@ -1,8 +1,8 @@
 <?php
 return [
     'title' => 'We use cookies',
-    'intro' => 'Lorem ipsum dolor sit amet, consectetur adipisicing, elit. Tempore magnam, consectetur corporis quo distinctio aperiam! Quo modi unde suscipit earum accusantium molestiae ullam, consequatur maiores cum, et accusamus exercitationem numquam?',
-    'link' => 'Check our <a href=":url">cookies policy</a> for more information.',
+    'intro' => 'This website uses cookies in order to enhance the overall user experience.',
+    'link' => 'Take a look at our <a href=":url">Cookies Policy</a> for more information.',
 
     'essentials' => 'Only essentials',
     'all' => 'Accept all',
