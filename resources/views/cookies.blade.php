@@ -5,8 +5,8 @@
                 <h2 class="cookies__title">@lang('cookieConsent::cookies.title')</h2>
                 <div class="cookies__intro">
                     <p>@lang('cookieConsent::cookies.intro')</p>
-                    @if(config('cookieconsent.legal'))
-                        <p>@lang('cookieConsent::cookies.link', ['url' => route(config('cookieconsent.legal'))])</p>
+                    @if($policy)
+                        <p>@lang('cookieConsent::cookies.link', ['url' => $policy])</p>
                     @endif
                 </div>
                 <div class="cookies__actions">

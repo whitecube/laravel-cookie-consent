@@ -217,8 +217,13 @@ class CookiesManager
 
     public function getNoticeMarkup(): string
     {
+        if($policy = config('cookieconsent.policy')) {
+            $policy = route($policy);
+        }
+
         return view('cookie-consent::cookies', [
             'cookies' => $this->registrar,
+            'policy' => $policy,
         ])->render();
     }
 
