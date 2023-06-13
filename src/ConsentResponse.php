@@ -117,13 +117,7 @@ class ConsentResponse
      */
     public function getResponseScripts(): ?array
     {
-        if(! $this->scripts) {
-            return null;
-        }
-
-        // TODO : implode scripts and add a useful data-* attribute
-
-        return $this->scripts;
+        return $this->scripts ?: null;
     }
 
     /**

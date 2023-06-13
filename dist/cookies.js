@@ -6231,33 +6231,35 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 
-var cookies = /*#__PURE__*/function () {
-  function cookies(config) {
-    _classCallCheck(this, cookies);
-    this.config = JSON.parse(config);
+var LaravelCookieConsent = /*#__PURE__*/function () {
+  function LaravelCookieConsent(config) {
+    _classCallCheck(this, LaravelCookieConsent);
+    _defineProperty(this, "config", void 0);
+    this.config = config;
   }
-  _createClass(cookies, [{
+  _createClass(LaravelCookieConsent, [{
     key: "acceptAll",
     value: function acceptAll() {
-      this.request(this.config['accept.all']);
+      return this.request(this.config['accept.all']);
     }
   }, {
     key: "acceptEssentials",
     value: function acceptEssentials() {
-      this.request(this.config['accept.essentials']);
+      return this.request(this.config['accept.essentials']);
     }
   }, {
     key: "configure",
     value: function configure(data) {
-      this.request(this.config['accept.configuration'], data);
+      return this.request(this.config['accept.configuration'], data);
     }
   }, {
     key: "reset",
     value: function reset() {
-      this.request(this.config['reset']).then(function (response) {
+      return this.request(this.config['reset']).then(function (response) {
         var tmp = document.createElement('div');
         tmp.innerHTML = response.data.notice;
         document.body.appendChild(tmp.querySelector('#cookies-policy'));
@@ -6275,17 +6277,15 @@ var cookies = /*#__PURE__*/function () {
     key: "request",
     value: function request(url) {
       var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-      return (0,axios__WEBPACK_IMPORTED_MODULE_0__["default"])({
-        method: 'post',
-        url: url,
-        data: data
-      });
+      return axios__WEBPACK_IMPORTED_MODULE_0__["default"].post(url, data);
     }
   }]);
-  return cookies;
+  return LaravelCookieConsent;
 }();
 window.addEventListener('load', function () {
-  window.LaravelCookieConsent = new cookies('{config}');
+  window.LaravelCookieConsent = new LaravelCookieConsent({
+    config: 1
+  });
 });
 })();
 
