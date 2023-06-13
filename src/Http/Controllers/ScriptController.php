@@ -15,11 +15,11 @@ class ScriptController
 
     protected function generateConfig(): string
     {
-        return '{'
-            . '"accept.all": "' . route('cookieconsent.accept.all') . '",'
-            . '"accept.essentials": "' . route('cookieconsent.accept.essentials') . '",'
-            . '"accept.configuration": "' . route('cookieconsent.accept.configuration') . '",'
-            . '"reset": "' . route('cookieconsent.reset') . '"'
-            . '}';
+        return json_encode([
+            'accept.all' => route('cookieconsent.accept.all'),
+            'accept.essentials' => route('cookieconsent.accept.essentials'),
+            'accept.configuration' => route('cookieconsent.accept.configuration'),
+            'reset' => route('cookieconsent.reset'),
+        ]);
     }
 }
