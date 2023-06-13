@@ -25,12 +25,12 @@
             <form action="{{ route('cookieconsent.accept.configuration')}}" method="post" class="cookies__customize">
                 @csrf
                 <div class="cookies__sections">
-                @foreach($cookies->getCategories() as $category)
-                <div class="cookies__section">
+                    @foreach($cookies->getCategories() as $category)
+                    <div class="cookies__section">
                         <label for="cookies-policy-check-{{ $category->key() }}" class="cookies__category">
                             <input type="checkbox" name="categories[]" value="{{ $category->key() }}" id="cookies-policy-check-{{ $category->key() }}"{{ $category->key() === 'essentials' ? ' checked disabled' : '' }}/>
                             <span class="cookies__box">
-                                <strong class="cookies__label">{{ $category->key() }}</strong>
+                                <strong class="cookies__label">{{ $category->title }}</strong>
                             </span>
                             @if($category->description)
                                 <p class="cookies__info">{{ $category->description }}</p>
@@ -51,7 +51,6 @@
                             </ul>
                         </div>
                         <a href="#cookies-policy-{{ $category->key() }}" class="cookies__details">@lang('cookieConsent::cookies.details.more')</a>
-
                     </div>
                     @endforeach
                 </div>

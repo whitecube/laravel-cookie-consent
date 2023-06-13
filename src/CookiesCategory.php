@@ -7,6 +7,7 @@ use Closure;
 class CookiesCategory
 {
     use Concerns\HasAttributes;
+    use Concerns\HasTranslations;
     use Concerns\HasCookies;
 
     /**
@@ -20,6 +21,8 @@ class CookiesCategory
     public function __construct(string $key)
     {
         $this->key = $key;
+        $this->setAttribute('title', $this->translate('categories.' . $key . '.title', ucfirst($key)));
+        $this->setAttribute('description', $this->translate('categories.' . $key . '.description'));
     }
 
     /**
