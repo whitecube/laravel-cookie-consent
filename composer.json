@@ -44,7 +44,10 @@
         "laravel": {
             "providers": [
                 "Whitecube\\LaravelCookieConsent\\ServiceProvider"
-            ]
+            ],
+            "aliases": {
+                "Cookies": "Whitecube\\LaravelCookieConsent\\Facades\\Cookies"
+            }
         }
     },
     "scripts": {
