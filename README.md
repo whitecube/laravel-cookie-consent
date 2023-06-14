@@ -129,7 +129,7 @@ The optional second parameter, `Closure $maker`, can be used to define a custom 
 ```php
 use Whitecube\LaravelCookieConsent\Facades\Cookies;
 
-$category = Cookies::category(key: 'my-custom-category', function(string $key) {
+$category = Cookies::category(key: 'my-custom-category', maker: function(string $key) {
     return new MyCustomCategory($key);
 });
 ```
@@ -168,7 +168,7 @@ TBD
 
 There are several ways to check for explicit user consent, each of them being useful in different contexts.
 
-### Using the `Cookies` facade
+#### Using the `Cookies` facade
 
 The `Cookies` facade is automatically discovered when installing this package.
 
@@ -180,7 +180,7 @@ if(Cookies::hasConsentFor('my_cookie_name')) {
 }
 ```
 
-### Using dependency injection
+#### Using dependency injection
 
 Useful when working with methods resolved by Laravel's Service Container:
 
