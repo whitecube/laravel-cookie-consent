@@ -22,7 +22,9 @@ Nevertheless, this package provides all the tools you'll need to cover a proper 
 - Blade directives & Facade methods making your life easier
 - JavaScript code that will enhance front-end user experience
 
-We've built this package with flexibility in our mind: you'll be able to customize content, behavior and styling as you wish.
+We've built this package with flexibility in our mind: you'll be able to customize content, behavior and styling as you wish. Here is what it looks like out of the box:
+
+![Laravel Cookie Consent in action](https://raw.githubusercontent.com/whitecube/laravel-cookie-consent/main/laravel-cookie-consent.gif)
 
 ## Installation
 
@@ -37,34 +39,48 @@ This package will auto-register its service provider.
 First, publish the package's files:
 
 1. Publish the configuration file: `php artisan vendor:publish --tag=laravel-cookie-consent-config`
-2. Publish the JavaScript library: `php artisan vendor:publish --tag=laravel-cookie-consent-assets`
-3. Publish the customizable views: `php artisan vendor:publish --tag=laravel-cookie-consent-views`
+2. Publish the customizable views: `php artisan vendor:publish --tag=laravel-cookie-consent-views`
+3. Publish the translation file: `php artisan vendor:publish --tag=laravel-cookie-consent-lang`
 
-More on customization below.
+More on [customization](#customizing-views) below.
 
 Now, we'll have to register and configure the used cookies. A good place to do so is in the `App\Providers\AppServiceProvider`'s `boot` method, but feel free to create your own `CookiesServiceProvider`.
 
 ```php
+use Whitecube\LaravelCookieConsent\Consent;
 use Whitecube\LaravelCookieConsent\Facades\Cookies;
 
 public function boot()
 {
+    // Register Laravel's base cookies under the "required" cookies section:
     Cookies::essentials()
         ->session()
         ->csrf();
 
+    // Register all Analytics cookies at once using one single shorthand method:
     Cookies::analytics()
         ->google(env('GOOGLE_ANALYTICS_ID'));
 
-    Cookies::optional()->name('my_cookie')->duration(120);
+    // Register custom cookies under the pre-existing "optional" category:
+    Cookies::optional()
+        ->name('darkmode_enabled')
+        ->description('This cookie helps us remember your preferences regarding the interface\'s brightness.')
+        ->duration(120)
+        ->accepted(fn(Consent $add, MyDarkmode $darkmode) => $add->cookie(value: $darkmode->getDefaultValue()));
+
+    // Register custom cookies under a custom "accessibility" category:
+    Cookies::accessibility()
+        ->name('high_contrast_enabled')
+        ->description('This cookie helps us remember your preferences regarding color contrast.')
+        ->duration(60 * 24 * 365);
 }
 ```
 
-More details on the available cookie registration methods below.
+More details on the available [cookie registration](#registering-cookies) methods below.
 
-Then, let's add consent scripts and modals to the application's layouts or views using the following blade directives:
+Then, let's add consent scripts and modals to the application's views using the following blade directives:
 
-- `@cookieconsentscripts`: used to add the package's default JavaScript and any third-party script you need to get the end-user's consent for.
+- `@cookieconsentscripts`: used to add the package's default JavaScript and any third-party scripts you need to get the end-user's consent for.
 - `@cookieconsentview`: used to render the alert or pop-up view.
 
 ```blade
@@ -83,24 +99,168 @@ Then, let's add consent scripts and modals to the application's layouts or views
 
 ### Registering cookies
 
-TBD.
+This package aims to centralize cookie declaration and documentation at the same place in order to keep projects maintainable. However, the suggested methodology is not mandatory. If you wish to queue cookies or execute code upon consent somewhere else in your app's codebase, feel free to do so: we have a few available methods that can come in handy when you'll need to [check if consent has been granted](#checking-for-consent) during the request's lifecycle.
+
+#### Choosing a cookie category
+
+All registered cookies are attached to a Cookie Category, which is a convenient way to group cookies under similar topics. The aimed objective is to add usability to the detailed information views by providing understandable and summarized sections.
+
+Instead of consenting each cookie individually, users grant consent to those categories. All cookies included in such a consented category will automatically be considered as given explicit consent to.
+
+There are 3 base categories included in this package:
+
+1. `Cookies::essentials()`: lists all cookies that add required functionnality to the app. This category cannot be opted-out and automatically contains the package's consent cookie.
+    - `Cookies::essentials()->session()`: registers Laravel's "session" cookie (defined in your app's `session.cookie` configuration) ;
+    - `Cookies::essentials()->csrf()`: registers [Laravel's "XSRF-TOKEN"](https://laravel.com/docs/10.x/csrf) cookie.
+2. `Cookies::analytics()`: lists all cookies used for statistics and data collection.
+    - `Cookies::analytics()->google(string $trackingId)`: automatically lists all Google Analytics' cookies. **This will also automatically register Google Analytics' JS scripts and inject them to the layout's `<head>` only when consent is granted.** Convenient, huh?
+3. `Cookies::optional()`: lists all cookies that serve some kind of utility feature. Since this category can ben opted-out, linked features should always check if consent has been granted before queuing or relying on their cookies.
+
+You are free to add as many custom categories as you want. To do so, simply call the `category(string $key, ?Closure $maker = null)` method on the `Cookies` facade:
+
+```php
+use Whitecube\LaravelCookieConsent\Facades\Cookies;
+
+$category = Cookies::category(key: 'my-custom-category');
+```
+
+The optional second parameter, `Closure $maker`, can be used to define a custom `CookiesCategory` instance:
+
+```php
+use Whitecube\LaravelCookieConsent\Facades\Cookies;
+
+$category = Cookies::category(key: 'my-custom-category', function(string $key) {
+    return new MyCustomCategory($key);
+});
+```
+
+Custom category classes should extend `Whitecube\LaravelCookieConsent\CookiesCategory`.
+
+Once defined, custom categories can be accessed using their own camel-case method:
+
+```php
+use Whitecube\LaravelCookieConsent\Facades\Cookies;
+
+$category = Cookies::myCustomCategory();
+```
+
+In order to add human-readable titles and descriptions to categories, you should insert new lines to the `cookieConsent::cookies.categories.[category-key]` translations. More information on [translations](#textual-content-and-translations) below.
+
+```php
+return [
+    // ...
+    'categories' => [
+        // ...
+        'my-custom-category' => [
+            'title' => 'My custom category of cookies',
+            'description' => 'A short description of what these cookies are meant for.',
+        ],
+        // ...
+    ],
+];
+```
+
+#### Cookie definition
+
+TBD
+
+### Checking for consent
+
+There are several ways to check for explicit user consent, each of them being useful in different contexts.
+
+### Using the `Cookies` facade
+
+The `Cookies` facade is automatically discovered when installing this package.
+
+```php
+use Whitecube\LaravelCookieConsent\Facades\Cookies;
+
+if(Cookies::hasConsentFor('my_cookie_name')) {
+    // ...
+}
+```
+
+### Using dependency injection
+
+Useful when working with methods resolved by Laravel's Service Container:
+
+```php
+use Whitecube\LaravelCookieConsent\CookiesManager;
+
+class FooController
+{
+    public function __invoke(CookiesManager $cookies)
+    {
+        if($cookies->hasConsentFor('my_cookie_name')) {
+            // ...
+        }
+    }
+}
+```
 
 ### Customizing views
 
-TBD.
+Cookie notices are boring and this package's default design is no different. It has been built in a robust, accessible and neutral way so it could serve as many situations as possible.
+
+However, this world shouldn't be a boring place and even if cookie notices are part of a project's legal requirements, why not use it as an opportunity to bring a smile to your audience's face? Cookie modals are now integrated in every digital platform's user experience and therefore they should blend in accordingly: that's why we've built this package with full flexibility in our mind.
+
+#### The views
+
+A good starting point is to take a look at this package's default markup. If not already published, you can access the views using `php artisan vendor:publish --tag=laravel-cookie-consent-views`, this will copy our blade files to your app's `resources/views/vendor/cookie-consent` directory.
+
+Here you can express your unlimited creativity and push the boundaries of conventionnal Cookie notices or popups. 
+
+When rendered, the view has access to these variables:
+
+- `$policy`: the URL to your app's Cookie Policy page when defined. To do so, take a look at the package's `cookieconsent.php` configuration file.
+- `$cookies`: the registered cookie categories with their attached cookie definitions.
+
+In order to add buttons, we'd recommend using the package's `@cookieconsentbutton()` blade directive:
+
+- `@cookieconsentbutton('accept.all')`: renders a button targetting this package's "consent to all cookies" API route ;
+- `@cookieconsentbutton('accept.essentials')`: renders a button targetting this package's "consent to essential cookies only" API route ;
+- `@cookieconsentbutton('accept.configuration')`: renders a button targetting this package's "consent to custom cookies selection" API route. Beware that this route requires the selected cookie categories as the request's payload ;
+- `@cookieconsentbutton('reset')`: renders a button targetting this package's "reset cookie configuration" API route.
+
+#### Styling
+
+As you probably noticed, we've included our design's CSS directly in the `cookies.blade.php` view using a `<style>` tag. You can move, remove or replace it if needed. In fact, we'd recommend adding your own styles using a proper CSS file loaded in the layout's `<head>` using a `<link>` tag or by adding Tailwind classes to the HTML markup.
+
+Our CSS is compiled from a SASS file included in this package's `resources/scss` directory. If that fits your workflow, feel free to use it as a starting point for your own implementation.
+
+#### Javascript
+
+Keep in mind that cookie notices are supposed to work when Javascript is disabled. This package's base design only uses Javascript as an extra layer for a smoother User Experience, but its features do not rely on it. 
+
+Since most implementations have the same needs, we've separated our Javascript code into two parts: 
+
+1. A reusable Javascript library: automatically loaded via the `@cookieconsentscripts` blade directive, it is used to perform AJAX requests (using Axios) for all the existing API routes:
+    - `LaravelCookieConsent.acceptAll()`
+    - `LaravelCookieConsent.acceptEssentials()`
+    - `LaravelCookieConsent.configure(data)`
+    - `LaravelCookieConsent.reset()`
+2. A script implementing said library for our base design. Like our basic styling tag, this script is directly included in the `cookies.blade.php` view using a `<script>` tag. Feel free to remove it and add your own interactivity logic.
+
+#### Textual content and translations
+
+Most of the displayed strings are defined in the `cookieConsent::cookies` translation files. The package ships with a few supported locales, but if yours is not yet included we would greatly appreciate a PR.
+
+If not already published, you can edit or fill the translation files using `php artisan vendor:publish --tag=laravel-cookie-consent-lang`, this will copy our translation files to your app's `vendor/cookieConsent` "lang" path.
 
 ## A few useful tips
 
 > **Disclaimer**: We are not lawyers. Always check with your legal partners which rules may apply to your project.
-
-TBD.
 
 ### Cookie Policy Details Page
 
 Your website will need a dedicated "Cookie Policy" page containing extensive information about cookies, how and why they're used, etc. These pages also explain in detail which cookies are included. In order to keep these pages automatically up-to-date, keep in mind that this package can be used anywhere in your application using the `Whitecube\LaravelCookieConsent\Facades\Cookies` facade:
 
 ```blade
+<h1>Cookie Policy</h1>
+
 <p>...</p>
+
+<h2>How do we use cookies?</h2>
 
 @foreach(Cookies::getCategories() as $category)
 <table>
@@ -159,6 +319,15 @@ By default, this package will store the user's preferences for the current domai
 ### Keep it accessible
 
 When defining your own views & styles, keep in mind that cookie notices are obstacles for the application's overall accessibility. Also, they should work even when JavaScript is not enabled, that's why this package mainly works using API routes and AJAX calls in order to enhance user experience.
+
+---
+
+## Development roadmap
+
+We have a few ideas to further improve this package in the future. If you wish to add useful features, feel free to open a PR or an issue on this repository.
+
+- Add a `reset` callback on the Cookies definition instances in order to handle consent withdrawal ;
+- Add blade conditions for easier consent and feature availability checking.
 
 ## 🔥 Sponsorships 
 
