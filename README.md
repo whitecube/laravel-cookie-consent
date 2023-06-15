@@ -211,8 +211,17 @@ Cookies::essentials()               // Targetting a category
 ```
 
 #### `name(string $name)`
+
+Required. Defines the cookie name. It is used for display and as the actual cookie "key" when setting the cookie.
+
 #### `description(string $description)`
+
+Optional. Adds a textual description for the cookie. It is used for display only.
+
 #### `duration(int $minutes)`
+
+Required. Defines the cookie's lifetime in minutes. It is used for display and for the actual cookie expiration date when setting the cookie.
+
 #### `accepted(Closure $callback)`
 
 The optional "accepted" callback gets invoked when consent is granted to the category a cookie is attached to. This happens once the user configures their cookie preferences but also each time an incoming request is handled afterwards.
