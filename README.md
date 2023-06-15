@@ -26,6 +26,27 @@ We've built this package with flexibility in our mind: you'll be able to customi
 
 ![Laravel Cookie Consent in action](https://raw.githubusercontent.com/whitecube/laravel-cookie-consent/main/laravel-cookie-consent.gif)
 
+## Table of contents
+
+1. [Installation](#installation)
+2. [Usage](#usage)
+3. [Registering cookies](#registering-cookies)
+    - [Choosing a cookie category](#choosing-a-cookie-category)
+    - [Cookie definition](#cookie-definition)
+4. [Checking for consent](#checking-for-consent)
+    - [Using the Cookies facade](#using-the-cookies-facade)
+    - [Using dependency injection](#using-dependency-injection)
+5. [Customization](#customization)
+    - [The views](#the-views)
+    - [Styling](#styling)
+    - [Javascript](#javascript)
+    - [Textual content and translations](#textual-content-and-translations)
+6. [A few useful tips](#a-few-useful-tips)
+    - [Cookie Policy Details Page](#cookie-policy-details-page)
+    - [Let your users change their mind](#let-your-users-change-their-mind)
+    - [Storing user preferences for multiple sub-domains](#storing-user-preferences-for-multiple-sub-domains)
+    - [Keep it accessible](#keep-it-accessible)
+
 ## Installation
 
 ```bash
@@ -40,9 +61,9 @@ First, publish the package's files:
 
 1. Publish the configuration file: `php artisan vendor:publish --tag=laravel-cookie-consent-config`
 2. Publish the customizable views: `php artisan vendor:publish --tag=laravel-cookie-consent-views`
-3. Publish the translation file: `php artisan vendor:publish --tag=laravel-cookie-consent-lang`
+3. Publish the translation files: `php artisan vendor:publish --tag=laravel-cookie-consent-lang`
 
-More on [customization](#customizing-views) below.
+More on [customization](#customization) below.
 
 Now, we'll have to register and configure the used cookies. A good place to do so is in the `App\Providers\AppServiceProvider`'s `boot` method, but feel free to create your own `CookiesServiceProvider`.
 
@@ -97,11 +118,11 @@ Then, let's add consent scripts and modals to the application's views using the 
 </html>
 ```
 
-### Registering cookies
+## Registering cookies
 
 This package aims to centralize cookie declaration and documentation at the same place in order to keep projects maintainable. However, the suggested methodology is not mandatory. If you wish to queue cookies or execute code upon consent somewhere else in your app's codebase, feel free to do so: we have a few available methods that can come in handy when you'll need to [check if consent has been granted](#checking-for-consent) during the request's lifecycle.
 
-#### Choosing a cookie category
+### Choosing a cookie category
 
 All registered cookies are attached to a Cookie Category, which is a convenient way to group cookies under similar topics. The aimed objective is to add usability to the detailed information views by providing understandable and summarized sections.
 
@@ -160,15 +181,15 @@ return [
 ];
 ```
 
-#### Cookie definition
+### Cookie definition
 
 TBD
 
-### Checking for consent
+## Checking for consent
 
 There are several ways to check for explicit user consent, each of them being useful in different contexts.
 
-#### Using the `Cookies` facade
+### Using the `Cookies` facade
 
 The `Cookies` facade is automatically discovered when installing this package.
 
@@ -180,7 +201,7 @@ if(Cookies::hasConsentFor('my_cookie_name')) {
 }
 ```
 
-#### Using dependency injection
+### Using dependency injection
 
 Useful when working with methods resolved by Laravel's Service Container:
 
@@ -198,13 +219,13 @@ class FooController
 }
 ```
 
-### Customizing views
+## Customization
 
 Cookie notices are boring and this package's default design is no different. It has been built in a robust, accessible and neutral way so it could serve as many situations as possible.
 
 However, this world shouldn't be a boring place and even if cookie notices are part of a project's legal requirements, why not use it as an opportunity to bring a smile to your audience's face? Cookie modals are now integrated in every digital platform's user experience and therefore they should blend in accordingly: that's why we've built this package with full flexibility in our mind.
 
-#### The views
+### The views
 
 A good starting point is to take a look at this package's default markup. If not already published, you can access the views using `php artisan vendor:publish --tag=laravel-cookie-consent-views`, this will copy our blade files to your app's `resources/views/vendor/cookie-consent` directory.
 
@@ -222,13 +243,13 @@ In order to add buttons, we'd recommend using the package's `@cookieconsentbutto
 - `@cookieconsentbutton('accept.configuration')`: renders a button targetting this package's "consent to custom cookies selection" API route. Beware that this route requires the selected cookie categories as the request's payload ;
 - `@cookieconsentbutton('reset')`: renders a button targetting this package's "reset cookie configuration" API route.
 
-#### Styling
+### Styling
 
 As you probably noticed, we've included our design's CSS directly in the `cookies.blade.php` view using a `<style>` tag. You can move, remove or replace it if needed. In fact, we'd recommend adding your own styles using a proper CSS file loaded in the layout's `<head>` using a `<link>` tag or by adding Tailwind classes to the HTML markup.
 
 Our CSS is compiled from a SASS file included in this package's `resources/scss` directory. If that fits your workflow, feel free to use it as a starting point for your own implementation.
 
-#### Javascript
+### Javascript
 
 Keep in mind that cookie notices are supposed to work when Javascript is disabled. This package's base design only uses Javascript as an extra layer for a smoother User Experience, but its features do not rely on it. 
 
@@ -241,7 +262,7 @@ Since most implementations have the same needs, we've separated our Javascript c
     - `LaravelCookieConsent.reset()`
 2. A script implementing said library for our base design. Like our basic styling tag, this script is directly included in the `cookies.blade.php` view using a `<script>` tag. Feel free to remove it and add your own interactivity logic.
 
-#### Textual content and translations
+### Textual content and translations
 
 Most of the displayed strings are defined in the `cookieConsent::cookies` translation files. The package ships with a few supported locales, but if yours is not yet included we would greatly appreciate a PR.
 
@@ -305,7 +326,7 @@ Or, for even more customization, you can change its template situated in `resour
 
 If you're wondering why these buttons are wrapped in a `form` element: this way they'll work when JavaScript is disabled whilst preventing browser link prefetching.
 
-### Store user preferences for multiple sub-domains
+### Storing user preferences for multiple sub-domains
 
 By default, this package will store the user's preferences for the current domain. If you wish to prompt for consent only once and keep the user's choice across multiple sub-domains, you'll have to configure the `cookieconsent.cookie.domain` setting (located in `config/cookieconsent.php`) as follows:
 
