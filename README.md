@@ -87,7 +87,7 @@ public function boot()
         ->name('darkmode_enabled')
         ->description('This cookie helps us remember your preferences regarding the interface\'s brightness.')
         ->duration(120)
-        ->accepted(fn(Consent $add, MyDarkmode $darkmode) => $add->cookie(value: $darkmode->getDefaultValue()));
+        ->accepted(fn(Consent $consent, MyDarkmode $darkmode) => $consent->cookie(value: $darkmode->getDefaultValue()));
 
     // Register custom cookies under a custom "accessibility" category:
     Cookies::accessibility()

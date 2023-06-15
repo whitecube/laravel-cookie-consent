@@ -3,6 +3,7 @@
 namespace Whitecube\LaravelCookieConsent\Concerns;
 
 use Closure;
+use Illuminate\Support\Facades\App;
 use Whitecube\LaravelCookieConsent\Consent;
 
 trait HasConsentCallback
@@ -37,7 +38,7 @@ trait HasConsentCallback
     {
         $consent = new Consent($this);
 
-        call_user_func($this->callback, $consent);
+        App::call($this->callback, ['consent' => $consent]);
 
         return $consent;
     }
