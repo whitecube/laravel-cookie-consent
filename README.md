@@ -183,7 +183,90 @@ return [
 
 ### Cookie definition
 
-TBD
+Once a category has been targetted, you can start defining cookies in it using the following methods:
+
+```php
+Cookies::essentials()               // Targetting a category
+    ->name('darkmode_enabled')      // Defining a cookie
+    ->description('Lorem ipsum')    // Adding the cookie's description for display
+    ->duration(120);                // Adding the cookie's lifetime in minutes
+```
+
+Using these methods you'll have to define each cookie by calling a category each time. For convenience it is also possible to chain cookie definitions using the chainable `cookie(Closure|Cookie $cookie)` method:
+
+```php
+use Whitecube\LaravelCookieConsent\Cookie;
+
+Cookies::essentials()               // Targetting a category
+    ->cookie(function(Cookie $cookie) {
+        $cookie->name('darkmode_enabled')       // Defining a cookie
+            ->description('Lorem ipsum')        // Adding the cookie's description for display
+            ->duration(120);                    // Adding the cookie's lifetime in minutes
+    })
+    ->cookie(function(Cookie $cookie) {
+        $cookie->name('high_contrast_enabled')  // Defining a cookie
+            ->description('Lorem ipsum')        // Adding the cookie's description for display
+            ->duration(60 * 24 * 365);          // Adding the cookie's lifetime in minutes
+    });
+```
+
+#### `name(string $name)`
+#### `description(string $description)`
+#### `duration(int $minutes)`
+#### `accepted(Closure $callback)`
+
+The optional "accepted" callback gets invoked when consent is granted to the category a cookie is attached to. This happens once the user configures their cookie preferences but also each time an incoming request is handled afterwards.
+
+The callback receives at least one parameter, `Consent $consent`, which is an object used to configure consent output:
+
+- `script(string $tag)`: defines a script tag that will be added to the layout's `<head>` only when consent has been granted ;
+- `cookie(string $value, ?string $path = null, ?string $domain = null, ?bool $secure = null, bool $httpOnly = true, bool $raw = false, ?string $sameSite = null)`: defines a cookie that will be added to the response when consent has been granted. Note that it doesn't need a name and a duration anymore since those settings have already been defined using the `name()` and `duration()` methods described above.
+
+```php
+use Whitecube\LaravelCookieConsent\Consent;
+
+$cookie->accepted(function(Consent $consent) {
+    $consent->cookie(value: 'off')->script('<script src="' . asset('js/darkmode.js') . '"></script>');
+});
+```
+
+Other parameters can be type-hinted and will be resolved by Laravel's Service Container:
+
+```php
+use App\Services\MyDependencyService;
+use Whitecube\LaravelCookieConsent\Consent;
+
+$cookie->accepted(function(Consent $consent, MyDependencyService $service) {
+    $consent->script($service->getScriptTag());
+});
+```
+
+#### Custom cookie attributes
+
+When building your own cookie notice designs, you might need extra attributes on the `Cookie` instances. We've got you covered!
+
+```php
+$cookie->color = 'warning';
+
+echo $cookie->color; // "warning"
+```
+
+Behind the scenes, these magic attributes use the `setAttribute` and `getAttribute` methods:
+
+```php
+$cookie->setAttribute('icon', 'brightness');
+
+echo $cookie->getAttribute('icon'); // "brightness"
+```
+
+But since all other cookie definition methods are chainable, you can also call custom attributes as chainable methods:
+
+```php
+$cookie->subtitle('Darkmode preferences')->checkmark(true);
+
+echo $cookie->subtitle; // "brightness"
+echo $cookie->checkmark ? 'on' : 'off'; // "on"
+```
 
 ## Checking for consent
 
