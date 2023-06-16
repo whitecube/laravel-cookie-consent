@@ -425,7 +425,7 @@ By default, this package will store the user's preferences for the current domai
 ```php
 'cookie' => [
     // ...
-    'domain' => '.mydomain.com', // notice de leading "."
+    'domain' => '.mydomain.com', // notice the leading "."
 ],
 ```
 
