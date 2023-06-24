@@ -13,7 +13,9 @@ class ServiceProvider extends Provider
      */
     public function register()
     {
-        define('LCC_ROOT', realpath(__DIR__ . '/..'));
+        if (!defined('LCC_ROOT')) {
+            define('LCC_ROOT', realpath(__DIR__ . '/..'));
+        }
         
         $this->mergeConfigFrom(LCC_ROOT.'/config/cookieconsent.php', 'cookieconsent');
 
