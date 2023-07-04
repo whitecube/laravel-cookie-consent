@@ -400,6 +400,16 @@ Your website will need a dedicated "Cookie Policy" page containing extensive inf
 <p>...</p>
 ```
 
+A side note on `Carbon\CarbonInterval`'s `cascade` method: when working with years, some unexpected results could appear. By default, the `CarbonInterval` "year" factor will return 336 days instead of 365. It is possible to change this by defining your own factors (for instance in `App\Providers\AppServiceProvider`):
+
+```php
+\Carbon\CarbonInterval::setCascadeFactors([
+  'year' => [365,  'days']
+]);
+```
+
+More information on CarbonInterval's gotchas in [Constantin's blog post on Cahsingcode.dev](https://chasingcode.dev/blog/carbon-php-practical-examples/).
+
 ### Let your users change their mind
 
 Users should be able to change their consent settings at any time. No worries, with this package it is quite simple to achieve: generate a button that will reset the user's cookies and show the consent modal again.
