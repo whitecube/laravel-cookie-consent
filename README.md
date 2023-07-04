@@ -403,9 +403,9 @@ Your website will need a dedicated "Cookie Policy" page containing extensive inf
 A side note on `Carbon\CarbonInterval`'s `cascade` method: when working with years, some unexpected results could appear. By default, the `CarbonInterval` "year" factor will return 336 days instead of 365. It is possible to change this by defining your own factors (for instance in `App\Providers\AppServiceProvider`):
 
 ```php
-\Carbon\CarbonInterval::setCascadeFactors([
-  'year' => [365,  'days']
-]);
+$factors = \Carbon\CarbonInterval::getCascadeFactors();
+$factors['years'] = [365, 'dayz'];
+\Carbon\CarbonInterval::setCascadeFactors($factors);
 ```
 
 More information on CarbonInterval's gotchas in [Constantin's blog post on Cahsingcode.dev](https://chasingcode.dev/blog/carbon-php-practical-examples/).
