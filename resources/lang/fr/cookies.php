@@ -21,7 +21,7 @@ return [
         ],
         'analytics' => [
             'title' => 'Cookies analystiques',
-            'description' => 'Nous utilisons ces cookies uniquement à des fins de recherche interne sur la manière dont nous pouvons améliorer le service que nous offrons à tous nos utilisateurs. Ces cookies permettent d\'évaluer la manière dont vous interagissez avec notre site web — en tant qu\'utilisateur anonyme (les données recueillies ne permettent pas de vous identifier personnellement).',
+            'description' => 'Nous utilisons ces cookies uniquement à des fins de recherche interne sur la manière dont nous pouvons améliorer le service que nous offrons à tous nos utilisateurs. Ces cookies permettent d\'évaluer la manière dont vous interagissez avec notre site web.',
         ],
         'optional' => [
             'title' => 'Cookies optionnels',

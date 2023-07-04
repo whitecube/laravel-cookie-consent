@@ -21,7 +21,7 @@ return [
         ],
         'analytics' => [
             'title' => 'Analysecookies',
-            'description' => 'We gebruiken deze uitsluitend voor intern onderzoek om na te gaan hoe we de dienstverlening aan al onze gebruikers kunnen verbeteren. De cookies analyseren hoe u met onze website communiceert — als anonieme gebruiker (u wordt niet persoonlijk geïdentificeerd op basis van de verzamelde gegevens).',
+            'description' => 'We gebruiken deze uitsluitend voor intern onderzoek om na te gaan hoe we de dienstverlening aan al onze gebruikers kunnen verbeteren. De cookies analyseren hoe u met onze website communiceert.',
         ],
         'optional' => [
             'title' => 'Optionele cookies',

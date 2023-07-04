@@ -21,7 +21,7 @@ return [
         ],
         'analytics' => [
             'title' => 'Analytics cookies',
-            'description' => 'We use these for internal research on how we can improve the service we provide for all our users. These cookies assess how you interact with our website – as an anonymous user (the gathered data does not identify you personally).',
+            'description' => 'We use these for internal research on how we can improve the service we provide for all our users. These cookies assess how you interact with our website.',
         ],
         'optional' => [
             'title' => 'Optional cookies',
