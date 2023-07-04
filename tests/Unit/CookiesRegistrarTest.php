@@ -2,14 +2,14 @@
 
 use Whitecube\LaravelCookieConsent\CookiesRegistrar;
 use Whitecube\LaravelCookieConsent\CookiesCategory;
-use Whitecube\LaravelCookieConsent\OperationalCookiesCategory;
+use Whitecube\LaravelCookieConsent\EssentialCookiesCategory;
 use Whitecube\LaravelCookieConsent\AnalyticCookiesCategory;
 
 it('can create and access consent categories', function () {
     $registrar = new CookiesRegistrar();
 
-    expect($operational = $registrar->operational())->toBeInstanceOf(OperationalCookiesCategory::class);
-    expect($operational->key())->toBe('operational');
+    expect($essentials = $registrar->essentials())->toBeInstanceOf(EssentialCookiesCategory::class);
+    expect($essentials->key())->toBe('essentials');
 
     expect($analytics = $registrar->analytics())->toBeInstanceOf(AnalyticCookiesCategory::class);
     expect($analytics->key())->toBe('analytics');
@@ -44,13 +44,13 @@ it('cannot return an undefined consent category', function() {
 
 it('can return all defined consent categories', function() {
     $registrar = new CookiesRegistrar();
-    $registrar->operational();
+    $registrar->essentials();
     $registrar->category('custom');
     $registrar->analytics();
 
     $results = $registrar->getCategories();
     expect($results)->toHaveLength(3);
-    expect($results[0]->key())->toBe('operational');
+    expect($results[0]->key())->toBe('essentials');
     expect($results[1]->key())->toBe('custom');
     expect($results[2]->key())->toBe('analytics');
 });

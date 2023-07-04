@@ -11,10 +11,9 @@
 |
 */
 
-require_once(__DIR__ . '/PhpUnitTestCase.php');
 require_once(__DIR__ . '/OrchestraTestCase.php');
 
-uses(Tests\PhpUnitTestCase::class)->in('Unit');
+uses(Tests\OrchestraTestCase::class)->in('Unit');
 uses(Tests\OrchestraTestCase::class)->in('Feature');
 
 /*

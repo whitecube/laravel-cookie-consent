@@ -28,7 +28,7 @@ it('can register a cookies group', function () {
 
     expect($category->group(fn(CookiesGroup $group) => $group))->toBe($category);
 
-    $results = $category->getCookies();
+    $results = $category->getDefined();
     expect($results)->toHaveLength(1);
 });
 
