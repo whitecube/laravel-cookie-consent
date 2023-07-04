@@ -23,7 +23,7 @@ class AnalyticCookiesCategory extends CookiesCategory
                     ->description(__('cookieConsent::cookies.defaults._ga_ID'))
                 )
                 ->cookie(fn(Cookie $cookie) => $cookie->name('_gid')
-                    ->duration(26 * 60)
+                    ->duration(24 * 60)
                     ->description(__('cookieConsent::cookies.defaults._gid'))
                 )
                 ->cookie(fn(Cookie $cookie) => $cookie->name('_gat')
