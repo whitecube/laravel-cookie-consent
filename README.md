@@ -377,7 +377,7 @@ Your website will need a dedicated "Cookie Policy" page containing extensive inf
 
 @foreach(Cookies::getCategories() as $category)
 <table>
-    <caption>{{ $category->label }}</caption>
+    <caption>{{ $category->title }}</caption>
     <thead>
         <tr>
             <th>Cookie</th>
