@@ -22,13 +22,18 @@
                 </svg>
             </a>
         <div class="cookies__expandable cookies__expandable--custom" id="cookies-policy-customize">
-            <form action="{{ route('cookieconsent.accept.configuration')}}" method="post" class="cookies__customize">
+            <form action="{{ route('cookieconsent.accept.configuration') }}" method="post" class="cookies__customize">
                 @csrf
                 <div class="cookies__sections">
                     @foreach($cookies->getCategories() as $category)
                     <div class="cookies__section">
                         <label for="cookies-policy-check-{{ $category->key() }}" class="cookies__category">
-                            <input type="checkbox" name="categories[]" value="{{ $category->key() }}" id="cookies-policy-check-{{ $category->key() }}"{{ $category->key() === 'essentials' ? ' checked disabled' : '' }}/>
+                            @if ($category->key() === 'essentials')
+                                <input type="hidden" name="categories[]" value="{{ $category->key() }}" />
+                                <input type="checkbox" name="categories[]" value="{{ $category->key() }}" id="cookies-policy-check-{{ $category->key() }}" checked="checked" disabled="disabled" />
+                            @else
+                                <input type="checkbox" name="categories[]" value="{{ $category->key() }}" id="cookies-policy-check-{{ $category->key() }}" />
+                            @endif
                             <span class="cookies__box">
                                 <strong class="cookies__label">{{ $category->title }}</strong>
                             </span>

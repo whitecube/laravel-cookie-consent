@@ -37,8 +37,7 @@ function initCookies() {
 
 function configureCookies(event)  {
     event.preventDefault();
-    var formData = new FormData(event.target)
-    window.LaravelCookieConsent.configure(formData)
+    window.LaravelCookieConsent.configure(new FormData(event.target));
     close();
 }
 
@@ -93,7 +92,7 @@ function toggleExpand(event, el, hide = true) {
     hideNotice(hide, isOpen)
 }
 
-function  changeText(hide, isOpen, event) {
+function changeText(hide, isOpen, event) {
     if(hide) return;
 
     event.target.textContent = isOpen

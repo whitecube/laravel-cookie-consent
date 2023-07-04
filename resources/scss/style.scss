@@ -217,7 +217,7 @@
             margin-top: -0.7em;
             background: #E7E8E9;
             z-index: 0;
-            transition: background 200ms ease-out;
+            transition: background 200ms ease-out, opacity 200ms ease-out;
         }
         &:before {
             right: 0.75em;
@@ -234,6 +234,10 @@
 
     &__category input:checked + .cookies__box:after {
         background: #7959EF;
+        opacity: 1;
+    }
+
+    &__category input:disabled + .cookies__box:after {
         opacity: 0.6;
     }
 

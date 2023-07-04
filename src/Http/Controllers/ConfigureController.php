@@ -9,11 +9,11 @@ class ConfigureController
 {
     public function __invoke(Request $request, CookiesManager $cookies)
     {
-        $categories = $request->collect()
-            ->filter(function($value, $key) use ($cookies) {
-                return $cookies->hasCategory($key) && filter_var($value, FILTER_VALIDATE_BOOLEAN);
-            })
-            ->keys()
+        $categories = collect($request->get('categories', []))
+            ->prepend('essentials')
+            ->unique()
+            ->filter(fn($key) => $cookies->hasCategory($key))
+            ->values()
             ->all();
 
         return $cookies->accept($categories)->toResponse($request);
