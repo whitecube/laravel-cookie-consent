@@ -13,7 +13,8 @@ class EssentialCookiesCategory extends CookiesCategory
     {
         return $this->cookie(function(Cookie $cookie) {
             $cookie->name(Config::get('cookieconsent.cookie.name'))
-                ->duration(Config::get('cookieconsent.cookie.duration'));
+                ->duration(Config::get('cookieconsent.cookie.duration'))
+                ->description(__('cookieConsent::cookies.defaults.consent'));
         });
     }
 
@@ -24,7 +25,8 @@ class EssentialCookiesCategory extends CookiesCategory
     {
         return $this->cookie(function(Cookie $cookie) {
             $cookie->name(Config::get('session.cookie'))
-                ->duration(Config::get('session.lifetime'));
+                ->duration(Config::get('session.lifetime'))
+                ->description(__('cookieConsent::cookies.defaults.session'));
         });
     }
 
@@ -35,7 +37,8 @@ class EssentialCookiesCategory extends CookiesCategory
     {
         return $this->cookie(function(Cookie $cookie) {
             $cookie->name('XSRF-TOKEN')
-                ->duration(Config::get('session.lifetime'));
+                ->duration(Config::get('session.lifetime'))
+                ->description(__('cookieConsent::cookies.defaults.csrf'));
         });
     }
 }

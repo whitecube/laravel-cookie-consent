@@ -28,4 +28,14 @@ return [
             'description' => 'Deze cookies voegen functies toe die uw gebruikerservaring kunnen verbeteren, maar hun afwezigheid heeft geen invloed op uw vermogen om door onze website te bladeren.',
         ],
     ],
+
+    'defaults' => [
+        'consent' => 'Opslaan van de cookie-toestemmingsvoorkeuren van de gebruiker.',
+        'session' => 'Identificatie van de browsersessie van de gebruiker.',
+        'csrf' => 'Beschermen van de gebruiker en onze site tegen imitatie-aanvallen tijdens server interacties.',
+        '_ga' => 'Hoofdcookie gebruikt door Google Analytics, waarmee de ene bezoeker van de andere kan worden onderscheiden.',
+        '_ga_ID' => 'Gebruikt door Google Analytics.',
+        '_gid' => 'Gebruikt door Google Analytics om een gebruiker te identificeren.',
+        '_gat' => 'Gebruikt door Google Analytics om de aanvraag hoeveelheid te handhaven.',
+    ],
 ];

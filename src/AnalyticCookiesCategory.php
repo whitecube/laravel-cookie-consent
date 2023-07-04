@@ -13,8 +13,10 @@ class AnalyticCookiesCategory extends CookiesCategory
     {
         $this->group(function(CookiesGroup $group) use ($id) {
             $group->name(static::GOOGLE_ANALYTICS)
-                ->cookie(fn(Cookie $cookie) => $cookie->name('_ga')->duration(2 * 365 * 24 * 60))
-                ->cookie(fn(Cookie $cookie) => $cookie->name('_ga_' . strtoupper($id))->duration(2 * 365 * 24 * 60))
+                ->cookie(fn(Cookie $cookie) => $cookie->name('_ga')->duration(2 * 365 * 24 * 60)->description(__('cookieConsent::cookies.defaults._ga')))
+                ->cookie(fn(Cookie $cookie) => $cookie->name('_ga_' . strtoupper($id))->duration(2 * 365 * 24 * 60)->description(__('cookieConsent::cookies.defaults._ga_ID')))
+                ->cookie(fn(Cookie $cookie) => $cookie->name('_gid')->duration(26 * 60)->description(__('cookieConsent::cookies.defaults._gid')))
+                ->cookie(fn(Cookie $cookie) => $cookie->name('_gat')->duration(1)->description(__('cookieConsent::cookies.defaults._gat')))
                 ->accepted(function(Consent $consent) use ($id) {
                     $consent->script('<script async src="https://www.googletagmanager.com/gtag/js?id='.$id.'"></script>')
                         ->script('<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag(\'js\',new Date());gtag(\'config\',\''.$id.'\');</script>');
