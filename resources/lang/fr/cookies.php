@@ -34,7 +34,7 @@ return [
         'session' => 'Identification de la session de navigation de l\'utilisateur.',
         'csrf' => 'Protection de l\'utilisateur et notre site contre les attaques d\'usurpation d\'identité lors des requêtes.',
         '_ga' => 'Cookie principal utilisé par Google Analytics, permettant de distinguer un visiteur d\'un autre.',
-        '_ga_ID' => 'Utilisé par Google Analytics.',
+        '_ga_ID' => 'Utilisé par Google Analytics pour conserver l\'état de la session.',
         '_gid' => 'Utilisé par Google Analytics pour identifier un visiteur.',
         '_gat' => 'Utilisé par Google Analytics pour limiter le taux de demande.',
     ],

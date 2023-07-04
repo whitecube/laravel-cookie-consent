@@ -34,7 +34,7 @@ return [
         'session' => 'Identificatie van de browsersessie van de gebruiker.',
         'csrf' => 'Beschermen van de gebruiker en onze site tegen imitatie-aanvallen tijdens server interacties.',
         '_ga' => 'Hoofdcookie gebruikt door Google Analytics, waarmee de ene bezoeker van de andere kan worden onderscheiden.',
-        '_ga_ID' => 'Gebruikt door Google Analytics.',
+        '_ga_ID' => 'Gebruikt door Google Analytics om de sessiestatus te behouden.',
         '_gid' => 'Gebruikt door Google Analytics om een gebruiker te identificeren.',
         '_gat' => 'Gebruikt door Google Analytics om de aanvraag hoeveelheid te handhaven.',
     ],
