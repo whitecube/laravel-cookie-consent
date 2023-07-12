@@ -20,7 +20,7 @@ return [
             'description' => 'Nous devons utiliser certains cookies pour pouvoir faire fonctionner certaines pages web. C\'est la raison pour laquelle ils ne nécessitent pas votre consentement.',
         ],
         'analytics' => [
-            'title' => 'Cookies analystiques',
+            'title' => 'Cookies analytiques',
             'description' => 'Nous utilisons ces cookies uniquement à des fins de recherche interne sur la manière dont nous pouvons améliorer le service que nous offrons à tous nos utilisateurs. Ces cookies permettent d\'évaluer la manière dont vous interagissez avec notre site web.',
         ],
         'optional' => [
