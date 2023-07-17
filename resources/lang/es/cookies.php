@@ -30,12 +30,12 @@ return [
     ],
 
     'defaults' => [
-        'consent' => 'Used to store the user\'s cookie consent preferences.',
-        'session' => 'Used to identify the user\'s browsing session.',
-        'csrf' => 'Used to secure both the user and our website against cross-site request forgery attacks.',
-        '_ga' => 'Main cookie used by Google Analytics, enables a service to distinguish one visitor from another.',
-        '_ga_ID' => 'Used by Google Analytics to persist session state.',
-        '_gid' => 'Used by Google Analytics to identify the user.',
-        '_gat' => 'Used by Google Analytics to throttle the request rate.',
-    ],
+        'consent' => 'Se utiliza para almacenar las preferencias de consentimiento de cookies del usuario.',
+        'session' => 'Se utiliza para identificar la sesión de navegación del usuario.',
+        'csrf' => 'Se utiliza para asegurar tanto al usuario como a nuestro sitio web contra ataques de falsificación de solicitudes entre sitios.',
+        '_ga' => 'Cookie principal utilizada por Google Analytics, permite distinguir a un visitante de otro.',
+        '_ga_ID' => 'Utilizada por Google Analytics para persistir el estado de la sesión.',
+        '_gid' => 'Utilizada por Google Analytics para identificar al usuario.',
+        '_gat' => 'Utilizada por Google Analytics para limitar la tasa de solicitudes.',
+    ]
 ];
