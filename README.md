@@ -118,6 +118,10 @@ Then, let's add consent scripts and modals to the application's views using the 
 </html>
 ```
 
+### Middleware
+
+Add `AddQueuedCookiesToResponse` to your `$middleware` or `$middlewareGroups`. The controller `Whitecube\LaravelCookieConsent\Http\Controllers\ResetController` uses cookie queue to reset cookies.
+
 ## Registering cookies
 
 This package aims to centralize cookie declaration and documentation at the same place in order to keep projects maintainable. However, the suggested methodology is not mandatory. If you wish to queue cookies or execute code upon consent somewhere else in your app's codebase, feel free to do so: we have a few available methods that can come in handy when you'll need to [check if consent has been granted](#checking-for-consent) during the request's lifecycle.
