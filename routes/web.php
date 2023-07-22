@@ -13,7 +13,8 @@ Route::group([
     'prefix' => config('cookieconsent.url.prefix'),
 ], function() {
     Route::get('script', ScriptController::class)
-        ->name('script');
+        ->name('script')
+        ->middleware('cache.headers:public;max_age=2628000;etag');
 
     Route::post('accept-all', AcceptAllController::class)
         ->name('accept.all');
