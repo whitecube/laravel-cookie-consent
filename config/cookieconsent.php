@@ -16,6 +16,7 @@ return [
 
     'url' => [
         'domain' => null,
+        'middleware' => ['web'],
         'prefix' => 'cookie-consent',
     ],
 
