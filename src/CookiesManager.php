@@ -160,7 +160,7 @@ class CookiesManager
             value: json_encode($this->preferences),
             minutes: config('cookieconsent.cookie.duration'),
             domain: config('cookieconsent.cookie.domain'),
-            secure: true
+            secure: (env('APP_ENV') == 'local') ? false : true
         );
     }
 
