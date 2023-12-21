@@ -65,7 +65,7 @@ First, publish the package's files:
     'providers' => ServiceProvider::defaultProviders()->merge([
         // ...
         App\Providers\RouteServiceProvider::class,
-        // Add the line below AFTER "App\Providers\RouteServiceProvider::class,"
+        // IMPORTANT: add the following line AFTER "App\Providers\RouteServiceProvider::class,"
         App\Providers\CookiesServiceProvider::class,
     ])->toArray(),
     ```
