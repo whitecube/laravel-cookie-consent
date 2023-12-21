@@ -78,7 +78,7 @@ If you want to customize the consent modal's views:
 
 More on [customization](#customization) below.
 
-Now, we'll have to register and configure the used cookies in the freshly published `App\Providers\CookiesServiceProvider`:
+Now, we'll have to register and configure the used cookies in the freshly published `App\Providers\CookiesServiceProvider::registerCookies()` method:
 
 ```php
 namespace App\Providers;
