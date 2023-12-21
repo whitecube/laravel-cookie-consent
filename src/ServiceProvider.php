@@ -32,6 +32,10 @@ class ServiceProvider extends Provider
     public function boot()
     {
         $this->publishes([
+            LCC_ROOT.'/stubs/CookiesServiceProvider.php' => app_path('Providers/CookiesServiceProvider.php'),
+        ], 'laravel-cookie-consent-service-provider');
+
+        $this->publishes([
             LCC_ROOT.'/config/cookieconsent.php' => config_path('cookieconsent.php'),
         ], 'laravel-cookie-consent-config');
 

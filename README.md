@@ -59,41 +59,57 @@ This package will auto-register its service provider.
 
 First, publish the package's files:
 
-1. Publish the configuration file: `php artisan vendor:publish --tag=laravel-cookie-consent-config`
-2. Publish the customizable views: `php artisan vendor:publish --tag=laravel-cookie-consent-views`
-3. Publish the translation files: `php artisan vendor:publish --tag=laravel-cookie-consent-lang`
+1. Publish the `CookiesServiceProvider` file: `php artisan vendor:publish --tag=laravel-cookie-consent-service-provider`
+2. Add the Service Provider to the `providers` array in `config/app.php`:
+    ```php
+    'providers' => ServiceProvider::defaultProviders()->merge([
+        // ...
+        App\Providers\RouteServiceProvider::class,
+        // Add the line below AFTER "App\Providers\RouteServiceProvider::class,"
+        App\Providers\CookiesServiceProvider::class,
+    ])->toArray(),
+    ```
+3. Publish the configuration file: `php artisan vendor:publish --tag=laravel-cookie-consent-config`
+
+If you want to customize the consent modal's views:
+
+1. Publish the customizable views: `php artisan vendor:publish --tag=laravel-cookie-consent-views`
+2. Publish the translation files: `php artisan vendor:publish --tag=laravel-cookie-consent-lang`
 
 More on [customization](#customization) below.
 
-Now, we'll have to register and configure the used cookies. A good place to do so is in the `App\Providers\AppServiceProvider`'s `boot` method, but feel free to create your own `CookiesServiceProvider`.
+Now, we'll have to register and configure the used cookies in the freshly published `App\Providers\CookiesServiceProvider`:
 
 ```php
+namespace App\Providers;
+
 use Whitecube\LaravelCookieConsent\Consent;
 use Whitecube\LaravelCookieConsent\Facades\Cookies;
+use Whitecube\LaravelCookieConsent\CookiesServiceProvider as ServiceProvider;
 
-public function boot()
+class CookiesServiceProvider extends ServiceProvider
 {
-    // Register Laravel's base cookies under the "required" cookies section:
-    Cookies::essentials()
-        ->session()
-        ->csrf();
+    /**
+     * Define the cookies users should be aware of.
+     */
+    protected function registerCookies(): void
+    {
+        // Register Laravel's base cookies under the "required" cookies section:
+        Cookies::essentials()
+            ->session()
+            ->csrf();
 
-    // Register all Analytics cookies at once using one single shorthand method:
-    Cookies::analytics()
-        ->google(env('GOOGLE_ANALYTICS_ID'));
-
-    // Register custom cookies under the pre-existing "optional" category:
-    Cookies::optional()
-        ->name('darkmode_enabled')
-        ->description('This cookie helps us remember your preferences regarding the interface\'s brightness.')
-        ->duration(120)
-        ->accepted(fn(Consent $consent, MyDarkmode $darkmode) => $consent->cookie(value: $darkmode->getDefaultValue()));
-
-    // Register custom cookies under a custom "accessibility" category:
-    Cookies::accessibility()
-        ->name('high_contrast_enabled')
-        ->description('This cookie helps us remember your preferences regarding color contrast.')
-        ->duration(60 * 24 * 365);
+        // Register all Analytics cookies at once using one single shorthand method:
+        Cookies::analytics()
+            ->google(env('GOOGLE_ANALYTICS_ID'));
+    
+        // Register custom cookies under the pre-existing "optional" category:
+        Cookies::optional()
+            ->name('darkmode_enabled')
+            ->description('This cookie helps us remember your preferences regarding the interface\'s brightness.')
+            ->duration(120);
+            ->accepted(fn(Consent $consent, MyDarkmode $darkmode) => $consent->cookie(value: $darkmode->getDefaultValue()));
+    }
 }
 ```
 
