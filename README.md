@@ -60,7 +60,7 @@ This package will auto-register its service provider.
 First, publish the package's files:
 
 1. Publish the `CookiesServiceProvider` file: `php artisan vendor:publish --tag=laravel-cookie-consent-service-provider`
-2. Add the Service Provider to the `providers` array in `config/app.php`:
+2. Register the Service Provider in your application. For applications using Laravel 9 or 10, add the Service Provider to the `providers` array in `config/app.php`:
     ```php
     'providers' => ServiceProvider::defaultProviders()->merge([
         // ...
@@ -68,6 +68,14 @@ First, publish the package's files:
         // IMPORTANT: add the following line AFTER "App\Providers\RouteServiceProvider::class,"
         App\Providers\CookiesServiceProvider::class,
     ])->toArray(),
+    ```
+
+    For applications running Laravel 11, add the Service Provider to the array in `bootstrap/providers.php`:
+    ```php
+    return [
+        App\Providers\AppServiceProvider::class,
+        App\Providers\CookiesServiceProvider::class,
+    ];
     ```
 3. Publish the configuration file: `php artisan vendor:publish --tag=laravel-cookie-consent-config`
 
