@@ -115,7 +115,7 @@ class CookiesServiceProvider extends ServiceProvider
         Cookies::optional()
             ->name('darkmode_enabled')
             ->description('This cookie helps us remember your preferences regarding the interface\'s brightness.')
-            ->duration(120);
+            ->duration(120)
             ->accepted(fn(Consent $consent, MyDarkmode $darkmode) => $consent->cookie(value: $darkmode->getDefaultValue()));
     }
 }
