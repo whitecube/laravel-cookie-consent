@@ -37,10 +37,18 @@ class LaravelCookieConsent {
         }
 
         data.scripts.forEach(script => {
+            const scriptRegex = /<script.*<\/script>/;
+            if (!scriptRegex.test(script)) {
+                console.error('Invalid script tag: ' + script);
+            }
             let tmp = document.createElement('div');
             tmp.innerHTML = script;
 
-            let tag = tmp.querySelector('script')
+            let tag = document.createElement('script');
+            tag.textContent = tmp.querySelector('script').textContent;
+            for (const attr of tmp.querySelector('script').attributes) {
+                tag.setAttribute(attr.name, attr.value);
+            }
             tag.setAttribute('data-cookie-consent', true);
 
             document.head.appendChild(tag);
