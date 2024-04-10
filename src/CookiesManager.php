@@ -230,7 +230,7 @@ class CookiesManager
     /**
      * Output a single cookie consent action button.
      */
-    public function renderButton(string $action, ?string $label = null, array $attributes = []): string
+    public function renderButton(string $action, ?string $label = null, array $attributes = [], array $btnattributes = []): string
     {
         $url = match ($action) {
             'accept.all' => route('cookieconsent.accept.all'),
@@ -259,10 +259,19 @@ class CookiesManager
             ->map(fn($value, $attribute) => $attribute . '="' . $value . '"')
             ->implode(' ');
 
+        if(! ($btnattributes['class'] ?? null)) {
+            $btnattributes['class'] = $basename . '__link';
+        }
+
+        $btnattributes = collect($btnattributes)
+            ->map(fn($value, $attribute) => $attribute . '="' . $value . '"')
+            ->implode(' ');
+
         return view('cookie-consent::button', [
             'url' => $url,
             'label' => $label ?? $action, // TODO: use lang file
             'attributes' => $attributes,
+            'btnattributes' => $btnattributes,
             'basename' => $basename,
         ])->render();
     }
