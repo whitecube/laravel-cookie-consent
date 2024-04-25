@@ -37,5 +37,6 @@ return [
         '_ga_ID' => 'Koristi ga Google Analytics za održavanje stanja sesije.',
         '_gid' => 'Koristi Google Analytics za identifikaciju korisnika.',
         '_gat' => 'Koristi ga Google Analytics za smanjenje stope zahtjeva.',
+        'fbpx' => 'Facebookov piksel je dio koda koji prati interakcije korisnika s web-mjestom, omogućavajući Facebooku da isporučuje ciljane oglase tim korisnicima na temelju njihova ponašanja pri pregledavanju.',
     ],
 ];

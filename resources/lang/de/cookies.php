@@ -36,6 +36,7 @@ return [
         '_ga' => 'Haupt-Cookie, das von Google Analytics verwendet wird und es dem Dienst ermöglicht, einen Besucher von einem anderen zu unterscheiden.',
         '_ga_ID' => 'Wird von Google Analytics verwendet, um den Sitzungsstatus zu erhalten.',
         '_gid' => 'Wird von Google Analytics verwendet, um den Benutzer zu identifizieren.',
-        '_gat' => 'Wird von Google Analytics verwendet, um die Abfragerate zu drosseln.',
+        '_gat' => 'Wird von Google Analytics verwendet, um die Abfragerate zu drosseln.',+
+        'fbpx' => 'Das Facebook-Pixel ist ein Code-Schnipsel, der die Interaktionen von Benutzern mit einer Website verfolgt und es Facebook ermöglicht, gezielte Anzeigen basierend auf ihrem Browserverhalten an diese Benutzer zu liefern.',
     ],
 ];

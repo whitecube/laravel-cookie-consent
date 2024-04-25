@@ -37,5 +37,6 @@ return [
         '_ga_ID' => 'Used by Google Analytics to persist session state.',
         '_gid' => 'Used by Google Analytics to identify the user.',
         '_gat' => 'Used by Google Analytics to throttle the request rate.',
+        'fbpx' => 'Facebook Pixel is a piece of code that tracks users\' interactions with a website, allowing Facebook to deliver targeted ads to those users based on their browsing behavior.',
     ],
 ];

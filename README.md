@@ -109,7 +109,8 @@ class CookiesServiceProvider extends ServiceProvider
 
         // Register all Analytics cookies at once using one single shorthand method:
         Cookies::analytics()
-            ->google(env('GOOGLE_ANALYTICS_ID'));
+            ->google(env('GOOGLE_ANALYTICS_ID'))
+            ->facebook(env('FACEBOOK_PIXEL_ID'));
     
         // Register custom cookies under the pre-existing "optional" category:
         Cookies::optional()
@@ -159,6 +160,7 @@ There are 3 base categories included in this package:
     - `Cookies::essentials()->csrf()`: registers [Laravel's "XSRF-TOKEN"](https://laravel.com/docs/10.x/csrf) cookie.
 2. `Cookies::analytics()`: lists all cookies used for statistics and data collection.
     - `Cookies::analytics()->google(string $trackingId)`: automatically lists all Google Analytics' cookies. **This will also automatically register Google Analytics' JS scripts and inject them to the layout's `<head>` only when consent is granted.** Convenient, huh?
+    - `Cookies::analytics()->facebook(string $trackingId)`: automatically allows for registering and keeping track of Facebook Pixel user settings. **This will also automatically register the JS scripts and inject it to the layout's `<head>` only when consent is granted.**
 3. `Cookies::optional()`: lists all cookies that serve some kind of utility feature. Since this category can ben opted-out, linked features should always check if consent has been granted before queuing or relying on their cookies.
 
 You are free to add as many custom categories as you want. To do so, simply call the `category(string $key, ?Closure $maker = null)` method on the `Cookies` facade:

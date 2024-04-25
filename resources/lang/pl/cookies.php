@@ -37,5 +37,6 @@ return [
         '_ga_ID' => 'Używany przez Google Analytics do utrzymania infromacji o stanie sesji.',
         '_gid' => 'Używany przez Google Analytics do identyfikacji użytkownika.',
         '_gat' => 'Używany przez Google Analytics do ograniczania częstotliwości żądań.',
+        'fbpx' => 'Piksel Facebooka to kawałek kodu śledzący interakcje użytkowników z witryną, pozwalający Facebookowi dostarczać ukierunkowane reklamy tym użytkownikom na podstawie ich zachowań podczas przeglądania.',
     ],
 ];
