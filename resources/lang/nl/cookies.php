@@ -37,5 +37,6 @@ return [
         '_ga_ID' => 'Gebruikt door Google Analytics om de sessiestatus te behouden.',
         '_gid' => 'Gebruikt door Google Analytics om een gebruiker te identificeren.',
         '_gat' => 'Gebruikt door Google Analytics om de aanvraag hoeveelheid te handhaven.',
+        'fbpx' => 'Facebook Pixel is een stukje code dat de interacties van gebruikers met een website bijhoudt, waardoor Facebook gerichte advertenties kan leveren aan die gebruikers op basis van hun browsegedrag.',
     ],
 ];

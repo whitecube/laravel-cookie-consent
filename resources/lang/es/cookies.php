@@ -37,5 +37,6 @@ return [
         '_ga_ID' => 'Utilizada por Google Analytics para persistir el estado de la sesión.',
         '_gid' => 'Utilizada por Google Analytics para identificar al usuario.',
         '_gat' => 'Utilizada por Google Analytics para limitar la tasa de solicitudes.',
+        'fbpx' => 'El píxel de Facebook es un fragmento de código que rastrea las interacciones de los usuarios con un sitio web, permitiendo que Facebook entregue anuncios dirigidos a esos usuarios según su comportamiento de navegación.',
     ]
 ];

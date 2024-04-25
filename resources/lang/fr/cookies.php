@@ -37,5 +37,6 @@ return [
         '_ga_ID' => 'Utilisé par Google Analytics pour conserver l\'état de la session.',
         '_gid' => 'Utilisé par Google Analytics pour identifier un visiteur.',
         '_gat' => 'Utilisé par Google Analytics pour limiter le taux de demande.',
+        'fbpx' => 'Le pixel Facebook est un morceau de code qui suit les interactions des utilisateurs avec un site web, permettant à Facebook de diffuser des annonces ciblées à ces utilisateurs en fonction de leur comportement de navigation.',
     ],
 ];
