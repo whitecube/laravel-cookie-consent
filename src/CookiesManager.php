@@ -266,4 +266,14 @@ class CookiesManager
             'basename' => $basename,
         ])->render();
     }
+
+    /**
+     * Output a table with all the cookies infos.
+     */
+    public function renderInfo(): string
+    {
+        return view('cookie-consent::info', [
+            'cookies' => $this->registrar,
+        ])->render();
+    }
 }

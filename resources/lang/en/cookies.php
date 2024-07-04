@@ -13,6 +13,13 @@ return [
         'less' => 'Less details',
     ],
     'save' => 'Save settings',
+    'cookie' => 'Cookie',
+    'purpose' => 'Purpose',
+    'duration' => 'Duration',
+    'year' => 'Year|Years',
+    'day' => 'Day|Days',
+    'hour' => 'Hour|Hours',
+    'minute' => 'Minute|Minutes',
 
     'categories' => [
         'essentials' => [
