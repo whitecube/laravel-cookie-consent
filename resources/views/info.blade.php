@@ -11,7 +11,7 @@
         <tr>
             <td>{{ $cookie->name }}</td>
             <td>{{ $cookie->description }}</td>
-            <td>{{ $cookie->durationInHumanReadableFormat() }}</td>
+            <td>{{ \Carbon\CarbonInterval::minutes($cookie->duration)->cascade() }}</td>
         </tr>
     @endforeach
     </tbody>
