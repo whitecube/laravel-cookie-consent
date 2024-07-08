@@ -463,6 +463,17 @@ By default, this package will store the user's preferences for the current domai
 ],
 ```
 
+### Injecting the cookies inside a legal page
+
+To provide detailed cookie information within a legal page, such as a terms of service or privacy policy page, you can inject a formatted table listing cookie names, descriptions, and durations. 
+
+This can be done using the `@cookieconsentinfo` Blade directive, or you can place the directive directly within a WYSIWYG editor and later replace it using the following method:
+```blade
+{!! Cookies::replaceInfoTag($wysiwyg) !!}
+```
+This will automatically generate and insert the required cookie information, ensuring your legal documentation remains up-to-date and compliant.
+
+
 ### Keep it accessible
 
 When defining your own views & styles, keep in mind that cookie notices are obstacles for the application's overall accessibility. Also, they should work even when JavaScript is not enabled, that's why this package mainly works using API routes and AJAX calls in order to enhance user experience.
