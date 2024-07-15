@@ -111,7 +111,9 @@ class CookiesManager
             : [$key];
 
         foreach($cookies as $cookie) {
-            if(! boolval($this->preferences[$cookie] ?? false)) return false;
+            if(!($this->preferences[$cookie] ?? false)) {
+                return false;
+            }
         }
 
         return true;
@@ -160,7 +162,7 @@ class CookiesManager
             value: json_encode($this->preferences),
             minutes: config('cookieconsent.cookie.duration'),
             domain: config('cookieconsent.cookie.domain'),
-            secure: (env('APP_ENV') == 'local') ? false : true
+            secure: !((env('APP_ENV') === 'local'))
         );
     }
 
@@ -201,7 +203,6 @@ class CookiesManager
         return '<script '
             . 'src="' . route('cookieconsent.script') . '?id='
             . md5(\filemtime(LCC_ROOT . '/dist/script.js')) . '" '
-            . 'defer'
             . '></script>';
     }
 
