@@ -12,7 +12,7 @@ class AnalyticCookiesCategory extends CookiesCategory
     public function google(string $id, bool $anonymizeIp = true): static
     {
         $this->group(function (CookiesGroup $group) use ($anonymizeIp, $id) {
-            $key = (strpos($id, 'G-') === 0) ? substr($id, 2) : $id;
+            $key = str_starts_with($id, 'G-') ? substr($id, 2) : $id;
             $anonymizeIp = $anonymizeIp === true ? 'true' : false;
 
             $group->name(static::GOOGLE_ANALYTICS)
