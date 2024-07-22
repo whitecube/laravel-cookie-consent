@@ -2,9 +2,8 @@
 
 namespace App\Providers;
 
-use Whitecube\LaravelCookieConsent\Consent;
-use Whitecube\LaravelCookieConsent\Facades\Cookies;
 use Whitecube\LaravelCookieConsent\CookiesServiceProvider as ServiceProvider;
+use Whitecube\LaravelCookieConsent\Facades\Cookies;
 
 class CookiesServiceProvider extends ServiceProvider
 {
@@ -20,8 +19,11 @@ class CookiesServiceProvider extends ServiceProvider
 
         // Register all Analytics cookies at once using one single shorthand method:
         // Cookies::analytics()
-        //     ->google(env('GOOGLE_ANALYTICS_ID'));
-    
+        //    ->google(
+        //        id:          env('GOOGLE_ANALYTICS_ID'),
+        //        anonymizeIp: env('GOOGLE_ANALYTICS_ANONYMIZE_IP'),
+        //    );
+
         // Register custom cookies under the pre-existing "optional" category:
         // Cookies::optional()
         //     ->name('darkmode_enabled')
