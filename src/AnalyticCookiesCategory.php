@@ -45,19 +45,16 @@ class AnalyticCookiesCategory extends CookiesCategory
     }
 
     /**
-     * Define Facebook Pixel (formerly Meta Pixel) cookies.
+     * Define the Meta Pixel (formerly Facebook Pixel) cookie.
      */
     public function facebook(string $key): static
     {
-        $this->group(function (CookiesGroup $group) use ($key) {
-            $group->name(static::FACEBOOK_PIXEL)
-                ->cookie(function (Cookie $cookie) {
-                    $cookie->name('fbpx')
-                        ->duration(2 * 365 * 24 * 60)
-                        ->description(__('cookieConsent::cookies.defaults.fbpx'));
-                })
+        return $this->cookie(function (Cookie $cookie) use ($key) {
+            $cookie->name(static::FACEBOOK_PIXEL)
+                ->duration(2 * 365 * 24 * 60)
+                ->description(__('cookieConsent::cookies.defaults.fbpx'))
                 ->accepted(function (Consent $consent) use ($key) {
-                    $consent->script('<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version=\'2.0\';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window, document,\'script\',\'https://connect.facebook.net/en_US/fbevents.js\');fbq(\'init\', \'' . $key . '\');fbq(\'track\', \'PageView\');</script>');
+                    $consent->script('<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version=\'2.0\';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window, document,\'script\',\'https://connect.facebook.net/en_US/fbevents.js\');fbq(\'init\', \''.$key.'\');fbq(\'track\', \'PageView\');</script>');
                 });
         });
 
