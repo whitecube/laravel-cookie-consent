@@ -109,7 +109,10 @@ class CookiesServiceProvider extends ServiceProvider
 
         // Register all Analytics cookies at once using one single shorthand method:
         Cookies::analytics()
-            ->google(env('GOOGLE_ANALYTICS_ID'));
+            ->google(
+                id: env('GOOGLE_ANALYTICS_ID')
+                anonymizeIp: env('GOOGLE_ANALYTICS_ANONYMIZE_IP')
+            );
     
         // Register custom cookies under the pre-existing "optional" category:
         Cookies::optional()
@@ -154,11 +157,11 @@ Instead of consenting each cookie individually, users grant consent to those cat
 
 There are 3 base categories included in this package:
 
-1. `Cookies::essentials()`: lists all cookies that add required functionnality to the app. This category cannot be opted-out and automatically contains the package's consent cookie.
+1. `Cookies::essentials()`: lists all cookies that add required functionality to the app. This category cannot be opted-out and automatically contains the package's consent cookie.
     - `Cookies::essentials()->session()`: registers Laravel's "session" cookie (defined in your app's `session.cookie` configuration) ;
     - `Cookies::essentials()->csrf()`: registers [Laravel's "XSRF-TOKEN"](https://laravel.com/docs/10.x/csrf) cookie.
 2. `Cookies::analytics()`: lists all cookies used for statistics and data collection.
-    - `Cookies::analytics()->google(string $trackingId)`: automatically lists all Google Analytics' cookies. **This will also automatically register Google Analytics' JS scripts and inject them to the layout's `<head>` only when consent is granted.** Convenient, huh?
+    - `Cookies::analytics()->google(string $trackingId, bool $anonymizeIp)`: automatically lists all Google Analytics' cookies. **This will also automatically register Google Analytics' JS scripts and inject them to the layout's `<head>` only when consent is granted.** Convenient, huh?
 3. `Cookies::optional()`: lists all cookies that serve some kind of utility feature. Since this category can ben opted-out, linked features should always check if consent has been granted before queuing or relying on their cookies.
 
 You are free to add as many custom categories as you want. To do so, simply call the `category(string $key, ?Closure $maker = null)` method on the `Cookies` facade:
