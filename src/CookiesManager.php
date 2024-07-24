@@ -266,4 +266,32 @@ class CookiesManager
             'basename' => $basename,
         ])->render();
     }
+
+    /**
+     * Output a table with all the cookies infos.
+     */
+    public function renderInfo(): string
+    {
+        return view('cookie-consent::info', [
+            'cookies' => $this->registrar,
+        ])->render();
+    }
+
+    public function replaceInfoTag(string $wysiwyg): string
+    {
+        $cookieConsentInfo = view('cookie-consent::info', [
+            'cookies' => $this->registrar,
+        ])->render();
+        
+        $formattedString = preg_replace(
+            [
+                '/\<(\w)[^\>]+\>\@cookieconsentinfo\<\/\1\>/',
+                '/\@cookieconsentinfo/',
+            ],
+            $cookieConsentInfo,
+            $wysiwyg,
+        );
+
+        return $formattedString;
+    }
 }
