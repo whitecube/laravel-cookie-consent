@@ -37,7 +37,7 @@ class LaravelCookieConsent {
         }
 
         data.scripts.forEach(script => {
-            const scriptRegex = /<script([^]*)<\/script>/;
+            const scriptRegex = /<script[^]*<\/script>/;
             if (!scriptRegex.test(script)) {
                 console.error('Invalid script tag: ' + script);
             }
