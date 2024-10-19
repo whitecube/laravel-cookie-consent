@@ -47,12 +47,12 @@ return [
     | Legal page configuration
     |--------------------------------------------------------------------------
     |
-    | Most cookie notices display a link to a dedicated page explaining  
+    | Most cookie notices display a link to a dedicated page explaining
     | the extended cookies usage policy. If your application has such a page
     | you can add its route name here.
     |
     */
 
     'policy' => null,
-    
+
 ];
