@@ -32,12 +32,12 @@ class LaravelCookieConsent {
     }
 
     addScripts(data) {
-        if(!data.scripts) {
+        if (!data.scripts) {
             return;
         }
 
         data.scripts.forEach(script => {
-            const scriptRegex = /<script.*<\/script>/;
+            const scriptRegex = /<script[^]*<\/script>/;
             if (!scriptRegex.test(script)) {
                 console.error('Invalid script tag: ' + script);
             }
@@ -56,7 +56,7 @@ class LaravelCookieConsent {
     }
 
     addNotice(data) {
-        if(!data.notice) {
+        if (!data.notice) {
             return;
         }
 
@@ -68,7 +68,7 @@ class LaravelCookieConsent {
 
         let tags = tmp.querySelectorAll('[data-cookie-consent]');
 
-        if (! tags.length) {
+        if (!tags.length) {
             return;
         }
 
@@ -85,5 +85,5 @@ class LaravelCookieConsent {
 }
 
 window.addEventListener('load', () => {
-    window.LaravelCookieConsent = new LaravelCookieConsent({config:1});
+    window.LaravelCookieConsent = new LaravelCookieConsent({ config: 1 });
 });
