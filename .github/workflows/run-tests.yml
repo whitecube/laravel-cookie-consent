@@ -6,10 +6,10 @@ jobs:
     test:
         runs-on: ${{ matrix.os }}
         strategy:
-            fail-fast: true
+            fail-fast: false
             matrix:
                 os: [ubuntu-latest]
-                php: [8.4, 8.3, 8.2, 8.1]
+                php: [8.4, 8.3, 8.2]
                 laravel: [12.*, 11.*, 10.*]
                 stability: [prefer-lowest, prefer-stable]
                 include:
@@ -19,11 +19,6 @@ jobs:
                         testbench: 9.*
                     -   laravel: 10.*
                         testbench: 8.*
-                exclude:
-                    -   laravel: 12.*
-                        php: 8.1
-                    -   laravel: 11.*
-                        php: 8.1
 
         name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
 
@@ -44,4 +39,4 @@ jobs:
                     composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
             -   name: Execute tests
-                run: vendor/bin/pest
+                run: vendor/bin/pest --color=always
