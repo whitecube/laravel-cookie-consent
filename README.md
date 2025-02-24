@@ -70,7 +70,7 @@ First, publish the package's files:
     ])->toArray(),
     ```
 
-    For applications running Laravel 11, add the Service Provider to the array in `bootstrap/providers.php`:
+    For applications running Laravel 11 and above, add the Service Provider to the array in `bootstrap/providers.php`:
     ```php
     return [
         App\Providers\AppServiceProvider::class,
