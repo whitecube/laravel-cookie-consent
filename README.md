@@ -437,7 +437,7 @@ $factors['years'] = [365, 'dayz'];
 \Carbon\CarbonInterval::setCascadeFactors($factors);
 ```
 
-More information on CarbonInterval's gotchas in [Constantin's blog post on Cahsingcode.dev](https://chasingcode.dev/blog/carbon-php-practical-examples/).
+More information on CarbonInterval's gotchas in [Constantin's blog post on chasingcode.dev](https://chasingcode.dev/blog/carbon-php-practical-examples/).
 
 ### Let your users change their mind
 
