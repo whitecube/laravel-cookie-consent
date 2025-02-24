@@ -27,7 +27,7 @@
     "require-dev": {
         "pestphp/pest": "^3.7",
         "mockery/mockery": "^1.5",
-        "orchestra/testbench": "^8.5|^9.0"
+        "orchestra/testbench": "^8.5|^9.0|^10.0"
     },
     "config": {
         "allow-plugins": {
