@@ -30,11 +30,12 @@ function initCookies() {
     cookies.classList.remove('cookies--no-js');
     cookies.classList.add('cookies--closing');
 
-    setTimeout(function() {
-        cookies.classList.remove('cookies--closing');
-    }, 310);
+    document.addEventListener('DOMContentLoaded',()=>{
+        setTimeout(function() {
+            cookies.classList.remove('cookies--closing');
+        }, 310);
+    })
 }
-
 function configureCookies(event)  {
     event.preventDefault();
     window.LaravelCookieConsent.configure(new FormData(event.target));
