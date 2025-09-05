@@ -123,6 +123,8 @@ function close() {
     cookies.classList.add('cookies--closing');
 
     setTimeout(((cookies) => { return () => {
+        if (!cookies.parentNode) return;
+
         let scripts = cookies.parentNode.querySelectorAll('[data-cookie-consent]');
 
         scripts.forEach(script => {
