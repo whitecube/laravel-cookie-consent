@@ -29,8 +29,10 @@ function initCookies() {
     cookies.removeAttribute('data-text');
     cookies.classList.remove('cookies--no-js');
     cookies.classList.add('cookies--closing');
-
-    document.addEventListener('DOMContentLoaded',()=>{
+    cookies.classList.add('cookies--hidden');
+    
+    document.addEventListener('DOMContentLoaded',()=>{        
+        cookies.classList.remove('cookies--hidden');
         setTimeout(function() {
             cookies.classList.remove('cookies--closing');
         }, 310);
