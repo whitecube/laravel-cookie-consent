@@ -11,7 +11,7 @@ Route::group([
     'as' => 'cookieconsent.',
     'domain' => config('cookieconsent.url.domain'),
     'prefix' => config('cookieconsent.url.prefix'),
-    'middleware' => config('cookieconsent.url.middleware')         
+    'middleware' => config('cookieconsent.url.middleware')
 ], function() {
     Route::get('script', ScriptController::class)
         ->name('script');

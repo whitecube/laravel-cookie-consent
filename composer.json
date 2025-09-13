@@ -22,12 +22,12 @@
     ],
     "require": {
         "php": ">=8.1",
-        "laravel/framework": "^9|^10|^11"
+        "laravel/framework": "^9|^10|^11|^12"
     },
     "require-dev": {
-        "pestphp/pest": "^2.6",
+        "pestphp/pest": "^2.0|^3.7",
         "mockery/mockery": "^1.5",
-        "orchestra/testbench": "^8.5|^9.0"
+        "orchestra/testbench": "^8.5|^9.0|^10.0"
     },
     "config": {
         "allow-plugins": {

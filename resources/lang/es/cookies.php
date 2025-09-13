@@ -1,18 +1,25 @@
 <?php
 return [
-    'title' => 'Nosotros utilizamos cookies',
+    'title' => 'Utilizamos cookies',
     'intro' => 'Este sitio utiliza cookies para mejorar su experiencia de usuario.',
     'link' => 'Consulte nuestra <a href=":url">política de cookies</a> para obtener más información.',
 
-    'essentials' => 'Cookies esenciales',
-    'all' => 'Aceptar todo',
+    'essentials' => 'Solo esenciales',
+    'all' => 'Aceptar todas',
     'customize' => 'Personalizar',
     'manage' => 'Administrar cookies',
     'details' => [
         'more' => 'Más información',
         'less' => 'Menos información',
     ],
-    'save' => 'Registro',
+    'save' => 'Guardar configuración',
+    'cookie' => 'Cookie',
+    'purpose' => 'Finalidad',
+    'duration' => 'Duración',
+    'year' => 'Año|Años',
+    'day' => 'Día|Días',
+    'hour' => 'Hora|Horas',
+    'minute' => 'Minuto|Minutos',
 
     'categories' => [
         'essentials' => [
@@ -21,7 +28,7 @@ return [
         ],
         'analytics' => [
             'title' => 'Cookies analíticas',
-            'description' => 'Solo utilizamos estas cookies únicamente con fines de investigación interna sobre como podemos mejorar el servicio que brindamos a todos nuestros usuarios. Estas cookies se utilizan para evaluar como interactúa con nuestro sitio web – como un usuario anónimo (los datos recopilados no lo identifican personalmente).',
+            'description' => 'Utilizamos estas cookies con fines de investigación interna sobre como podemos mejorar el servicio que brindamos a nuestros usuarios. Estas cookies se utilizan para evaluar como interactúa con nuestro sitio web como un usuario anónimo (los datos recopilados no lo identifican personalmente).',
         ],
         'optional' => [
             'title' => 'Cookies opcionales',

@@ -47,12 +47,29 @@ return [
     | Legal page configuration
     |--------------------------------------------------------------------------
     |
-    | Most cookie notices display a link to a dedicated page explaining  
+    | Most cookie notices display a link to a dedicated page explaining
     | the extended cookies usage policy. If your application has such a page
     | you can add its route name here.
     |
     */
 
     'policy' => null,
-    
+
+    /* Google Analytics configuration
+    |--------------------------------------------------------------------------
+    |
+    | If you use Google Analytics, you can configure the package to automatically
+    | load the Google Analytics script when the user gives his consent.
+    |
+    | The ID parameter is required and represents your Google Analytics ID.
+    |
+    | The anonymize parameter is optional and determines whether the user's IP
+    | address should be anonymized before being sent to Google Analytics.
+    |
+    */
+    'google_analytics' => [
+        'id' => env('GOOGLE_ANALYTICS_ID', ""),
+        'anonymize_ip' => env('GOOGLE_ANALYTICS_ANONYMIZE_IP', true)
+    ],
+
 ];
