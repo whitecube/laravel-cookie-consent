@@ -370,6 +370,29 @@ As you probably noticed, we've included our design's CSS directly in the `cookie
 
 Our CSS is compiled from a SASS file included in this package's `resources/scss` directory. If that fits your workflow, feel free to use it as a starting point for your own implementation.
 
+Buttons in this package are designed to be easily customizable.  
+You can pass an array of attributes directly to the `@cookieconsentbutton` component:
+
+```blade
+@cookieconsentbutton(
+    action: 'reset',
+    label: 'Manage cookies',
+    attributes: [
+        'id' => 'reset-button',
+        'class' => 'btn'
+    ]
+)
+```
+
+In this example:
+
+* The wrapping `<form>` element will receive the `btn` class.
+* The generated `<button>` itself will always have the `__link` added to the form class.
+
+With this setup, you can freely customize your button styles using pseudo-classes like `:hover`, `:focus`, while keeping a clean and maintainable structure.
+
+For other changes, don't forget [you can publish the package views](#the-views).
+
 ### Javascript
 
 Keep in mind that cookie notices are supposed to work when Javascript is disabled. This package's base design only uses Javascript as an extra layer for a smoother User Experience, but its features do not rely on it. 
