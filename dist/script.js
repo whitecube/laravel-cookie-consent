@@ -7469,7 +7469,8 @@ if (cookieConsentNotice) {
     cookieConsentConfigScript.removeAttribute('data-config');
     cookieConsentNotice.removeAttribute('data-text');
     setTimeout(function () {
-      return cookieConsentNotice.classList.remove('cookies--closing');
+      cookieConsentNotice.classList.remove('cookies--closing');
+      cookieConsentNotice.style.transitionDuration = "200ms";
     }, 110);
   });
 }

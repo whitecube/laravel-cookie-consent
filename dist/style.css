@@ -7,7 +7,7 @@
   max-width: 100%;
   overflow: auto;
   z-index: 9999;
-  transition: transform 200ms ease-out, opacity 200ms ease-out;
+  transition: transform 0ms ease-out, opacity 0ms ease-out;
 }
 #cookies-policy.cookies--closing {
   opacity: 0;
