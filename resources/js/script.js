@@ -18,6 +18,9 @@ if (cookieConsentNotice) {
         cookieConsentConfigScript.removeAttribute('data-config');
         cookieConsentNotice.removeAttribute('data-text');
 
-        setTimeout( () => cookieConsentNotice.classList.remove('cookies--closing'), 110);
+        setTimeout( () => {
+            cookieConsentNotice.classList.remove('cookies--closing');
+            cookieConsentNotice.style.transitionDuration = "200ms";
+        }, 110);
     });
 }
