@@ -69,7 +69,7 @@
 
 {{-- STYLES & SCRIPT : feel free to remove them and add your own --}}
 
-<script data-cookie-consent>
+<script id="cookies-script" data-cookie-consent data-config="{{ $scriptConfig }}">
     {!! file_get_contents(LCC_ROOT . '/dist/script.js') !!}
 </script>
 <style data-cookie-consent>
