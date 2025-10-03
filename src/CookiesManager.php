@@ -224,7 +224,18 @@ class CookiesManager
         return view('cookie-consent::cookies', [
             'cookies' => $this->registrar,
             'policy' => $policy,
+            'scriptConfig' => $this->generateConfig(),
         ])->render();
+    }
+
+    protected function generateConfig(): string
+    {
+        return json_encode([
+            'accept.all' => route('cookieconsent.accept.all'),
+            'accept.essentials' => route('cookieconsent.accept.essentials'),
+            'accept.configuration' => route('cookieconsent.accept.configuration'),
+            'reset' => route('cookieconsent.reset'),
+        ]);
     }
 
     /**
