@@ -1,6 +1,6 @@
 import axios from "axios";
 
-class LaravelCookieConsent {
+export class LaravelCookieConsent {
     config;
 
     constructor(config) {
@@ -83,7 +83,3 @@ class LaravelCookieConsent {
         });
     }
 }
-
-window.addEventListener('DOMContentLoaded', () => {
-    window.LaravelCookieConsent = new LaravelCookieConsent({ config: 1 });
-});
