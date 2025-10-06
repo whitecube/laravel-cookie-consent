@@ -16,7 +16,7 @@ class CookiesManager
     /**
      * The user's current consent preferences.
      */
-    protected ?array $preferences = null;
+    public ?array $preferences = null;
 
     /**
      * Create a new Service Manager instance.
