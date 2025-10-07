@@ -13,7 +13,10 @@ if (cookieConsentNotice) {
         let text = JSON.parse(cookieConsentNotice.getAttribute('data-text'));
 
         window.LaravelCookieConsent = new LaravelCookieConsent(config);
-        window.LaravelCookieModal = new LaravelCookieModal(cookieConsentNotice, text);
+        window.LaravelCookieModal = LaravelCookieModal;
+
+        LaravelCookieModal.getValues(cookieConsentNotice, text);
+        LaravelCookieModal.addEventListeners();
 
         cookieConsentConfigScript.removeAttribute('data-config');
         cookieConsentNotice.removeAttribute('data-text');
