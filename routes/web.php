@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Support\Facades\Route;
 use Whitecube\LaravelCookieConsent\Http\Controllers\ResetController;
 use Whitecube\LaravelCookieConsent\Http\Controllers\ScriptController;
@@ -27,4 +28,4 @@ Route::group([
 
     Route::post('reset', ResetController::class)
         ->name('reset');
-});
+})->withoutMiddleware([EncryptCookies::class]);
