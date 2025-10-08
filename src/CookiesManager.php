@@ -4,6 +4,7 @@ namespace Whitecube\LaravelCookieConsent;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie as CookieFacade;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Cookie as CookieComponent;
 
 class CookiesManager
@@ -198,11 +199,19 @@ class CookiesManager
 
     protected function getDefaultScriptTag(): string
     {
+        $csp_enable = config('cookieconsent.csp_enable', false);
+
         return '<script '
             . 'src="' . route('cookieconsent.script') . '?id='
             . md5(\filemtime(LCC_ROOT . '/dist/script.js')) . '" '
+            . ($csp_enable ? 'nonce="' . $this->generateCspNonce() . '" ' : '')
             . 'defer'
             . '></script>';
+    }
+
+    protected function generateCspNonce(): string
+    {
+        return bin2hex(random_bytes(16));
     }
 
     /**
