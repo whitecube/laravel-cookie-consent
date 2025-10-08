@@ -16,7 +16,8 @@ class CookiesManager
     /**
      * The user's current consent preferences.
      */
-    public ?array $preferences = null;
+    protected ?array $preferences = null;
+    protected bool $editPreferences = false;
 
     /**
      * Create a new Service Manager instance.
@@ -25,6 +26,32 @@ class CookiesManager
     {
         $this->registrar = $registrar;
         $this->preferences = $this->getCurrentConsentSettings($request);
+        $this->editPreferences = $this->isEditMode($request);
+    }
+
+    protected function isEditMode(Request $request): bool
+    {
+        $raw = $request->cookie('edit-cookie');
+
+        if (! $raw) {
+            return false;
+        }
+
+        $edit = json_decode($raw, true);
+
+        $forgetCookie = CookieFacade::make(
+            name: 'edit-cookie',
+            value: null,
+            minutes: -3600,
+            domain: config('cookieconsent.cookie.domain'),
+            secure: (config('app.env') == 'local') ? false : true
+        );
+
+        CookieFacade::queue(
+            $forgetCookie
+        );
+
+        return $edit;
     }
 
     /**
@@ -77,6 +104,10 @@ class CookiesManager
     public function shouldDisplayNotice(): bool
     {
         if(! $this->preferences) {
+            return true;
+        }
+
+        if ($this->editPreferences) {
             return true;
         }
 
@@ -237,6 +268,7 @@ class CookiesManager
             'accept.essentials' => route('cookieconsent.accept.essentials'),
             'accept.configuration' => route('cookieconsent.accept.configuration'),
             'reset' => route('cookieconsent.reset'),
+            'edit' => route('cookieconsent.edit'),
             default => null,
         };
 
