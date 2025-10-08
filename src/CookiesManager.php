@@ -201,26 +201,17 @@ class CookiesManager
     {
         $csp_enable = config('cookieconsent.csp_enable', false);
 
-        if ($csp_enable) {
-            return '<script '
-                . 'src="' . route('cookieconsent.script') . '?id='
-                . md5(\filemtime(LCC_ROOT . '/dist/script.js')) . '" '
-                . 'nonce="' . $this->generateCspNonce() . '" '
-                . 'defer'
-                . '></script>';
-        }
-
         return '<script '
             . 'src="' . route('cookieconsent.script') . '?id='
             . md5(\filemtime(LCC_ROOT . '/dist/script.js')) . '" '
+            . ($csp_enable ? 'nonce="' . $this->generateCspNonce() . '" ' : '')
             . 'defer'
             . '></script>';
-
     }
 
     protected function generateCspNonce(): string
     {
-        return Str::random(32);
+        return bin2hex(random_bytes(16));
     }
 
     /**
