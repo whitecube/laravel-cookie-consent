@@ -391,7 +391,7 @@ In this example:
 
 With this setup, you can freely customize your button styles using pseudo-classes like `:hover`, `:focus`, while keeping a clean and maintainable structure.
 
-For other changes, don't forget [you can publish the package views](#the-views).
+For other changes, don't forget [you can publish the package views](#the-views). The `$action` variable lets you customize your button for specific use cases.
 
 ### Javascript
 
