@@ -346,6 +346,24 @@ Cookie notices are boring and this package's default design is no different. It 
 
 However, this world shouldn't be a boring place and even if cookie notices are part of a project's legal requirements, why not use it as an opportunity to bring a smile to your audience's face? Cookie modals are now integrated in every digital platform's user experience and therefore they should blend in accordingly: that's why we've built this package with full flexibility in our mind.
 
+For example, after publishing the views, you can fully customize the different buttons, as in this example:
+
+```bladehtml
+<form action="{!! $url !!}" {!! $attributes !!}>
+    @csrf
+    @if($action === 'reset')
+    <button type="submit" class="{!! $basename !!}__reset" data-toggle="tooltip">
+        <span class="icon icon--reset"></span>
+        <span class="{!! $basename !!}__label">{{ $label }}</span>
+    </button>
+    @else
+    <button type="submit" class="{!! $basename !!}__link">
+        <span class="{!! $basename !!}__label">{{ $label }}</span>
+    </button>
+    @endif
+</form>
+```
+
 ### The views
 
 A good starting point is to take a look at this package's default markup. If not already published, you can access the views using `php artisan vendor:publish --tag=laravel-cookie-consent-views`, this will copy our blade files to your app's `resources/views/vendor/cookie-consent` directory.
@@ -373,7 +391,7 @@ Our CSS is compiled from a SASS file included in this package's `resources/scss`
 Buttons in this package are designed to be easily customizable.  
 You can pass an array of attributes directly to the `@cookieconsentbutton` component:
 
-```blade
+```bladehtml
 @cookieconsentbutton(
     action: 'reset',
     label: 'Manage cookies',
