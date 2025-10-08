@@ -16,8 +16,9 @@ class CookiesManager
     /**
      * The user's current consent preferences.
      */
-    protected ?array $preferences = null;
+    public ?array $preferences = null;
     protected bool $editPreferences = false;
+    public static ?array $editPreferencesData = null;
 
     /**
      * Create a new Service Manager instance.
@@ -29,6 +30,9 @@ class CookiesManager
         $this->editPreferences = $this->isEditMode($request);
     }
 
+    /**
+     * Check if edit mode activated.
+     */
     protected function isEditMode(Request $request): bool
     {
         $raw = $request->cookie('edit-cookie');
@@ -37,8 +41,26 @@ class CookiesManager
             return false;
         }
 
-        $edit = json_decode($raw, true);
+        $this->setEditData($raw);
 
+        $this->deleteEditCookie();
+
+        return true;
+    }
+
+    /**
+     * Set edit datas in static variable.
+     */
+    protected function setEditData($raw): void
+    {
+        self::$editPreferencesData = json_decode($raw, true) ?? null;
+    }
+
+    /**
+     * Unset the temp cookie.
+     */
+    protected function deleteEditCookie(): void
+    {
         $forgetCookie = CookieFacade::make(
             name: 'edit-cookie',
             value: null,
@@ -50,8 +72,6 @@ class CookiesManager
         CookieFacade::queue(
             $forgetCookie
         );
-
-        return $edit;
     }
 
     /**

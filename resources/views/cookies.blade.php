@@ -28,14 +28,9 @@
             <form action="{{ route('cookieconsent.accept.configuration') }}" method="post" class="cookies__customize">
                 @csrf
                 <div class="cookies__sections">
-                    @php
-                        $cookieName = config('cookieconsent.cookie.name');
-                        $cookieValue = $_COOKIE[$cookieName] ?? null;
-                        $preferences = $cookieValue ? json_decode($cookieValue) : [];
-                    @endphp
                     @foreach($cookies->getCategories() as $category)
                         @php
-                            $isChecked = !empty($preferences['categories'][$category->key()] ?? null);
+                            $isChecked = !empty(\Whitecube\LaravelCookieConsent\CookiesManager::$editPreferencesData[$category->key()] ?? null);
                         @endphp
                         <div class="cookies__section">
                             <label for="cookies-policy-check-{{ $category->key() }}" class="cookies__category">
