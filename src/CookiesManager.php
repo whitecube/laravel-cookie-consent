@@ -199,8 +199,13 @@ class CookiesManager
     protected function getDefaultScriptTag(): string
     {
         return '<script '
-            . 'src="' . route('cookieconsent.script') . '?id='
-            . md5(\filemtime(LCC_ROOT . '/dist/script.js')) . '" '
+            . 'src="' . route('cookieconsent.script.cookie') . '?id='
+            . md5(\filemtime(LCC_ROOT . '/dist/cookies.js')) . '" '
+            . 'defer'
+            . '></script>'
+            . '<script '
+            . 'src="' . route('cookieconsent.script.modal') . '?id='
+            . md5(\filemtime(LCC_ROOT . '/dist/modal.js')) . '" '
             . 'defer'
             . '></script>';
     }
@@ -224,18 +229,7 @@ class CookiesManager
         return view('cookie-consent::cookies', [
             'cookies' => $this->registrar,
             'policy' => $policy,
-            'scriptConfig' => $this->generateConfig(),
         ])->render();
-    }
-
-    protected function generateConfig(): string
-    {
-        return json_encode([
-            'accept.all' => route('cookieconsent.accept.all'),
-            'accept.essentials' => route('cookieconsent.accept.essentials'),
-            'accept.configuration' => route('cookieconsent.accept.configuration'),
-            'reset' => route('cookieconsent.reset'),
-        ]);
     }
 
     /**
