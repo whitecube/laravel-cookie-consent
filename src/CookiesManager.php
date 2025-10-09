@@ -2,6 +2,7 @@
 
 namespace Whitecube\LaravelCookieConsent;
 
+use Illuminate\Database\Eloquent\Casts\Json;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie as CookieFacade;
 use Symfony\Component\HttpFoundation\Cookie as CookieComponent;
@@ -198,11 +199,41 @@ class CookiesManager
 
     protected function getDefaultScriptTag(): string
     {
+        $gtmScript = config('cookieconsent.google_tag_manager.id') ? $this->getGTMScript() : null;
+
         return '<script '
             . 'src="' . route('cookieconsent.script') . '?id='
             . md5(\filemtime(LCC_ROOT . '/dist/script.js')) . '" '
             . 'defer'
-            . '></script>';
+            . '></script>'
+            . $gtmScript ?? '';
+    }
+
+    /**
+     * Define default Google Tag Manager script tag;
+     */
+    private function getGTMScript()
+    {
+        $defaultSettings = config('cookieconsent.gtm_consent', [
+            'ad_user_data',
+            'ad_personalization',
+            'ad_storage',
+            'analytics_storage',
+        ]);
+
+        $defaultSettings = array_fill_keys($defaultSettings, 'denied');
+        $defaultSettings['wait_for_update'] = 500;
+
+        $defaultJson = json_encode($defaultSettings, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+
+        return '<script type="module" defer>
+                    window.dataLayer = window.dataLayer || []; function gtag() {
+                        dataLayer.push(arguments);
+                    }
+
+                    gtag(\'consent\', \'default\',  ' . $defaultJson . ');
+                    dataLayer.push({\'gtm.start\': new Date().getTime(), \'event\': \'gtm.js\'});
+                 </script> ';
     }
 
     /**
