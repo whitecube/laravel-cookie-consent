@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export class LaravelCookieConsent {
+class LaravelCookieConsent {
     config;
 
     constructor(config) {
@@ -83,3 +83,10 @@ export class LaravelCookieConsent {
         });
     }
 }
+
+/*
+    Config is set to 1 here, but it is modified by ScriptController depending on the different actions.
+*/
+
+window.LaravelCookieConsent = new LaravelCookieConsent({config:1});
+window.dispatchEvent(new Event('LARAVEL_COOKIE_CONSENT_SCRIPT_LOAD'));

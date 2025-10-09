@@ -1,14 +1,36 @@
-export const LaravelCookieModal = {
-    getValues(cookieConsentNotice, text) {
+class LaravelCookieModal {
+    element;
+
+    constructor() {
+        this.element = document.querySelector('#cookies-policy');
+        if (!window.LaravelCookieConsent || window.LaravelCookieModal) {
+            return;
+        }
+
+        if (!this.element) {
+            return;
+        }
+
+        this.getValues();
+        this.addEventListeners();
+
+        this.element.removeAttribute('data-text');
+
+        setTimeout(() => {
+            this.element.classList.remove('cookies--pre-init');
+            this.element.classList.remove('cookies--closing');
+        }, 60);
+    }
+
+    getValues() {
         this.reset = document.querySelector('.cookiereset');
-        this.customize = cookieConsentNotice.querySelector('.cookies__btn--customize');
-        this.details = cookieConsentNotice.querySelectorAll('.cookies__details');
-        this.acceptAll = cookieConsentNotice.querySelector('.cookiesBtn--accept');
-        this.acceptEssentials = cookieConsentNotice.querySelector('.cookiesBtn--essentials');
-        this.configure = cookieConsentNotice.querySelector('.cookies__customize');
-        this.text = text;
-        this.cookieConsentNotice = cookieConsentNotice;
-    },
+        this.customize = this.element.querySelector('.cookies__btn--customize');
+        this.details = this.element.querySelectorAll('.cookies__details');
+        this.acceptAll = this.element.querySelector('.cookiesBtn--accept');
+        this.acceptEssentials = this.element.querySelector('.cookiesBtn--essentials');
+        this.configure = this.element.querySelector('.cookies__customize');
+        this.text = JSON.parse(this.element.getAttribute('data-text'));
+    }
 
     addEventListeners() {
         if (this.reset) {
@@ -22,39 +44,39 @@ export const LaravelCookieModal = {
         this.acceptEssentials.addEventListener('submit', (event) => this.acceptEssentialsCookies(event));
         this.configure.addEventListener('submit', (event) => this.configureCookies(event));
         window.addEventListener('resize', (event) => this.resize(event));
-    },
+    }
 
     configureCookies(event) {
         event.preventDefault();
         window.LaravelCookieConsent.configure(new FormData(event.target));
         this.close();
-    },
+    }
 
     acceptAllCookies(event) {
         event.preventDefault();
         window.LaravelCookieConsent.acceptAll()
         this.close();
-    },
+    }
 
     acceptEssentialsCookies(event) {
         event.preventDefault();
         window.LaravelCookieConsent.acceptEssentials()
         this.close();
-    },
+    }
 
     resize() {
-        if (window.innerHeight <= this.cookieConsentNotice.offsetHeight) {
-            this.cookieConsentNotice.querySelector('.cookies__sections').style.maxHeight = '50vh';
+        if (window.innerHeight <= this.element.offsetHeight) {
+            this.element.querySelector('.cookies__sections').style.maxHeight = '50vh';
         } else {
-            this.cookieConsentNotice.querySelector('.cookies__sections').removeAttribute('style')
+            this.element.querySelector('.cookies__sections').removeAttribute('style')
         }
-    },
+    }
 
     toggleExpand(event, el, hide = true) {
         event.preventDefault();
         event.target.blur();
 
-        const element = this.cookieConsentNotice.querySelector(el.getAttribute('href')),
+        const element = this.element.querySelector(el.getAttribute('href')),
             content = element.firstElementChild,
             height = content.offsetHeight,
             isOpen = element.classList.contains('cookies__expandable--open');
@@ -71,10 +93,10 @@ export const LaravelCookieModal = {
                 element.removeAttribute('style');
             }, 310);
 
-        })(this.cookieConsentNotice), 10);
+        })(this.element), 10);
 
         this.hideNotice(hide, isOpen)
-    },
+    }
 
     changeText(hide, isOpen, event) {
         if (hide) return;
@@ -82,12 +104,12 @@ export const LaravelCookieModal = {
         event.target.textContent = isOpen
             ? this.text.more
             : this.text.less
-    },
+    }
 
     hideNotice(hide, isOpen) {
         if (!hide) return;
 
-        const container = this.cookieConsentNotice.querySelector('.cookies__container'),
+        const container = this.element.querySelector('.cookies__container'),
             containerHeight = container.firstElementChild.offsetHeight;
 
         container.setAttribute('style', 'height:' + (!isOpen ? containerHeight : 0) + 'px');
@@ -101,30 +123,36 @@ export const LaravelCookieModal = {
                 container.removeAttribute('style');
             }, 320);
 
-        })(this.cookieConsentNotice), 10);
-    },
+        })(this.element), 10);
+    }
 
     close() {
-        this.cookieConsentNotice.classList.add('cookies--closing');
+        this.element.classList.add('cookies--closing');
 
         setTimeout(((cookie) => {
             return () => {
                 if (!cookie.parentNode) return;
 
-                let scripts = this.cookieConsentNotice.parentNode.querySelectorAll('[data-cookie-consent]');
+                let scripts = this.element.parentNode.querySelectorAll('[data-cookie-consent]');
 
                 scripts.forEach(script => {
                     script.parentNode.removeChild(script);
                 });
 
-                this.cookieConsentNotice.parentNode.removeChild(cookie);
+                this.element.parentNode.removeChild(cookie);
             }
-        })(this.cookieConsentNotice), 210);
-    },
+        })(this.element), 210);
+    }
 
     resetCookies(event) {
         event.preventDefault();
         if (document.querySelector('#cookies-policy')) return;
         window.LaravelCookieConsent.reset()
-    },
+    }
 }
+
+window.LaravelCookieModal = new LaravelCookieModal();
+window.LaravelCookieModal.init();
+window.addEventListener('LARAVEL_COOKIE_CONSENT_SCRIPT_LOAD', () => {
+    window.LaravelCookieModal.init();
+});
