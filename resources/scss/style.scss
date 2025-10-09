@@ -7,12 +7,15 @@
     max-width: 100%;
     overflow: auto;
     z-index: 9999;
-    transition: transform 0ms ease-out,
-                opacity 0ms ease-out;
+    transition: transform 200ms ease-out,
+                opacity 200ms ease-out;
 
     &--closing {
         opacity: 0;
         transform: translateY(10px);
+    }
+    &--pre-init {
+        transition: none;
     }
     &--show {
         .cookies__btn {
