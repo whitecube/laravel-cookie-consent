@@ -72,4 +72,29 @@ return [
         'anonymize_ip' => env('GOOGLE_ANALYTICS_ANONYMIZE_IP', true)
     ],
 
+    /* Google Tag Manager configuration
+    |--------------------------------------------------------------------------
+    |
+    | If you use Google Tag Manager, you can configure the package to automatically
+    | load the Google Tag Manager script when the user gives his consent.
+    |
+    | The ID parameter is required and represents your Google Tag Manager ID.
+    |
+    */
+    'google_tag_manager' => [
+        'id' => env('GOOGLE_TAG_MANAGER_ID'),
+    ],
+
+    /* Google Tag Manager configuration
+    |--------------------------------------------------------------------------
+    |
+    | These rules will define the data that Google Tag Manager will receive.
+    |
+    */
+    'gtm_consent' => [
+        'ad_user_data',
+        'ad_personalization',
+        'ad_storage',
+        'analytics_storage',
+    ]
 ];
