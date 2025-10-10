@@ -44,8 +44,8 @@
                                            id="cookies-policy-check-{{ $category->key() }}" @checked($isChecked)/>
                                 @endif
                                 <span class="cookies__box">
-                                <strong class="cookies__label">{{ $category->title }}</strong>
-                            </span>
+                                    <strong class="cookies__label">{{ $category->title }}</strong>
+                                </span>
                                 @if($category->description)
                                     <p class="cookies__info">{{ $category->description }}</p>
                                 @endif
