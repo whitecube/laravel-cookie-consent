@@ -1,11 +1,14 @@
+window.LaravelCookieModalLoaded = false;
+
 class LaravelCookieModal {
     element;
 
-    constructor() {
-        this.element = document.querySelector('#cookies-policy');
-        if (!window.LaravelCookieConsent || window.LaravelCookieModal) {
+    init() {
+        if (!window.LaravelCookieConsent || window.LaravelCookieModalLoaded) {
             return;
         }
+
+        this.element = document.querySelector('#cookies-policy');
 
         if (!this.element) {
             return;
@@ -20,10 +23,12 @@ class LaravelCookieModal {
             this.element.classList.remove('cookies--pre-init');
             this.element.classList.remove('cookies--closing');
         }, 60);
-    }
+
+        window.LaravelCookieModalLoaded = true;
+    };
 
     getValues() {
-        this.reset = document.querySelector('.cookiereset');
+        this.reset = document.querySelector('#reset-button');
         this.customize = this.element.querySelector('.cookies__btn--customize');
         this.details = this.element.querySelectorAll('.cookies__details');
         this.acceptAll = this.element.querySelector('.cookiesBtn--accept');
