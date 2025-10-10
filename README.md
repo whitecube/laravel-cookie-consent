@@ -511,7 +511,7 @@ When defining your own views & styles, keep in mind that cookie notices are obst
 ## FAQ
 
 <details open>
-  <summary>If you use Laravel Octane</summary>
+  <summary>If you use Laravel Octane with Laravel 11</summary>
 
    It optimizes your application by storing requests in RAM. Some reports mention that you need to flush the cookieConsent class to ensure it correctly saves the consent value, like so in your config/octane.php:
 
