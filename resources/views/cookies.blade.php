@@ -1,4 +1,4 @@
-<aside id="cookies-policy" class="cookies cookies--no-js" data-text="{{ json_encode(__('cookieConsent::cookies.details')) }}">
+<aside id="cookies-policy" class="cookies" data-text="{{ json_encode(__('cookieConsent::cookies.details')) }}">
     <div class="cookies__alert">
         <div class="cookies__container">
             <div class="cookies__wrapper">
@@ -69,11 +69,15 @@
 
 {{-- STYLES & SCRIPT : feel free to remove them and add your own
     This script can't be removed --}}
-<script data-cookie-consent>
-    const element = document.querySelector('#cookies-policy');
-    element.classList.add('cookies--pre-init');
-    element.classList.add('cookies--closing');
-</script>
+@if(!$isReset)
+    <script data-cookie-consent>
+        let element = document.querySelector('#cookies-policy');
+        if (element) {
+            element.classList.add('cookies--pre-init');
+            element.classList.add('cookies--closing');
+        }
+    </script>
+@endif
 <style data-cookie-consent>
     {!! file_get_contents(LCC_ROOT . '/dist/style.css') !!}
 </style>

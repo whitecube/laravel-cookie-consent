@@ -226,9 +226,12 @@ class CookiesManager
             $policy = route($policy);
         }
 
+        $isReset = request()->routeIs('cookieconsent.reset');
+
         return view('cookie-consent::cookies', [
             'cookies' => $this->registrar,
             'policy' => $policy,
+            'isReset' => $isReset,
         ])->render();
     }
 
