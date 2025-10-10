@@ -2,6 +2,8 @@
 
 namespace Whitecube\LaravelCookieConsent\Concerns;
 
+use Closure;
+
 trait HasAttributes
 {
     /**
@@ -54,6 +56,8 @@ trait HasAttributes
      */
     public function getAttribute(string $attribute): mixed
     {
-        return $this->attributes[$attribute] ?? null;
+        $value = $this->attributes[$attribute] ?? null;
+
+        return $value instanceof Closure ? $value() : $value;
     }
 }
