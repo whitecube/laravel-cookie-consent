@@ -8,8 +8,18 @@ class ScriptController
 {
     public function __invoke(Request $request)
     {
-        $content = str_replace('{config:1}', $this->generateConfig(), file_get_contents(LCC_ROOT . '/dist/cookies.js'));
 
+    }
+
+    public function getCookieScript()
+    {
+        $content = str_replace('{config:1}', $this->generateConfig(), file_get_contents(LCC_ROOT . '/dist/cookies.js'));
+        return response($content)->header('Content-Type', 'application/javascript');
+    }
+
+    public function getModalScript()
+    {
+        $content = file_get_contents(LCC_ROOT . '/dist/modal.js');
         return response($content)->header('Content-Type', 'application/javascript');
     }
 
