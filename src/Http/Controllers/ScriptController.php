@@ -20,6 +20,7 @@ class ScriptController
             'accept.essentials' => route('cookieconsent.accept.essentials'),
             'accept.configuration' => route('cookieconsent.accept.configuration'),
             'reset' => route('cookieconsent.reset'),
+            'edit' => route('cookieconsent.edit'),
         ]);
     }
 }

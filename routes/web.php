@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Whitecube\LaravelCookieConsent\Http\Controllers\EditController;
 use Whitecube\LaravelCookieConsent\Http\Controllers\ResetController;
 use Whitecube\LaravelCookieConsent\Http\Controllers\ScriptController;
 use Whitecube\LaravelCookieConsent\Http\Controllers\AcceptAllController;
@@ -27,4 +28,7 @@ Route::group([
 
     Route::post('reset', ResetController::class)
         ->name('reset');
+
+    Route::post('edit', EditController::class)
+        ->name('edit');
 });

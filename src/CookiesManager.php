@@ -16,7 +16,9 @@ class CookiesManager
     /**
      * The user's current consent preferences.
      */
-    protected ?array $preferences = null;
+    public ?array $preferences = null;
+    protected bool $editPreferences = false;
+    public static ?array $editPreferencesData = null;
 
     /**
      * Create a new Service Manager instance.
@@ -25,6 +27,51 @@ class CookiesManager
     {
         $this->registrar = $registrar;
         $this->preferences = $this->getCurrentConsentSettings($request);
+        $this->editPreferences = $this->isEditMode($request);
+    }
+
+    /**
+     * Check if edit mode activated.
+     */
+    protected function isEditMode(Request $request): bool
+    {
+        $raw = $request->cookie('edit-cookie');
+
+        if (! $raw) {
+            return false;
+        }
+
+        $this->setEditData($raw);
+
+        $this->deleteEditCookie();
+
+        return true;
+    }
+
+    /**
+     * Set edit datas in static variable.
+     */
+    protected function setEditData($raw): void
+    {
+        self::$editPreferencesData = json_decode($raw, true) ?? null;
+    }
+
+    /**
+     * Unset the temp cookie.
+     */
+    protected function deleteEditCookie(): void
+    {
+        $forgetCookie = CookieFacade::make(
+            name: 'edit-cookie',
+            value: null,
+            minutes: -3600,
+            domain: config('cookieconsent.cookie.domain'),
+            secure: (config('app.env') == 'local') ? false : true
+        );
+
+        CookieFacade::queue(
+            $forgetCookie
+        );
     }
 
     /**
@@ -77,6 +124,10 @@ class CookiesManager
     public function shouldDisplayNotice(): bool
     {
         if(! $this->preferences) {
+            return true;
+        }
+
+        if ($this->editPreferences) {
             return true;
         }
 
@@ -237,6 +288,7 @@ class CookiesManager
             'accept.essentials' => route('cookieconsent.accept.essentials'),
             'accept.configuration' => route('cookieconsent.accept.configuration'),
             'reset' => route('cookieconsent.reset'),
+            'edit' => route('cookieconsent.edit'),
             default => null,
         };
 
