@@ -264,6 +264,7 @@ class CookiesManager
             'label' => $label ?? $action, // TODO: use lang file
             'attributes' => $attributes,
             'basename' => $basename,
+            'action' => $action,
         ])->render();
     }
 
