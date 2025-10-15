@@ -13,8 +13,11 @@ Route::group([
     'prefix' => config('cookieconsent.url.prefix'),
     'middleware' => config('cookieconsent.url.middleware')
 ], function() {
-    Route::get('script', ScriptController::class)
-        ->name('script');
+    Route::get('script-cookie', [ScriptController::class, 'getCookieScript'])
+        ->name('script.cookie');
+
+    Route::get('script-modal', [ScriptController::class, 'getModalScript'])
+        ->name('script.modal');
 
     Route::post('accept-all', AcceptAllController::class)
         ->name('accept.all');

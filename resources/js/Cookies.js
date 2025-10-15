@@ -84,6 +84,8 @@ class LaravelCookieConsent {
     }
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-    window.LaravelCookieConsent = new LaravelCookieConsent({ config: 1 });
-});
+/*
+    Config is set to 1 here, but it is modified by ScriptController depending on the different actions.
+*/
+window.LaravelCookieConsent = new LaravelCookieConsent({config:1});
+window.dispatchEvent(new Event('LARAVEL_COOKIE_CONSENT_SCRIPT_LOAD'));
