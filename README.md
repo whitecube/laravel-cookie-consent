@@ -11,6 +11,7 @@ Let's face it, most of the time you _could_ use alternatives for services requir
 - [Fathom](https://usefathom.com/): built by some fellow Laravel community members!
 - [Plausible](https://plausible.io/): made and hosted in the EU.
 - [Pirsch](https://pirsch.io/): made and hosted in the EU (Germany).
+- [Swetrix](https://swetrix.com): made in the UK, hosted in the EU.
 - ... want to add a useful competitor to this list? Open an issue!
 
 The main advantage of using these alternatives is that you could avoid asking for explicit consent altogether since you would not use any cookies that aren't strictly necessary. This will always be better for your application's accessibility and user experience.
