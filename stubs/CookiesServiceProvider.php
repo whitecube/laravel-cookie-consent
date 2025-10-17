@@ -19,9 +19,20 @@ class CookiesServiceProvider extends ServiceProvider
 
         // Register all Analytics cookies at once using one single shorthand method:
         // Cookies::analytics()
-        //    ->google(
+        //    ->googleAnalytics(
         //         id: config('cookieconsent.google_analytics.id'),
         //         anonymizeIp: config('cookieconsent.google_analytics.anonymize_ip')
+        //    );
+
+        // Cookies::analytics()
+        //    ->googleTagManager(
+        //        id: config('cookieconsent.google_tag_manager.id'),
+        //        config: [
+        //            'ad_user_data',
+        //            'ad_personalization',
+        //            'ad_storage',
+        //            'analytics_storage',
+        //        ]
         //    );
 
         // Register custom cookies under the pre-existing "optional" category:
