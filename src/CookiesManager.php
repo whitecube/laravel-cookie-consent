@@ -199,7 +199,7 @@ class CookiesManager
 
     protected function getDefaultScriptTag(): string
     {
-        $gtmScript = config('cookieconsent.google_tag_manager.id') ? $this->getGTMScript() : null;
+        $gtmScript = app()->has('cookieconsent.gtm.enabled') ? $this->getGTMScript() : null;
 
         return '<script '
             . 'src="' . route('cookieconsent.script') . '?id='
@@ -214,12 +214,7 @@ class CookiesManager
      */
     private function getGTMScript()
     {
-        $defaultSettings = config('cookieconsent.gtm_consent', [
-            'ad_user_data',
-            'ad_personalization',
-            'ad_storage',
-            'analytics_storage',
-        ]);
+        $defaultSettings = app('cookieconsent.gtm.config');
 
         $defaultSettings = array_fill_keys($defaultSettings, 'denied');
         $defaultSettings['wait_for_update'] = 500;

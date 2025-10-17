@@ -85,16 +85,4 @@ return [
         'id' => env('GOOGLE_TAG_MANAGER_ID'),
     ],
 
-    /* Google Tag Manager configuration
-    |--------------------------------------------------------------------------
-    |
-    | These rules will define the data that Google Tag Manager will receive.
-    |
-    */
-    'gtm_consent' => [
-        'ad_user_data',
-        'ad_personalization',
-        'ad_storage',
-        'analytics_storage',
-    ]
 ];

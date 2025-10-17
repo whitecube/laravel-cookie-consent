@@ -33,7 +33,7 @@ class AnalyticCookiesCategory extends CookiesCategory
     /**
      * Define Google Analytics cookies all at once.
      */
-    public function google(string $id, bool $anonymizeIp = true): static
+    public function googleAnalytics(string $id, bool $anonymizeIp = true): static
     {
         $this->group(function (CookiesGroup $group) use ($anonymizeIp, $id) {
             $anonymizeIp = $anonymizeIp === true ? 'true' : 'false';
@@ -50,15 +50,12 @@ class AnalyticCookiesCategory extends CookiesCategory
         return $this;
     }
 
-    public function gtm(string $id): static
+    public function googleTagManager(string $id, $config): static
     {
-        $consentSettings = config('cookieconsent.gtm_consent', [
-            'ad_user_data',
-            'ad_personalization',
-            'ad_storage',
-            'analytics_storage',
-        ]);
-        $consentSettings = array_fill_keys($consentSettings, 'granted');
+        app()->instance('cookieconsent.gtm.enabled', true);
+        app()->instance('cookieconsent.gtm.config', $config);
+
+        $consentSettings = array_fill_keys($config, 'granted');
 
         $consentJson = json_encode($consentSettings, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
