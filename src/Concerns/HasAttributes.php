@@ -53,6 +53,16 @@ trait HasAttributes
 
     /**
      * Get a specific attribute's value.
+     *
+     * The closures are only executed when the view accesses the attributes,
+     * ensuring that the current locale has already been set and translations
+     * are rendered correctly.
+     *
+     * This lazy evaluation approach is necessary because translations depend
+     *  on the active locale at render time. If the closures were executed earlier
+     *  (e.g., when the attribute was assigned), they might use the wrong locale,
+     *  causing incorrect or untranslated text to appear in the output.
+     * 
      */
     public function getAttribute(string $attribute): mixed
     {
