@@ -1,4 +1,4 @@
-<aside id="cookies-policy" class="cookies" data-text="{{ json_encode(__('cookieConsent::cookies.details')) }}">
+<aside id="cookies-policy" class="cookies">
     <div class="cookies__alert">
         <div class="cookies__container">
             <div class="cookies__wrapper">

@@ -2,6 +2,11 @@ window.LaravelCookieModalLoaded = false;
 
 class LaravelCookieModal {
     elements;
+    translations;
+
+    constructor(translations) {
+        this.translations = translations;
+    }
 
     init() {
         if (!window.LaravelCookieConsent || window.LaravelCookieModalLoaded) {
@@ -15,8 +20,6 @@ class LaravelCookieModal {
         }
 
         this.addEventListeners();
-
-        this.elements.root.removeAttribute('data-text');
 
         setTimeout(() => {
             this.elements.root.classList.remove('cookies--pre-init');
@@ -39,7 +42,7 @@ class LaravelCookieModal {
             acceptAll: root.querySelector('.cookiesBtn--accept'),
             acceptEssentials: root.querySelector('.cookiesBtn--essentials'),
             configure: root.querySelector('.cookies__customize'),
-            text: JSON.parse(root.getAttribute('data-text'))
+            translations: this.translations,
         };
     }
 
@@ -113,8 +116,8 @@ class LaravelCookieModal {
         if (hide) return;
 
         event.target.textContent = isOpen
-            ? this.elements.text.more
-            : this.elements.text.less
+            ? this.elements.translations.more
+            : this.elements.translations.less
     }
 
     hideNotice(hide, isOpen) {
@@ -162,7 +165,10 @@ class LaravelCookieModal {
     }
 }
 
-window.LaravelCookieModal = new LaravelCookieModal();
+/*
+    "Translations" is set to 1 here, but is modified by the ScriptController depending on the current locale.
+*/
+window.LaravelCookieModal = new LaravelCookieModal({translations:1});
 window.LaravelCookieModal.init();
 window.addEventListener('LARAVEL_COOKIE_CONSENT_SCRIPT_LOAD', () => {
     window.LaravelCookieModal.init();

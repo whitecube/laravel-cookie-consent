@@ -198,14 +198,16 @@ class CookiesManager
 
     protected function getDefaultScriptTag(): string
     {
+        $locale = app()->currentLocale();
+
         return '<script '
             . 'src="' . route('cookieconsent.script.cookie') . '?id='
-            . md5(\filemtime(LCC_ROOT . '/dist/cookies.js')) . '" '
+            . md5(\filemtime(LCC_ROOT . '/dist/cookies.js')) . '&locale=' . $locale . '" '
             . 'defer'
             . '></script>'
             . '<script '
             . 'src="' . route('cookieconsent.script.modal') . '?id='
-            . md5(\filemtime(LCC_ROOT . '/dist/modal.js')) . '" '
+            . md5(\filemtime(LCC_ROOT . '/dist/modal.js')) . '&locale=' . $locale . '" '
             . 'defer'
             . '></script>';
     }
