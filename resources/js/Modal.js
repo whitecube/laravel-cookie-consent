@@ -19,6 +19,9 @@ class LaravelCookieModal {
             return;
         }
 
+        this.elements.root.classList.add('cookies--pre-init');
+        this.elements.root.classList.add('cookies--closing');
+
         this.addEventListeners();
 
         setTimeout(() => {
@@ -36,7 +39,7 @@ class LaravelCookieModal {
 
         return {
             root: root,
-            reset: document.querySelector('#reset-button'),
+            reset: document.querySelector('[data-cookie-button]'),
             customize: root.querySelector('.cookies__btn--customize'),
             details: root.querySelectorAll('.cookies__details'),
             acceptAll: root.querySelector('.cookiesBtn--accept'),

@@ -233,7 +233,6 @@ class CookiesManager
         return view('cookie-consent::cookies', [
             'cookies' => $this->registrar,
             'policy' => $policy,
-            'isReset' => $isReset,
         ])->render();
     }
 
@@ -267,6 +266,7 @@ class CookiesManager
 
         $attributes = collect($attributes)
             ->map(fn($value, $attribute) => $attribute . '="' . $value . '"')
+            ->add('data-cookie-button')
             ->implode(' ');
 
         return view('cookie-consent::button', [

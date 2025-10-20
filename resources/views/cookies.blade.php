@@ -67,17 +67,7 @@
     </div>
 </aside>
 
-{{-- STYLES & SCRIPT : feel free to remove them and add your own
-    This script can't be removed --}}
-@if(!$isReset)
-    <script data-cookie-consent>
-        let element = document.querySelector('#cookies-policy');
-        if (element) {
-            element.classList.add('cookies--pre-init');
-            element.classList.add('cookies--closing');
-        }
-    </script>
-@endif
+{{-- STYLES & SCRIPT : feel free to remove them and add your own --}}
 <style data-cookie-consent>
     {!! file_get_contents(LCC_ROOT . '/dist/style.css') !!}
 </style>
