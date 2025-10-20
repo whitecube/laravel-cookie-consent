@@ -5,6 +5,7 @@ namespace Whitecube\LaravelCookieConsent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie as CookieFacade;
 use Symfony\Component\HttpFoundation\Cookie as CookieComponent;
+use Whitecube\LaravelCookieConsent\Enums\CookieConsentState;
 
 class CookiesManager
 {
@@ -240,6 +241,12 @@ class CookiesManager
             default => null,
         };
 
+        $state = match (true) {
+            request()->routeIs('cookieconsent.reset') => CookieConsentState::Reset,
+            // request()->routeIs('cookieconsent.update') => CookieConsentState::Updating,
+            default => CookieConsentState::Pending,
+        };
+
         if(! $url) {
             throw new \InvalidArgumentException('Cookie consent action "' . $action . '" does not exist. Try one of these: "accept.all", "accept.essentials", "accept.configuration", "reset".');
         }
@@ -265,6 +272,7 @@ class CookiesManager
             'attributes' => $attributes,
             'basename' => $basename,
             'action' => $action,
+            'state' => $state,
         ])->render();
     }
 
