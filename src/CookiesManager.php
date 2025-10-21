@@ -167,11 +167,11 @@ class CookiesManager
     /**
      * Output all the scripts for current consent state.
      */
-    public function renderScripts(bool $withDefault = true): string
+    public function renderScripts(bool $withDefault = true, ?string $nonce = null): string
     {
         $output = $this->shouldDisplayNotice()
-            ? $this->getNoticeScripts($withDefault)
-            : $this->getConsentedScripts($withDefault);
+            ? $this->getNoticeScripts($withDefault, $nonce)
+            : $this->getConsentedScripts($withDefault, $nonce);
 
         if(strlen($output)) {
             $output = '<!-- Cookie Consent -->' . $output;
@@ -180,14 +180,14 @@ class CookiesManager
         return $output;
     }
 
-    public function getNoticeScripts(bool $withDefault): string
+    public function getNoticeScripts(bool $withDefault, ?string $nonce = null): string
     {
-        return $withDefault ? $this->getDefaultScriptTag() : '';
+        return $withDefault ? $this->getDefaultScriptTag($nonce) : '';
     }
 
-    protected function getConsentedScripts(bool $withDefault): string
+    protected function getConsentedScripts(bool $withDefault, ?string $nonce = null): string
     {
-        $output = $this->getNoticeScripts($withDefault);
+        $output = $this->getNoticeScripts($withDefault, $nonce);
 
         foreach ($this->getConsentResponse()->getResponseScripts() ?? [] as $tag) {
             $output .= $tag;
@@ -196,11 +196,12 @@ class CookiesManager
         return $output;
     }
 
-    protected function getDefaultScriptTag(): string
+    protected function getDefaultScriptTag(?string $nonce = null): string
     {
         return '<script '
             . 'src="' . route('cookieconsent.script') . '?id='
-            . md5(\filemtime(LCC_ROOT . '/dist/script.js')) . '" '
+            .  md5(\filemtime(LCC_ROOT . '/dist/script.js')) . '" '
+            . ($nonce ? 'nonce="' . $nonce . '" ' : '')
             . 'defer'
             . '></script>';
     }
