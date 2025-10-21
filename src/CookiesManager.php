@@ -4,7 +4,6 @@ namespace Whitecube\LaravelCookieConsent;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie as CookieFacade;
-use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Cookie as CookieComponent;
 
 class CookiesManager
