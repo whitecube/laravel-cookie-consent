@@ -5,6 +5,7 @@ class LaravelCookieConsent {
 
     constructor(config) {
         this.config = config;
+        document.addEventListener('DOMContentLoaded', () => this.initActionButtons())
     }
 
     acceptAll() {
@@ -82,10 +83,24 @@ class LaravelCookieConsent {
             }
         });
     }
+
+    initActionButtons() {
+        const actionButtons = document.querySelectorAll('[data-cookie-action]');
+        actionButtons.forEach((button) => {
+            if (button.dataset.cookieAction === 'reset'){
+                button.addEventListener('submit', (event) => {
+                    event.preventDefault();
+                    if (document.querySelector('#cookies-policy')) return;
+                    this.reset();
+                });
+            }
+            // TODO: add edit case with PR:103
+        });
+    }
 }
 
 /*
     Config is set to 1 here, but it is modified by ScriptController depending on the different actions.
 */
-window.LaravelCookieConsent = new LaravelCookieConsent({config:1});
+window.LaravelCookieConsent = new LaravelCookieConsent({config: 1});
 window.dispatchEvent(new Event('LARAVEL_COOKIE_CONSENT_SCRIPT_LOAD'));

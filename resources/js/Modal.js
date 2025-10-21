@@ -6,6 +6,7 @@ class LaravelCookieModal {
 
     constructor(translations) {
         this.translations = translations;
+
     }
 
     init() {
@@ -39,20 +40,15 @@ class LaravelCookieModal {
 
         return {
             root: root,
-            reset: document.querySelector('[data-cookie-button]'),
             customize: root.querySelector('.cookies__btn--customize'),
             details: root.querySelectorAll('.cookies__details'),
             acceptAll: root.querySelector('.cookiesBtn--accept'),
             acceptEssentials: root.querySelector('.cookiesBtn--essentials'),
             configure: root.querySelector('.cookies__customize'),
-            translations: this.translations,
         };
     }
 
     addEventListeners() {
-        if (this.elements.reset) {
-            this.elements.reset.addEventListener('submit', (event) => this.resetCookies(event))
-        }
         for (let i = 0; i < this.elements.details.length; i++) {
             this.elements.details[i].addEventListener('click', (event) => this.toggleExpand(event, event.target, false));
         }
@@ -119,8 +115,8 @@ class LaravelCookieModal {
         if (hide) return;
 
         event.target.textContent = isOpen
-            ? this.elements.translations.more
-            : this.elements.translations.less
+            ? this.translations.more
+            : this.translations.less
     }
 
     hideNotice(hide, isOpen) {
@@ -160,16 +156,11 @@ class LaravelCookieModal {
             }
         })(this.elements.root), 210);
     }
-
-    resetCookies(event) {
-        event.preventDefault();
-        if (document.querySelector('#cookies-policy')) return;
-        window.LaravelCookieConsent.reset()
-    }
 }
 
 /*
-    "Translations" is set to 1 here, but is modified by the ScriptController depending on the current locale.
+    "Translations" is set to 1 here, but is modified by the cookieManager depending
+    on the current locale while calling this script.
 */
 window.LaravelCookieModal = new LaravelCookieModal({translations:1});
 window.LaravelCookieModal.init();
