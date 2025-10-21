@@ -200,7 +200,7 @@ class CookiesManager
     {
         return '<script '
             . 'src="' . route('cookieconsent.script') . '?id='
-            . md5(\filemtime(LCC_ROOT . '/dist/script.js')) . '" '
+            .  md5(\filemtime(LCC_ROOT . '/dist/cookies.js')) . '" '
             . 'defer'
             . '></script>';
     }
@@ -221,10 +221,18 @@ class CookiesManager
             $policy = route($policy);
         }
 
+        $script = str_replace('{translations:1}', $this->getNoticeTranslations(), file_get_contents(LCC_ROOT . '/dist/modal.js'));
+
         return view('cookie-consent::cookies', [
             'cookies' => $this->registrar,
             'policy' => $policy,
+            'script' => $script,
         ])->render();
+    }
+
+    protected function getNoticeTranslations() : string
+    {
+        return json_encode(__('cookieConsent::cookies.details'));
     }
 
     /**

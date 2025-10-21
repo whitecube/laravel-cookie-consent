@@ -1,4 +1,4 @@
-<aside id="cookies-policy" class="cookies cookies--no-js" data-text="{{ json_encode(__('cookieConsent::cookies.details')) }}">
+<aside id="cookies-policy" class="cookies">
     <div class="cookies__alert">
         <div class="cookies__container">
             <div class="cookies__wrapper">
@@ -68,9 +68,8 @@
 </aside>
 
 {{-- STYLES & SCRIPT : feel free to remove them and add your own --}}
-
 <script data-cookie-consent>
-    {!! file_get_contents(LCC_ROOT . '/dist/script.js') !!}
+    {!! $script !!}
 </script>
 <style data-cookie-consent>
     {!! file_get_contents(LCC_ROOT . '/dist/style.css') !!}

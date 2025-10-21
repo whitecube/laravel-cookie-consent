@@ -3,13 +3,13 @@
 namespace Whitecube\LaravelCookieConsent\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
 class ScriptController
 {
-    public function __invoke(Request $request)
+    public function __invoke()
     {
         $content = str_replace('{config:1}', $this->generateConfig(), file_get_contents(LCC_ROOT . '/dist/cookies.js'));
-
         return response($content)->header('Content-Type', 'application/javascript');
     }
 
