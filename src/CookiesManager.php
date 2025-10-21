@@ -198,16 +198,9 @@ class CookiesManager
 
     protected function getDefaultScriptTag(): string
     {
-        $locale = app()->currentLocale();
-
         return '<script '
-            . 'src="' . route('cookieconsent.script.cookie') . '?id='
-            . md5(\filemtime(LCC_ROOT . '/dist/cookies.js')) . '&locale=' . $locale . '" '
-            . 'defer'
-            . '></script>'
-            . '<script '
-            . 'src="' . route('cookieconsent.script.modal') . '?id='
-            . md5(\filemtime(LCC_ROOT . '/dist/modal.js')) . '&locale=' . $locale . '" '
+            . 'src="' . route('cookieconsent.script') . '?id='
+            .  md5(\filemtime(LCC_ROOT . '/dist/cookies.js')) . '" '
             . 'defer'
             . '></script>';
     }
@@ -228,12 +221,18 @@ class CookiesManager
             $policy = route($policy);
         }
 
-        $isReset = request()->routeIs('cookieconsent.reset');
+        $script = str_replace('{translations:1}', $this->getNoticeTranslations(), file_get_contents(LCC_ROOT . '/dist/modal.js'));
 
         return view('cookie-consent::cookies', [
             'cookies' => $this->registrar,
             'policy' => $policy,
+            'script' => $script,
         ])->render();
+    }
+
+    protected function getNoticeTranslations() : string
+    {
+        return json_encode(__('cookieConsent::cookies.details'));
     }
 
     /**
@@ -266,7 +265,6 @@ class CookiesManager
 
         $attributes = collect($attributes)
             ->map(fn($value, $attribute) => $attribute . '="' . $value . '"')
-            ->add('data-cookie-button')
             ->implode(' ');
 
         return view('cookie-consent::button', [
