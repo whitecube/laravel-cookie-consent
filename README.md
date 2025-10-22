@@ -443,7 +443,7 @@ Your website will need a dedicated "Cookie Policy" page containing extensive inf
         <tr>
             <td>{{ $cookie->name }}</td>
             <td>{{ $cookie->description }}</td>
-            <td>{{ \Carbon\Carbon::now()->diffForHumans(\Carbon\Carbon::now()->addMinutes($cookie->duration), true) }}</td>
+            <td>{{ $cookie->getDurationForHumans() }}</td>
         </tr>
         @endforeach
     </tbody>

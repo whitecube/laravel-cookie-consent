@@ -47,7 +47,7 @@
                                 @foreach($category->getCookies() as $cookie)
                                 <li class="cookies__cookie">
                                     <p class="cookies__name">{{ $cookie->name }}</p>
-                                    <p class="cookies__duration">{{ Carbon\Carbon::now()->diffForHumans(Carbon\Carbon::now()->addMinutes($cookie->duration), true) }}</p>
+                                    <p class="cookies__duration">{{ $cookie->getDurationForHumans() }}</p>
                                     @if($cookie->description)
                                         <p class="cookies__description">{{ $cookie->description }}</p>
                                     @endif

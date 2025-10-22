@@ -2,6 +2,8 @@
 
 namespace Whitecube\LaravelCookieConsent;
 
+use Carbon\Carbon;
+
 class Cookie
 {
     use Concerns\HasAttributes;
@@ -45,5 +47,10 @@ class Cookie
         $this->setAttribute($method, $arguments[0] ?? null);
 
         return $this;
+    }
+
+    public function getDurationForHumans() : string
+    {
+        return Carbon::now()->diffForHumans(Carbon::now()->addMinutes($this->duration), true);
     }
 }
