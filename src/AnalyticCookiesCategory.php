@@ -52,8 +52,7 @@ class AnalyticCookiesCategory extends CookiesCategory
 
     public function googleTagManager(string $id, $config): static
     {
-        app()->instance('cookieconsent.gtm.enabled', true);
-        app()->instance('cookieconsent.gtm.config', $config);
+        GoogleTagManagerConfig::enable($config);
 
         $consentSettings = array_fill_keys($config, 'granted');
 

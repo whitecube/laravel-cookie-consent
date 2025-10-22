@@ -20,6 +20,12 @@ class CookiesManager
     protected ?array $preferences = null;
 
     /**
+     * Google Tag Manager configuration
+     */
+    protected bool $gtmEnabled = false;
+    protected array $gtmConfig = [];
+
+    /**
      * Create a new Service Manager instance.
      */
     public function __construct(CookiesRegistrar $registrar, Request $request)
@@ -183,7 +189,11 @@ class CookiesManager
 
     public function getNoticeScripts(bool $withDefault): string
     {
-        return $withDefault ? $this->getDefaultScriptTag() : '';
+        $output = $withDefault ? $this->getDefaultScriptTag() : '';
+
+        $output .= $this->getGTMScript();
+
+        return $output;
     }
 
     protected function getConsentedScripts(bool $withDefault): string
@@ -199,22 +209,28 @@ class CookiesManager
 
     protected function getDefaultScriptTag(): string
     {
-        $gtmScript = app()->has('cookieconsent.gtm.enabled') ? $this->getGTMScript() : null;
-
         return '<script '
             . 'src="' . route('cookieconsent.script') . '?id='
             . md5(\filemtime(LCC_ROOT . '/dist/script.js')) . '" '
             . 'defer'
-            . '></script>'
-            . $gtmScript ?? '';
+            . '></script>';
     }
 
     /**
      * Define default Google Tag Manager script tag;
      */
-    private function getGTMScript()
+    private function getGTMScript(): string
     {
-        $defaultSettings = app('cookieconsent.gtm.config');
+        if (GoogleTagManagerConfig::isEnabled()) {
+            $this->gtmEnabled = true;
+            $this->gtmConfig = GoogleTagManagerConfig::getConfig();
+        }
+
+        if (! $this->gtmEnabled){
+            return '';
+        }
+
+        $defaultSettings = $this->gtmConfig;
 
         $defaultSettings = array_fill_keys($defaultSettings, 'denied');
         $defaultSettings['wait_for_update'] = 500;
