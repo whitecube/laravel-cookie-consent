@@ -443,7 +443,7 @@ Your website will need a dedicated "Cookie Policy" page containing extensive inf
         <tr>
             <td>{{ $cookie->name }}</td>
             <td>{{ $cookie->description }}</td>
-            <td>{{ \Carbon\CarbonInterval::minutes($cookie->duration)->cascade() }}</td>
+            <td>{{ $cookie->getDurationForHumans() }}</td>
         </tr>
         @endforeach
     </tbody>
@@ -452,16 +452,6 @@ Your website will need a dedicated "Cookie Policy" page containing extensive inf
 
 <p>...</p>
 ```
-
-A side note on `Carbon\CarbonInterval`'s `cascade` method: when working with years, some unexpected results could appear. By default, the `CarbonInterval` "year" factor will return 336 days instead of 365. It is possible to change this by defining your own factors (for instance in `App\Providers\AppServiceProvider`):
-
-```php
-$factors = \Carbon\CarbonInterval::getCascadeFactors();
-$factors['years'] = [365, 'dayz'];
-\Carbon\CarbonInterval::setCascadeFactors($factors);
-```
-
-More information on CarbonInterval's gotchas in [Constantin's blog post on chasingcode.dev](https://chasingcode.dev/blog/carbon-php-practical-examples/).
 
 ### Let your users change their mind
 
