@@ -21,8 +21,8 @@ class CookiesCategory
     public function __construct(string $key)
     {
         $this->key = $key;
-        $this->setAttribute('title', $this->translate('categories.' . $key . '.title', ucfirst($key)));
-        $this->setAttribute('description', $this->translate('categories.' . $key . '.description'));
+        $this->setAttribute('title', fn() => $this->translate('categories.' . $key . '.title', ucfirst($key)));
+        $this->setAttribute('description', fn() => $this->translate('categories.' . $key . '.description'));
     }
 
     /**
