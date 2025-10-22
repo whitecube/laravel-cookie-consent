@@ -15,4 +15,13 @@ enum CookieConsentState
 
     // User had configured consent but chose to reset the settings (similar to "pending")
     case Reset;
+
+    public function shouldDisplayNotice(): bool
+    {
+        return match($this) {
+            static::Pending , static::Reset=> true,
+            static::Configured => false,
+//            static::Updating => true,
+        };
+    }
 }
