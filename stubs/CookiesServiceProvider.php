@@ -18,10 +18,22 @@ class CookiesServiceProvider extends ServiceProvider
             ->csrf();
 
         // Register all Analytics cookies at once using one single shorthand method:
+        // Don't forget to change the config location to match your config file
         // Cookies::analytics()
-        //    ->google(
-        //         id: config('cookieconsent.google_analytics.id'),
-        //         anonymizeIp: config('cookieconsent.google_analytics.anonymize_ip')
+        //    ->googleAnalytics(
+        //         id: config('your_config.google_analytics.id'),
+        //         anonymizeIp: config('your_config.google_analytics.anonymize_ip')
+        //    );
+
+        // Cookies::analytics()
+        //    ->googleTagManager(
+        //        id: config('your_config.google_tag_manager.id'),
+        //        config: [
+        //            'ad_user_data',
+        //            'ad_personalization',
+        //            'ad_storage',
+        //            'analytics_storage',
+        //        ]
         //    );
 
         // Register custom cookies under the pre-existing "optional" category:

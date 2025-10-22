@@ -2,6 +2,7 @@
 
 namespace Whitecube\LaravelCookieConsent;
 
+use Illuminate\Database\Eloquent\Casts\Json;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie as CookieFacade;
 use Symfony\Component\HttpFoundation\Cookie as CookieComponent;
@@ -17,6 +18,12 @@ class CookiesManager
      * The user's current consent preferences.
      */
     protected ?array $preferences = null;
+
+    /**
+     * Google Tag Manager configuration
+     */
+    protected bool $gtmEnabled = false;
+    protected array $gtmConfig = [];
 
     /**
      * Create a new Service Manager instance.
@@ -182,7 +189,11 @@ class CookiesManager
 
     public function getNoticeScripts(bool $withDefault): string
     {
-        return $withDefault ? $this->getDefaultScriptTag() : '';
+        $output = $withDefault ? $this->getDefaultScriptTag() : '';
+
+        $output .= $this->getGTMScript();
+
+        return $output;
     }
 
     protected function getConsentedScripts(bool $withDefault): string
@@ -203,6 +214,37 @@ class CookiesManager
             . md5(\filemtime(LCC_ROOT . '/dist/script.js')) . '" '
             . 'defer'
             . '></script>';
+    }
+
+    /**
+     * Define default Google Tag Manager script tag;
+     */
+    private function getGTMScript(): string
+    {
+        if (GoogleTagManagerConfig::isEnabled()) {
+            $this->gtmEnabled = true;
+            $this->gtmConfig = GoogleTagManagerConfig::getConfig();
+        }
+
+        if (! $this->gtmEnabled){
+            return '';
+        }
+
+        $defaultSettings = $this->gtmConfig;
+
+        $defaultSettings = array_fill_keys($defaultSettings, 'denied');
+        $defaultSettings['wait_for_update'] = 500;
+
+        $defaultJson = json_encode($defaultSettings, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+
+        return '<script type="module" defer>
+                    window.dataLayer = window.dataLayer || []; function gtag() {
+                        dataLayer.push(arguments);
+                    }
+
+                    gtag(\'consent\', \'default\',  ' . $defaultJson . ');
+                    dataLayer.push({\'gtm.start\': new Date().getTime(), \'event\': \'gtm.js\'});
+                 </script> ';
     }
 
     /**

@@ -109,12 +109,25 @@ class CookiesServiceProvider extends ServiceProvider
                 ->session()
                 ->csrf();
     
-            // Register all Analytics cookies at once using one single shorthand method:
+            // Register all Google Analytics cookies at once using one single shorthand method:
+            // Don't forget to change the id an anonymizeIp to point to the good location
             Cookies::analytics()
-                ->google(
-                    id: config('cookieconsent.google_analytics.id')
-                    anonymizeIp: config('cookieconsent.google_analytics.anonymize_ip')
-                );
+               ->googleAnalytics(
+                    id: config('your_config.google_analytics.id'),
+                    anonymizeIp: config('your_config.google_analytics.anonymize_ip')
+               );
+
+            // Using Google Tag Manager? Use this method instead of the Google Analytics one;
+            Cookies::analytics()
+               ->googleTagManager(
+                   id: config('your_config.google_tag_manager.id'),
+                   config: [
+                       'ad_user_data',
+                       'ad_personalization',
+                       'ad_storage',
+                       'analytics_storage',
+                   ]
+               );
         
             // Register custom cookies under the pre-existing "optional" category:
             Cookies::optional()
@@ -128,6 +141,8 @@ class CookiesServiceProvider extends ServiceProvider
 ```
 
 More details on the available [cookie registration](#registering-cookies) methods below.
+
+More details on the [Google Analytics and Google Tag Manager](#analytics-cookies-custom-methods) methods below.
 
 Then, let's add consent scripts and modals to the application's views using the following blade directives:
 
@@ -412,6 +427,65 @@ Since most implementations have the same needs, we've separated our Javascript c
 Most of the displayed strings are defined in the `cookieConsent::cookies` translation files. The package ships with a few supported locales, but if yours is not yet included we would greatly appreciate a PR.
 
 If not already published, you can edit or fill the translation files using `php artisan vendor:publish --tag=laravel-cookie-consent-lang`, this will copy our translation files to your app's `vendor/cookieConsent` "lang" path.
+
+## Analytics cookies custom methods
+
+### Google Analytics (GA)
+
+Register all Google Analytics cookies at once using the shorthand method:
+
+```php
+Cookies::analytics()
+    ->googleAnalytics(
+        id: config('services.google_analytics.id'),
+        anonymizeIp: config('services.google_analytics.anonymize_ip', true)
+    );
+```
+
+### Google Tag Manager (GTM)
+
+For Google Tag Manager with consent mode v2, use this method instead:
+
+```php
+Cookies::analytics()
+    ->googleTagManager(
+        id: id: config('services.google_tag_manager.id'), // Your Google Tag Manager Container ID
+        config: [
+            'ad_storage',           // Enables storage for advertising
+            'ad_user_data',         // Enables sending user data for advertising
+            'ad_personalization',   // Enables personalized advertising
+            'analytics_storage',    // Enables storage for analytics
+        ]
+    );
+```
+
+You can find all the available consent types on [the Google Tag Manager documentation](https://support.google.com/tagmanager/answer/10718549?hl=en)
+
+**Config file example (`config/services.php`):**
+```php
+return [
+    'google_analytics' => [
+        'id' => env('GOOGLE_ANALYTICS_ID'),
+        'anonymize_ip' => env('GOOGLE_ANALYTICS_ANONYMIZE_IP', true),
+    ],
+    
+    'google_tag_manager' => [
+        'id' => env('GOOGLE_TAG_MANAGER_ID'),
+    ],
+];
+```
+
+**Environment variables (`.env`):**
+```env
+GOOGLE_ANALYTICS_ID=G-XXXXXXXXXX
+GOOGLE_ANALYTICS_ANONYMIZE_IP=true
+
+GOOGLE_TAG_MANAGER_ID=GTM-XXXXXXX
+```
+
+**Note:** When using Google Tag Manager, the consent mode is automatically configured. Users must accept the analytics cookies before GTM scripts are loaded. The default consent state is set to "denied" for all specified consent types until the user gives explicit consent.
+
+> **Important:** Don't use both `googleAnalytics()` and `googleTagManager()` methods together. Choose one based on your tracking setup.
 
 ## A few useful tips
 
