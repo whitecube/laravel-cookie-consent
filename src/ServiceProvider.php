@@ -64,7 +64,9 @@ class ServiceProvider extends Provider
     protected function registerBladeDirectives()
     {
         Blade::directive('cookieconsentscripts', function (string $expression) {
-            return '<?php echo ' . Facades\Cookies::class . '::renderScripts(!empty($expression) ? true, ' . $expression . ' : ""); ?>';
+            $expression = $expression ?: 'null';
+            return "<?php echo " . Facades\Cookies::class . '::renderScripts('. $expression .', true); ?>';
+
         });
         Blade::directive('cookieconsentview', function (string $expression) {
             return '<?php echo ' . Facades\Cookies::class . '::renderView(); ?>';

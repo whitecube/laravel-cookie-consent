@@ -167,11 +167,11 @@ class CookiesManager
     /**
      * Output all the scripts for current consent state.
      */
-    public function renderScripts(bool $withDefault = true, ?string $nonce = null): string
+    public function renderScripts(string|null $nonce, bool $withDefault = true): string
     {
         $output = $this->shouldDisplayNotice()
-            ? $this->getNoticeScripts($withDefault, $nonce)
-            : $this->getConsentedScripts($withDefault, $nonce);
+            ? $this->getNoticeScripts($nonce, $withDefault)
+            : $this->getConsentedScripts($nonce, $withDefault);
 
         if(strlen($output)) {
             $output = '<!-- Cookie Consent -->' . $output;
@@ -180,23 +180,23 @@ class CookiesManager
         return $output;
     }
 
-    public function getNoticeScripts(bool $withDefault, ?string $nonce = null): string
+    public function getNoticeScripts(string|null $nonce, bool $withDefault): string
     {
         return $withDefault ? $this->getDefaultScriptTag($nonce) : '';
     }
 
-    protected function getConsentedScripts(bool $withDefault, ?string $nonce = null): string
+    protected function getConsentedScripts(string|null $nonce, bool $withDefault): string
     {
-        $output = $this->getNoticeScripts($withDefault, $nonce);
+        $output = $this->getNoticeScripts($nonce, $withDefault);
 
-        foreach ($this->getConsentResponse()->getResponseScripts() ?? [] as $tag) {
+        foreach ($this->getConsentResponse($nonce)->getResponseScripts() ?? [] as $tag) {
             $output .= $tag;
         }
 
         return $output;
     }
 
-    protected function getDefaultScriptTag(?string $nonce = null): string
+    protected function getDefaultScriptTag(string|null $nonce): string
     {
         return '<script '
             . 'src="' . route('cookieconsent.script') . '?id='
