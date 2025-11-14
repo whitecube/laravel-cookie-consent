@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Cookie as CookieComponent;
 
 class CookiesManager
 {
+    protected string|null $nonce = null;
     /**
      * The cookies registrar.
      */
@@ -141,13 +142,22 @@ class CookiesManager
      */
     protected function getConsentResponse(): ConsentResponse
     {
-        return array_reduce($this->registrar->getCategories(), function($response, $category) {
-            return array_reduce($category->getDefined(), function(ConsentResponse $response, Cookie|CookiesGroup $instance) {
-                return $this->hasConsentFor($instance->name)
-                    ? $response->handleConsent($instance)
-                    : $response;
-            }, $response);
-        }, new ConsentResponse());
+        $nonce = $this->nonce;
+        return array_reduce(
+            $this->registrar->getCategories(),
+            function($response, $category) use ($nonce) {
+                return array_reduce(
+                    $category->getDefined(),
+                    function(ConsentResponse $response, Cookie|CookiesGroup $instance) use ($nonce) {
+                        return $this->hasConsentFor($instance->name)
+                            ? $response->handleConsent($instance, $nonce)
+                            : $response;
+                    },
+                    $response
+                );
+            },
+            new ConsentResponse()
+        );
     }
 
     /**
@@ -169,6 +179,7 @@ class CookiesManager
      */
     public function renderScripts(string|null $nonce, bool $withDefault = true): string
     {
+        $this->nonce = $nonce;
         $output = $this->shouldDisplayNotice()
             ? $this->getNoticeScripts($nonce, $withDefault)
             : $this->getConsentedScripts($nonce, $withDefault);
@@ -283,8 +294,8 @@ class CookiesManager
         $cookieConsentInfo = view('cookie-consent::info', [
             'cookies' => $this->registrar,
         ])->render();
-        
-        $formattedString = preg_replace(
+
+        return preg_replace(
             [
                 '/\<(\w)[^\>]+\>\@cookieconsentinfo\<\/\1\>/',
                 '/\@cookieconsentinfo/',
@@ -292,7 +303,5 @@ class CookiesManager
             $cookieConsentInfo,
             $wysiwyg,
         );
-
-        return $formattedString;
     }
 }
