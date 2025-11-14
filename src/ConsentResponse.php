@@ -26,7 +26,7 @@ class ConsentResponse
     /**
      * Transform the collected data into a JSON response-object.
      */
-    public function handleConsent(Cookie|CookiesGroup $instance): static
+    public function handleConsent(Cookie|CookiesGroup $instance, string|null $nonce): static
     {
         if(! $instance->hasConsentCallback()) {
             return $this;
@@ -35,7 +35,7 @@ class ConsentResponse
         $consent = $instance->getConsentResult();
 
         $this->attachCookies($consent->getCookies());
-        $this->attachScripts($consent->getScripts());
+        $this->attachScripts($consent->getScripts(), $nonce);
 
         return $this;
     }
@@ -65,20 +65,24 @@ class ConsentResponse
     /**
      * Add multiple script tags to the consent response.
      */
-    public function attachScripts(array $tags): static
+    public function attachScripts(array $tags, string|null $nonce): static
     {
         foreach ($tags as $tag) {
-            $this->attachScript($tag);
+            $this->attachScript($tag, $nonce);
         }
-        
+
         return $this;
     }
 
     /**
      * Add a single script tag to the consent response.
      */
-    public function attachScript(string $tag): static
+    public function attachScript(string $tag, ?string $nonce = null): static
     {
+        if ($nonce && str_contains($tag, 'nonce=""')) {
+            $tag = str_replace('nonce=""', 'nonce="' . $nonce . '"', $tag);
+        }
+
         $this->scripts[] = $tag;
 
         return $this;

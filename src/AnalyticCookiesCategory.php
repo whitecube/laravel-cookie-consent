@@ -33,9 +33,9 @@ class AnalyticCookiesCategory extends CookiesCategory
                     ->description(__('cookieConsent::cookies.defaults._gat'))
                 )
                 ->accepted(fn(Consent $consent) => $consent
-                    ->script('<script async src="https://www.googletagmanager.com/gtag/js?id=' . $id . '"></script>')
+                    ->script('<script nonce="" async src="https://www.googletagmanager.com/gtag/js?id=' . $id . '"></script>')
                     ->script(
-                        '<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag(\'js\',new Date());gtag(\'config\',\'' . $id . '\', {\'anonymize_ip\':' . $anonymizeIp . '});</script>'
+                        '<script nonce="">window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag(\'js\',new Date());gtag(\'config\',\'' . $id . '\', {\'anonymize_ip\':' . $anonymizeIp . '});</script>'
                     )
                 );
         });

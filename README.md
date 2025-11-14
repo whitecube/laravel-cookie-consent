@@ -463,6 +463,29 @@ $factors['years'] = [365, 'dayz'];
 
 More information on CarbonInterval's gotchas in [Constantin's blog post on chasingcode.dev](https://chasingcode.dev/blog/carbon-php-practical-examples/).
 
+### Content Security Policy
+
+This package supports CSP nonces for secure script loading. Pass your nonce to the @cookieconsentscripts directive:
+
+```blade
+{{-- Basic usage with nonce --}}
+@cookieconsentscripts($yourNonce)
+
+{{-- Example with Spatie Laravel CSP --}}
+@cookieconsentscripts(app('csp-nonce'))
+
+{{-- Without CSP --}}
+@cookieconsentscripts
+```
+
+How It Works
+
+When you provide a nonce, it's added to the script tag:
+
+```html
+<script src="/cookie-consent-script" nonce="your-nonce-here" defer></script>
+```
+
 ### Let your users change their mind
 
 Users should be able to change their consent settings at any time. No worries, with this package it is quite simple to achieve: generate a button that will reset the user's cookies and show the consent modal again.

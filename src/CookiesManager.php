@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Cookie as CookieComponent;
 
 class CookiesManager
 {
+    protected string|null $nonce = null;
     /**
      * The cookies registrar.
      */
@@ -141,13 +142,22 @@ class CookiesManager
      */
     protected function getConsentResponse(): ConsentResponse
     {
-        return array_reduce($this->registrar->getCategories(), function($response, $category) {
-            return array_reduce($category->getDefined(), function(ConsentResponse $response, Cookie|CookiesGroup $instance) {
-                return $this->hasConsentFor($instance->name)
-                    ? $response->handleConsent($instance)
-                    : $response;
-            }, $response);
-        }, new ConsentResponse());
+        $nonce = $this->nonce;
+        return array_reduce(
+            $this->registrar->getCategories(),
+            function($response, $category) use ($nonce) {
+                return array_reduce(
+                    $category->getDefined(),
+                    function(ConsentResponse $response, Cookie|CookiesGroup $instance) use ($nonce) {
+                        return $this->hasConsentFor($instance->name)
+                            ? $response->handleConsent($instance, $nonce)
+                            : $response;
+                    },
+                    $response
+                );
+            },
+            new ConsentResponse()
+        );
     }
 
     /**
@@ -167,11 +177,12 @@ class CookiesManager
     /**
      * Output all the scripts for current consent state.
      */
-    public function renderScripts(bool $withDefault = true): string
+    public function renderScripts(string|null $nonce, bool $withDefault = true): string
     {
+        $this->nonce = $nonce;
         $output = $this->shouldDisplayNotice()
-            ? $this->getNoticeScripts($withDefault)
-            : $this->getConsentedScripts($withDefault);
+            ? $this->getNoticeScripts($nonce, $withDefault)
+            : $this->getConsentedScripts($nonce, $withDefault);
 
         if(strlen($output)) {
             $output = '<!-- Cookie Consent -->' . $output;
@@ -180,27 +191,28 @@ class CookiesManager
         return $output;
     }
 
-    public function getNoticeScripts(bool $withDefault): string
+    public function getNoticeScripts(string|null $nonce, bool $withDefault): string
     {
-        return $withDefault ? $this->getDefaultScriptTag() : '';
+        return $withDefault ? $this->getDefaultScriptTag($nonce) : '';
     }
 
-    protected function getConsentedScripts(bool $withDefault): string
+    protected function getConsentedScripts(string|null $nonce, bool $withDefault): string
     {
-        $output = $this->getNoticeScripts($withDefault);
+        $output = $this->getNoticeScripts($nonce, $withDefault);
 
-        foreach ($this->getConsentResponse()->getResponseScripts() ?? [] as $tag) {
+        foreach ($this->getConsentResponse($nonce)->getResponseScripts() ?? [] as $tag) {
             $output .= $tag;
         }
 
         return $output;
     }
 
-    protected function getDefaultScriptTag(): string
+    protected function getDefaultScriptTag(string|null $nonce): string
     {
         return '<script '
             . 'src="' . route('cookieconsent.script') . '?id='
-            . md5(\filemtime(LCC_ROOT . '/dist/script.js')) . '" '
+            .  md5(\filemtime(LCC_ROOT . '/dist/script.js')) . '" '
+            . ($nonce ? 'nonce="' . $nonce . '" ' : '')
             . 'defer'
             . '></script>';
     }
@@ -282,8 +294,8 @@ class CookiesManager
         $cookieConsentInfo = view('cookie-consent::info', [
             'cookies' => $this->registrar,
         ])->render();
-        
-        $formattedString = preg_replace(
+
+        return preg_replace(
             [
                 '/\<(\w)[^\>]+\>\@cookieconsentinfo\<\/\1\>/',
                 '/\@cookieconsentinfo/',
@@ -291,7 +303,5 @@ class CookiesManager
             $cookieConsentInfo,
             $wysiwyg,
         );
-
-        return $formattedString;
     }
 }
