@@ -36,6 +36,7 @@ We've built this package with flexibility in our mind: you'll be able to customi
 4. [Checking for consent](#checking-for-consent)
     - [Using the Cookies facade](#using-the-cookies-facade)
     - [Using dependency injection](#using-dependency-injection)
+    - [Using javascript event](#using-javascript-event)
 5. [Customization](#customization)
     - [The views](#the-views)
     - [Styling](#styling)
@@ -339,6 +340,12 @@ class FooController
     }
 }
 ```
+
+### Using javascript event
+
+Here are the different events dispatched:
+- `fullyConsented`, which is dispatched after all cookies have been accepted;
+- `essentialsConsented`, which is dispatched after only essential cookies have been accepted;
 
 ## Customization
 

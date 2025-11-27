@@ -68,12 +68,14 @@ class LaravelCookieModal {
     acceptAllCookies(event) {
         event.preventDefault();
         window.LaravelCookieConsent.acceptAll()
+        document.dispatchEvent(new Event('fullyConsented'));
         this.close();
     }
 
     acceptEssentialsCookies(event) {
         event.preventDefault();
         window.LaravelCookieConsent.acceptEssentials()
+        document.dispatchEvent(new Event('essentialsConsented'));
         this.close();
     }
 
