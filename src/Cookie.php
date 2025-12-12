@@ -15,7 +15,7 @@ class Cookie
     public readonly string $name;
 
     /**
-     * The cookie's duration.
+     * The cookie's duration in minutes.
      */
     public readonly int $duration;
 
@@ -49,7 +49,7 @@ class Cookie
         return $this;
     }
 
-    public function getDurationForHumans() : string
+    public function getDurationForHumans(): string
     {
         return Carbon::now()->diffForHumans(Carbon::now()->addMinutes($this->duration), true);
     }
