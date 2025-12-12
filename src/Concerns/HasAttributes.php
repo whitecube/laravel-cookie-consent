@@ -59,10 +59,9 @@ trait HasAttributes
      * are rendered correctly.
      *
      * This lazy evaluation approach is necessary because translations depend
-     *  on the active locale at render time. If the closures were executed earlier
-     *  (e.g., when the attribute was assigned), they might use the wrong locale,
-     *  causing incorrect or untranslated text to appear in the output.
-     * 
+     * on the active locale at render time. If the closures were executed earlier
+     * (e.g., when the attribute was assigned), they might use the wrong locale,
+     * causing incorrect or untranslated text to appear in the output.
      */
     public function getAttribute(string $attribute): mixed
     {
