@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Support\Facades\Route;
 use Whitecube\LaravelCookieConsent\Http\Controllers\ResetController;
 use Whitecube\LaravelCookieConsent\Http\Controllers\ScriptController;
@@ -12,7 +13,7 @@ Route::group([
     'domain' => config('cookieconsent.url.domain'),
     'prefix' => config('cookieconsent.url.prefix'),
     'middleware' => config('cookieconsent.url.middleware')
-], function() {
+], function () {
     Route::get('script', ScriptController::class)
         ->name('script');
 

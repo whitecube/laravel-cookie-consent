@@ -2,6 +2,7 @@
 
 namespace Whitecube\LaravelCookieConsent;
 
+use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Support\ServiceProvider;
 
 abstract class CookiesServiceProvider extends ServiceProvider
@@ -26,6 +27,8 @@ abstract class CookiesServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $this->app->afterResolving(EncryptCookies::class, function (EncryptCookies $middleware) {
+            $middleware->disableFor(config('cookieconsent.cookie.name'));
+        });
     }
 }
