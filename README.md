@@ -520,8 +520,7 @@ To ensure the cookie consent setup is correctly reset for each incoming Octane r
 
 ```php
 'flush' => [
-    'cookie.consent',
-    \WhiteCube\LaravelCookieConsent\CookieConsent::class,
+    \WhiteCube\LaravelCookieConsent\CookiesRegistrar::class,
 ],
 ```
 </details>
