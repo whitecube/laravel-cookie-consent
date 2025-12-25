@@ -2,6 +2,7 @@
 
 namespace Whitecube\LaravelCookieConsent\Http\Controllers;
 
+use Illuminate\Support\Facades\Cookie;
 use Whitecube\LaravelCookieConsent\CookiesManager;
 use Illuminate\Http\Request;
 
@@ -9,7 +10,14 @@ class ResetController
 {
     public function __invoke(Request $request, CookiesManager $cookies)
     {
-        $response = ! $request->expectsJson()
+        $exclude = ['XSRF-TOKEN', 'laravel-session'];
+
+        $keys = array_filter(
+            array_keys($request->cookies->all()),
+            fn($key) => !in_array($key, $exclude, true)
+        );
+
+        $response = !$request->expectsJson()
             ? redirect()->back()
             : response()->json([
                 'status' => 'ok',
@@ -17,9 +25,13 @@ class ResetController
                 'notice' => $cookies->getNoticeMarkup(),
             ]);
 
-        return $response->withoutCookie(
-            cookie: config('cookieconsent.cookie.name'),
-            domain: config('cookieconsent.cookie.domain'),
-        );
+        foreach ($keys as $key) {
+            $response->withoutCookie(
+                cookie: $key,
+                domain: config('cookieconsent.cookie.domain'),
+            );
+        }
+
+        return $response;
     }
 }
