@@ -148,6 +148,29 @@ Then, let's add consent scripts and modals to the application's views using the 
 </html>
 ```
 
+**Using with Laravel Livewire**
+
+If your application uses Laravel Livewire, you may notice the cookie consent banner reappearing on every page navigation even after the user has accepted. This happens because Livewire's DOM diffing during component re-renders interferes with the banner's visibility state.
+The fix is to use Livewire's @teleport directive to render the banner and its scripts outside of Livewire's control:
+```blade
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- ... -->
+    @teleport('head')
+        @cookieconsentscripts
+    @endteleport
+</head>
+<body>
+    <!-- ... -->
+    @teleport('body')
+        @cookieconsentview
+    @endteleport
+</body>
+</html>
+```
+This moves both the banner and its scripts outside of Livewire's DOM diffing entirely, so they won't be reset during re-renders. This applies to Livewire v3 and above.
+
 ## Registering cookies
 
 This package aims to centralize cookie declaration and documentation at the same place in order to keep projects maintainable. However, the suggested methodology is not mandatory. If you wish to queue cookies or execute code upon consent somewhere else in your app's codebase, feel free to do so: we have a few available methods that can come in handy when you'll need to [check if consent has been granted](#checking-for-consent) during the request's lifecycle.
