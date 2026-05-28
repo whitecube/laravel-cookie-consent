@@ -9,7 +9,7 @@ class ConfigureController
 {
     public function __invoke(Request $request, CookiesManager $cookies)
     {
-        $categories = collect($request->get('categories', []))
+        $categories = collect($request->input('categories', []))
             ->prepend('essentials')
             ->unique()
             ->filter(fn($key) => $cookies->hasCategory($key))
