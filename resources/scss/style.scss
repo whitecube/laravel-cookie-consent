@@ -9,6 +9,10 @@
     z-index: 9999;
     transition: transform 200ms ease-out,
                 opacity 200ms ease-out;
+    
+    &--hidden {
+        display: none;
+    }
 
     &--closing {
         opacity: 0;
