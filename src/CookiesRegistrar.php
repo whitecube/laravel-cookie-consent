@@ -16,7 +16,7 @@ class CookiesRegistrar
     /**
      * Access the pre-defined "essentials" consent-category.
      */
-    public function essentials(): CookiesCategory
+    public function essentials(): EssentialCookiesCategory
     {
         return $this->getOrMakeCategory('essentials', function(string $key) {
             return new EssentialCookiesCategory($key);
@@ -26,7 +26,7 @@ class CookiesRegistrar
     /**
      * Access the pre-defined "analytics" consent-category.
      */
-    public function analytics(): CookiesCategory
+    public function analytics(): AnalyticCookiesCategory
     {
         return $this->getOrMakeCategory('analytics', function(string $key) {
             return new AnalyticCookiesCategory($key);
