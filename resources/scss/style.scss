@@ -1,3 +1,15 @@
+:root {
+    --cookies-color-primary: #7959EF;
+    --cookies-color-bg: #fff;
+    --cookies-color-text: #2C2E30;
+    --cookies-color-border: #E7E8E9;
+    --cookies-color-border-light: #eee;
+    --cookies-color-text-muted: #8A8E92;
+    --cookies-color-text-subtle: #676767;
+    --cookies-shadow-1: rgba(0, 0, 0, 0.08);
+    --cookies-shadow-2: rgba(0, 0, 0, 0.04);
+}
+
 #cookies-policy.cookies {
     font-size: 16px;
     position: fixed;
@@ -18,7 +30,7 @@
         .cookies__btn {
             &--customize {
                 border-top: none;
-                border-bottom: 1px solid #E7E8E9;
+                border-bottom: 1px solid var(--cookies-color-border);
             }
 
             svg {
@@ -75,12 +87,12 @@
         max-width: 90%;
         max-height: 90%;
         margin: 4%;
-        background: #fff;
+        background: var(--cookies-color-bg);
         border-radius: 8px;
-        border: 1px solid #E7E8E9;
-        -webkit-box-shadow: 0px 12px 12px -8px rgba(0, 0, 0, 0.08), 0px 0px 4px rgba(0, 0, 0, 0.04);
-        -moz-box-shadow: 0px 12px 12px -8px rgba(0, 0, 0, 0.08), 0px 0px 4px rgba(0, 0, 0, 0.04);
-        box-shadow: 0px 12px 12px -8px rgba(0, 0, 0, 0.08), 0px 0px 4px rgba(0, 0, 0, 0.04);
+        border: 1px solid var(--cookies-color-border);
+        -webkit-box-shadow: 0px 12px 12px -8px var(--cookies-shadow-1), 0px 0px 4px var(--cookies-shadow-2);
+        -moz-box-shadow: 0px 12px 12px -8px var(--cookies-shadow-1), 0px 0px 4px var(--cookies-shadow-2);
+        box-shadow: 0px 12px 12px -8px var(--cookies-shadow-1), 0px 0px 4px var(--cookies-shadow-2);
     }
 
     &__container {
@@ -111,14 +123,14 @@
         font-weight: bold;
         line-height: 1.4em;
         margin-bottom: 0.8em;
-        color: #2C2E30;
+        color: var(--cookies-color-text);
     }
 
     &__intro {
         font-weight: 450;
         font-size: 0.875em;
         line-height: 1.4em;
-        color: #2C2E30;
+        color: var(--cookies-color-text);
 
         p {
             margin-top: 1em;
@@ -135,7 +147,7 @@
 
             &:hover,
             &:focus {
-                color: #7959EF;
+                color: var(--cookies-color-primary);
             }
         }
     }
@@ -157,10 +169,10 @@
             font-size: 0.875em;
             line-height: 1em;
             text-decoration: none;
-            color: #2C2E30;
+            color: var(--cookies-color-text);
             position: relative;
             padding: 1.125em 24px;
-            border-top: 1px solid #E7E8E9;
+            border-top: 1px solid var(--cookies-color-border);
         }
 
         svg {
@@ -178,7 +190,7 @@
     }
 
     &__section + .cookies__section {
-        border-top: 1px solid #eee;
+        border-top: 1px solid var(--cookies-color-border-light);
     }
 
     &__category,
@@ -215,7 +227,7 @@
             width: 2.5em;
             height: 1.4em;
             margin-top: -0.7em;
-            background: #E7E8E9;
+            background: var(--cookies-color-border);
             z-index: 0;
             transition: background 200ms ease-out, opacity 200ms ease-out;
         }
@@ -224,7 +236,7 @@
             width: 1em;
             height: 1em;
             margin-top: -0.5em;
-            background: #fff;
+            background: var(--cookies-color-bg);
             z-index: 1;
             transform: translateX(-0.55em);
             transition: transform 200ms ease-out;
@@ -233,7 +245,7 @@
     }
 
     &__category input:checked + .cookies__box:after {
-        background: #7959EF;
+        background: var(--cookies-color-primary);
         opacity: 1;
     }
 
@@ -248,26 +260,26 @@
     &__label {
         font-size: 0.875em;
         font-weight: 600;
-        color: #2C2E30;
+        color: var(--cookies-color-text);
     }
 
     &__info {
         font-weight: 450;
         font-size: 0.875em;
         line-height: 1.4em;
-        color: #2C2E30;
+        color: var(--cookies-color-text);
     }
 
     &__details {
         display: block;
-        color: #7959EF;
+        color: var(--cookies-color-primary);
         font-size: 0.875em;
         margin: 0.625em 0 0.9em;
         transition: color 200ms ease-out;
 
         &:hover,
         &:focus {
-            color: #7959EF;
+            color: var(--cookies-color-primary);
         }
     }
 
@@ -276,7 +288,7 @@
         line-height: 1.2em;
         padding-top: 1em;
         padding-top: 0.8em;
-        color: #676767;
+        color: var(--cookies-color-text-subtle);
     }
 
     &__cookie + .cookies__cookie {
@@ -287,13 +299,13 @@
         display: inline;
         font-weight: 600;
         line-height: 22px;
-        color: #8A8E92;
+        color: var(--cookies-color-text-muted);
     }
 
     &__duration {
         display: inline;
         text-align: right;
-        color: #8A8E92;
+        color: var(--cookies-color-text-muted);
     }
 
     &__description {
@@ -302,11 +314,11 @@
         width: 100%;
         line-height: 120%;
         text-align: left;
-        color: #8A8E92;
+        color: var(--cookies-color-text-muted);
     }
 
     &__save {
-        border-top: 1px solid #E7E8E9;
+        border-top: 1px solid var(--cookies-color-border);
         padding: 0.75em 1.5em;
         margin-top: 0.4em;
         display: flex;
@@ -322,9 +334,9 @@
         font: inherit;
         font-size: 14px;
         font-weight: 600;
-        color: #fff;
-        background: #7959EF;
-        border: 1px solid #7959EF;
+        color: var(--cookies-color-bg);
+        background: var(--cookies-color-primary);
+        border: 1px solid var(--cookies-color-primary);
         border-radius: 4px;
         margin: 0;
         padding: 0.86em 1em;
