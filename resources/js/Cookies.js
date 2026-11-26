@@ -85,5 +85,5 @@ class LaravelCookieConsent {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-    window.LaravelCookieConsent = new LaravelCookieConsent({ config: 1 });
+    window.LaravelCookieConsent = new LaravelCookieConsent('__LARAVEL_COOKIE_CONSENT_CONFIG__');
 });
