@@ -2,6 +2,9 @@
 
 namespace Whitecube\LaravelCookieConsent;
 
+/**
+ * @method description(mixed $value)
+ */
 class Cookie
 {
     use Concerns\HasAttributes;

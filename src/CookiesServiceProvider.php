@@ -9,7 +9,7 @@ abstract class CookiesServiceProvider extends ServiceProvider
     /**
      * Register any application services.
      */
-    public function register()
+    public function register(): void
     {
         $this->booted(function () {
             $this->registerCookies();

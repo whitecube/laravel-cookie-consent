@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie as CookieFacade;
 use Symfony\Component\HttpFoundation\Cookie as CookieComponent;
 
+/**
+ * @mixin CookiesRegistrar
+ */
 class CookiesManager
 {
     /**

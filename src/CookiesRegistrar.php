@@ -15,6 +15,8 @@ class CookiesRegistrar
 
     /**
      * Access the pre-defined "essentials" consent-category.
+     *
+     * @return EssentialCookiesCategory
      */
     public function essentials(): CookiesCategory
     {
@@ -25,6 +27,8 @@ class CookiesRegistrar
 
     /**
      * Access the pre-defined "analytics" consent-category.
+     *
+     * @return AnalyticCookiesCategory
      */
     public function analytics(): CookiesCategory
     {
@@ -54,6 +58,8 @@ class CookiesRegistrar
     /**
      * Magically call a custom category or a cookie creation
      * method when inside a cookies group definition.
+     *
+     * @return CookiesCategory
      */
     public function __call(string $method, array $arguments)
     {
