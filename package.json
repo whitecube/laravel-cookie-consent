@@ -3,18 +3,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "npm run development",
-    "development": "mix",
-    "watch": "mix watch",
-    "watch-poll": "mix watch -- --watch-options-poll=1000",
-    "hot": "mix watch --hot",
+    "development": "vite build --mode development",
+    "watch": "vite build --watch",
     "prod": "npm run production",
-    "production": "mix --production"
+    "production": "vite build"
   },
   "devDependencies": {
     "axios": "^1.8.4",
-    "laravel-mix": "^6.0.49",
-    "resolve-url-loader": "^5.0.0",
-    "sass": "^1.63.2",
-    "sass-loader": "^12.1.0"
+    "vite": "^8.4.0"
   }
 }
